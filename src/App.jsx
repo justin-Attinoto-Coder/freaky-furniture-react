@@ -1,20 +1,22 @@
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Header from './components/Header';
+import Navbar from './components/Navbar';
+import Footer from './components/Footer';
+import Home from './pages/Home';
+import Cart from './pages/Cart';
 
 function App() {
   return (
-    <div>
-      <div className="bg-red-500 text-white p-4 mx-auto">
-        <h1 className="text-8xl text-sky-500">Hello, world!</h1>
-      </div>
-      <div>
-        <h2 className="text-3xl">Welcome to your Vite + React app</h2>
-      </div>
-      <div>
-        <button className="bg-amber-500 px-5 py-2 rounded-2xl hover:bg-amber-700 text-white font-bold">
-          Click Me!
-        </button>
-      </div>
-    </div>
+    <Router>
+      <Header />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/cart" element={<Cart />} />
+      </Routes>
+      <Footer />
+    </Router>
   );
 }
 
-export default App
+export default App;
