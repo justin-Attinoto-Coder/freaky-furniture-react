@@ -26,23 +26,27 @@ const HomePage = ({ handleSearch }) => {
   }, [location.search]);
 
   const fetchSearchResults = async (query) => {
-    // Replace this with your actual search logic
-    // For example, making an API call to fetch search results
-    const response = await fetch(`/api/search?query=${query}`);
-    const data = await response.json();
-    return data;
+    try {
+      const response = await fetch(`/api/search?query=${query}`);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error('Error fetching search results:', error);
+      return [];
+    }
   };
 
   return (
     <div>
       <h1>Welcome to Freaky Furniture</h1>
-      <SearchBar handleSearch={handleSearch} />
       <Hero />
       <SearchResults results={results} searchPerformed={searchPerformed} />
       <NewsSection />
       <Mobler />
       <Accordion />
-      {/* Render search results here */}
     </div>
   );
 };
