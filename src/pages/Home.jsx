@@ -8,7 +8,7 @@ import SearchResults from '../components/SearchResults';
 import SearchBar from '../components/SearchBar';
 import PropTypes from 'prop-types';
 
-const HomePage = ({ handleSearch }) => {
+const HomePage = ({ searchResults }) => {
   const [searchPerformed, setSearchPerformed] = useState(false);
   const [results, setResults] = useState([]);
   const location = useLocation();
@@ -23,7 +23,7 @@ const HomePage = ({ handleSearch }) => {
         setSearchPerformed(true);
       });
     }
-  }, [location.search]);
+  }, [location.search, searchResults]);
 
   const fetchSearchResults = async (query) => {
     try {
@@ -52,6 +52,7 @@ const HomePage = ({ handleSearch }) => {
 };
 
 HomePage.propTypes = {
+  searchResults: PropTypes.array.isRequired,
   handleSearch: PropTypes.func.isRequired,
 };
 
