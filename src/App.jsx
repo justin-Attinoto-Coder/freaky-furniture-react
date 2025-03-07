@@ -6,17 +6,21 @@ import Footer from './components/Footer';
 import Home from './pages/Home';
 import Cart from './pages/Cart';
 import ProductDetails from './pages/productdetails';
+import Admin from './pages/Admin';
 
 function App() {
+  const isAdminRoute = window.location.pathname.startsWith('/admin');
+
   return (
     <Router>
-      <Header />
+      {!isAdminRoute && <Header />}
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" index element={<Home />} />
         <Route path="/cart" element={<Cart />} />
-        <Route path="/product-details" element={<ProductDetails />} />
+        <Route path="/product/:id" element={<ProductDetails />} />
+        <Route path="/admin/*" element={<Admin />} />
       </Routes>
-      <Footer />
+      {!isAdminRoute && <Footer />}
     </Router>
   );
 }
