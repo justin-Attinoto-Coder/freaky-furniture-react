@@ -1,9 +1,9 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import { FaBars, FaHeart, FaUser, FaShoppingBasket } from 'react-icons/fa';
 import Navbar from './Navbar';
 
-const Header = () => {
+const Header = (props) => {
   return (
     <header className="flex justify-between items-center p-4 bg-white shadow-md">
       <div className="flex items-center">
@@ -12,7 +12,7 @@ const Header = () => {
           <img src="./public/images/logotyp90x50.png" alt="Logo" className="h-10 ml-2" />
         </Link>
       </div>
-      <Navbar />
+      <Navbar handleSearch={props.handleSearch}/>
       <div className="flex items-center">
         <FaHeart className="mx-2 cursor-pointer" />
         <FaUser className="mx-2 cursor-pointer" />
@@ -23,5 +23,9 @@ const Header = () => {
     </header>
   );
 };
+
+Header.propTypes = {
+  handleSearch: PropTypes.func.isRequired,
+  };
 
 export default Header;

@@ -1,6 +1,4 @@
-import React from 'react';
-
-const furnitureItems = [
+export const furnitureItems = [
   {
     id: 1,
     name: 'Furniture Item 1',
