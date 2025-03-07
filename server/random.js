@@ -25,9 +25,10 @@ function createRandomProducts(count) {
     const publishing_date = chance.date({ year: 2022 }).toISOString().split('T')[0];
     const urlSlug = generateSlug(name);
     const category = categories[Math.floor(Math.random() * categories.length)];
+    const image = chance.url({ extensions: ['jpg', 'png', 'gif'] });
 
-    const stmt = db.prepare('INSERT INTO furniture (name, brand, price, description, publishing_date, urlSlug, category) VALUES (?, ?, ?, ?, ?, ?, ?)');
-    stmt.run(name, brand, price, description, publishing_date, urlSlug, category);
+    const stmt = db.prepare('INSERT INTO furniture (name, brand, price, description, publishing_date, urlSlug, category, image) VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
+    stmt.run(name, brand, price, description, publishing_date, urlSlug, category, image);
   }
   console.log(`${count} random products inserted into the database.`);
 }
