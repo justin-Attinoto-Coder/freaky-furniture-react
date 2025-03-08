@@ -10,8 +10,9 @@ import Accordion from '../components/Accordion';
 import SearchResults from '../components/SearchResults';
 import PropTypes from 'prop-types';
 
-const HomePage = ({ searchResults, handleSearch, furnitureItems }) => {
+const HomePage = ({ handleSearch, furnitureItems }) => {
   const [searchPerformed, setSearchPerformed] = useState(false);
+  const [searchResults, setSearchResults] = useState([]);
   const location = useLocation();
 
   useEffect(() => {
@@ -21,10 +22,13 @@ const HomePage = ({ searchResults, handleSearch, furnitureItems }) => {
       // Perform search with searchQuery and update searchResults
       handleSearch(searchQuery);
       setSearchPerformed(true);
+    } else if (location.state && location.state.searchResults) {
+      setSearchResults(location.state.searchResults);
+      setSearchPerformed(true);
     } else {
       setSearchPerformed(false);
     }
-  }, [location.search, handleSearch]);
+  }, [location.search, location.state, handleSearch]);
 
   // Filter products to only include those with a publishing date within the past 7 days
   const filterRecentProducts = (products) => {
@@ -74,7 +78,6 @@ const HomePage = ({ searchResults, handleSearch, furnitureItems }) => {
 };
 
 HomePage.propTypes = {
-  searchResults: PropTypes.array.isRequired,
   handleSearch: PropTypes.func.isRequired,
   furnitureItems: PropTypes.array.isRequired,
 };
