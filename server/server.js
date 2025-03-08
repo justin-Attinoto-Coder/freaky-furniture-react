@@ -2,10 +2,9 @@ const express = require('express');
 const path = require('path');
 const Database = require('better-sqlite3');
 const bcrypt = require('bcrypt');
-const bodyParser = require('body-parser');
+const cors = require('cors'); // Import the cors package
 const app = express();
 const PORT = 8000;
-const cors = require('cors'); // Import the cors package
 
 // Use the cors middleware
 app.use(cors());
