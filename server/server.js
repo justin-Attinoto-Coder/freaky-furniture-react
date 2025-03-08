@@ -5,6 +5,10 @@ const bcrypt = require('bcrypt');
 const bodyParser = require('body-parser');
 const app = express();
 const PORT = 8000;
+const cors = require('cors'); // Import the cors package
+
+// Use the cors middleware
+app.use(cors());
 
 // Initialize SQLite database
 const db = new Database('furniture.db', { verbose: console.log });
@@ -57,8 +61,8 @@ async function createAdminUser() {
 createAdminUser();
 
 // Serve static files from the React app
-app.use(express.static(path.join(__dirname, '../client/build')));
-app.use(bodyParser.json());
+app.use(express.static(path.join(__dirname, '../dist')));
+app.use(express.json());
 
 // API route to get all furniture items
 app.get('/api/furniture', (req, res) => {
@@ -102,7 +106,7 @@ app.post('/login', async (req, res) => {
 
 // All other routes should serve the React app
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
+  res.sendFile(path.join(__dirname, '../dist', 'index.html'));
 });
 
 app.listen(PORT, () => {
