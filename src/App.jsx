@@ -4,6 +4,10 @@ import Footer from './components/Footer';
 import Home from './pages/Home';
 import Cart from './pages/Cart';
 import ProductDetails from './pages/ProductDetails';
+import CheckoutShipping from './pages/CheckoutShipping';
+import CheckoutPayment from './pages/CheckoutPayment';
+import CheckoutReview from './pages/CheckoutReview';
+import CheckoutConfirmation from './pages/CheckoutConfirmation';
 import { furnitureItems } from './components/Mobler';
 import { useState } from 'react';
 
@@ -28,6 +32,10 @@ function App() {
         <Route path="/home" element={<Home searchResults={searchResults} handleSearch={handleSearch} />} />
         <Route path="/cart" element={<Cart handleSearch={handleSearch} />} />
         <Route path="/product-details" element={<ProductDetails />} />
+        <Route path="/checkout-shipping" element={<CheckoutShipping />} />
+        <Route path="/checkout-payment" element={<CheckoutPayment />} />
+        <Route path="/checkout-review" element={<CheckoutReview />} />
+        <Route path="/checkout-confirmation" element={<CheckoutConfirmation />} />
       </Routes>
       <Footer />
     </Router>
