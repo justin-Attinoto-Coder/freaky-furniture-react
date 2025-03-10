@@ -1,36 +1,30 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 const SearchBar = ({ handleSearch }) => {
   const [query, setQuery] = useState('');
-  const navigate = useNavigate();
 
-  const handleClick = () => {
+  const onSubmit = (e) => {
+    e.preventDefault();
     handleSearch(query);
-    navigate(`/home?search=${query}`);
-  };
-
-  const handleInputChange = (e) => {
-    setQuery(e.target.value);
   };
 
   return (
-    <div>
+    <form onSubmit={onSubmit} className="flex items-center">
       <input
-        className="px-0.5 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
         type="text"
         value={query}
-        onChange={handleInputChange}
-        placeholder="Search for furniture..."
+        onChange={(e) => setQuery(e.target.value)}
+        className="px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+        placeholder="Search for products..."
       />
       <button
-        className="px-0.5 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-        onClick={handleClick}
+        type="submit"
+        className="ml-2 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700"
       >
         Search
       </button>
-    </div>
+    </form>
   );
 };
 

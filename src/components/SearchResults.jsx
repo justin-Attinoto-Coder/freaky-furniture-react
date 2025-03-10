@@ -12,11 +12,16 @@ const SearchResults = ({ results, searchPerformed }) => {
   }
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-      {results.map((item) => (
-        <ProductCard key={item.id} product={item} />
-      ))}
-    </div>
+    <section className="p-8 mt-8 bg-gray-100">
+      <div className="container px-4">
+        <h2 className="text-3xl font-bold mb-4">Search Results</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          {results.map((item) => (
+            <ProductCard key={item.id} product={item} />
+          ))}
+        </div>
+      </div>
+    </section>
   );
 };
 
