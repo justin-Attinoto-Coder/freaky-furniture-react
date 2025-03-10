@@ -8,7 +8,6 @@ import CheckoutShipping from './pages/CheckoutShipping';
 import CheckoutPayment from './pages/CheckoutPayment';
 import CheckoutReview from './pages/CheckoutReview';
 import CheckoutConfirmation from './pages/CheckoutConfirmation';
-import { furnitureItems } from './components/Mobler';
 import { useState } from 'react';
 
 function App() {
