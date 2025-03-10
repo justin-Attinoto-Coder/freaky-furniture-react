@@ -7,7 +7,7 @@ const AdminTable = () => {
   const [furniture, setFurniture] = useState([]);
 
   useEffect(() => {
-    fetch('/api/furniture')
+    fetch('http://localhost:8000/api/furniture') // Fetch furniture data from the API
       .then(response => response.json())
       .then(data => setFurniture(data))
       .catch(error => console.error('Error fetching furniture data:', error));
