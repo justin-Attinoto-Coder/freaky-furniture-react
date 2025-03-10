@@ -28,18 +28,18 @@ const Accordion = () => {
     <div className="max-w-md mx-auto my-8">
       <AccordionItem title="Categories">
         <ul>
-          <li>Möbler</li>
-          <li>Förvaring</li>
-          <li>Detaljer</li>
-          <li>Textil</li>
+          <li><a href="#mobler">Möbler</a></li>
+          <li><a href="#forvaring">Förvaring</a></li>
+          <li><a href="#detaljer">Detaljer</a></li>
+          <li><a href="#textil">Textil</a></li>
         </ul>
       </AccordionItem>
       <AccordionItem title="My Pages">
         <ul>
-          <li>Home</li>
-          <li>About</li>
-          <li>Shop</li>
-          <li>Contact</li>
+          <li><a href="/">Home</a></li>
+          <li><a href="/about">About</a></li>
+          <li><a href="/shop">Shop</a></li>
+          <li><a href="/contact">Contact</a></li>
         </ul>
       </AccordionItem>
       <AccordionItem title="Contact Form">
