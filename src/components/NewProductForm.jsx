@@ -58,7 +58,7 @@ const NewProductForm = () => {
         .then(data => {
           console.log('Form submitted:', data);
           // Navigate to the admin page
-          navigate('/admin');
+          navigate('/admin/products');
         })
         .catch(error => console.error('Error submitting form:', error));
     }

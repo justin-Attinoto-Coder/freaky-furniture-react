@@ -20,7 +20,7 @@ const AdminTable = () => {
         <h2 className="text-xl">Produkter</h2>
         <button
           className="bg-gray-800 text-white py-2 px-4 rounded hover:bg-gray-600"
-          onClick={() => navigate('new-product')} // Use relative path
+          onClick={() => navigate('/products/new')} // Use relative path
         >
           Ny produkt
         </button>
