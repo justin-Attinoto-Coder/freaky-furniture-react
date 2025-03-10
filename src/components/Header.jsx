@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { FaHeart, FaUser, FaShoppingBasket } from 'react-icons/fa';
@@ -52,7 +52,6 @@ const Header = (props) => {
 
 Header.propTypes = {
   handleSearch: PropTypes.func.isRequired,
-};
 };
 
 export default Header;

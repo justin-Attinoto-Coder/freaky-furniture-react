@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom';
+import { useState, useEffect, useCallback } from 'react'; // Add useEffect and useCallback imports
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Home from './pages/Home';
@@ -8,7 +9,6 @@ import CheckoutShipping from './pages/CheckoutShipping';
 import CheckoutPayment from './pages/CheckoutPayment';
 import CheckoutReview from './pages/CheckoutReview';
 import CheckoutConfirmation from './pages/CheckoutConfirmation';
-import { useState } from 'react';
 
 function App() {
   const [searchResults, setSearchResults] = useState([]);
