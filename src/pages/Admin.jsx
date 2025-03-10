@@ -13,8 +13,8 @@ const Admin = () => {
         <AdminSidebar />
         <div className="flex-1 p-4">
           <Routes>
-            <Route path="/" element={<AdminTable />} />
-            <Route path="new-product" element={<NewProductForm />} /> {/* Use relative path */}
+            <Route path="products" element={<AdminTable />} />
+            <Route path="new-product" element={<NewProductForm />} />
           </Routes>
         </div>
       </div>
