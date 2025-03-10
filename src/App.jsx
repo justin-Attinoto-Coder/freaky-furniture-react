@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Home from './pages/Home';
@@ -13,23 +13,31 @@ import { useState } from 'react';
 
 function App() {
   const [searchResults, setSearchResults] = useState([]);
+  const [furnitureItems, setFurnitureItems] = useState([]);
+  const navigate = useNavigate();
 
-  function handleSearch(query) {
-    console.log(query, furnitureItems);
+  useEffect(() => {
+    fetch('http://localhost:8000/api/furniture')
+      .then(response => response.json())
+      .then(data => setFurnitureItems(data))
+      .catch(error => console.error('Error fetching furniture items:', error));
+  }, []);
+
+  const handleSearch = useCallback((query) => {
+    console.log(`Handling search for query: ${query}`);
     const results = furnitureItems.filter((item) => {
       return item.name.toLowerCase().includes(query.toLowerCase());
     });
     setSearchResults(results);
-  }
-
-  console.log(searchResults);
+    navigate('/home', { state: { searchResults: results } }); // Redirect to the Home page with search results
+  }, [furnitureItems, navigate]);
 
   return (
-    <Router>
+    <>
       <Header handleSearch={handleSearch} />
       <Routes>
-        <Route path="/" element={<Home searchResults={searchResults} handleSearch={handleSearch} />} />
-        <Route path="/home" element={<Home searchResults={searchResults} handleSearch={handleSearch} />} />
+        <Route path="/" element={<Home searchResults={searchResults} handleSearch={handleSearch} furnitureItems={furnitureItems} />} />
+        <Route path="/home" element={<Home searchResults={searchResults} handleSearch={handleSearch} furnitureItems={furnitureItems} />} />
         <Route path="/cart" element={<Cart handleSearch={handleSearch} />} />
         <Route path="/product-details" element={<ProductDetails />} />
         <Route path="/checkout-shipping" element={<CheckoutShipping />} />
@@ -38,8 +46,16 @@ function App() {
         <Route path="/checkout-confirmation" element={<CheckoutConfirmation />} />
       </Routes>
       <Footer />
+    </>
+  );
+}
+
+function AppWithRouter() {
+  return (
+    <Router>
+      <App />
     </Router>
   );
 }
 
-export default App;
+export default AppWithRouter;

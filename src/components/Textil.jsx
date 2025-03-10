@@ -1,13 +1,13 @@
 import React from 'react';
 
-const Mobler = ({ products }) => {
+const Textil = ({ products }) => {
   if (!products || products.length === 0) {
-    return <p>No furniture items available.</p>;
+    return <p>No textile items available.</p>;
   }
 
   return (
     <section className="p-8 bg-gray-100">
-      <h2 className="text-3xl font-bold mb-6">Furniture Items</h2>
+      <h2 className="text-3xl font-bold mb-6">Textile Items</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {products.map((item) => (
           <div key={item.id} className="bg-white p-4 rounded-lg shadow-md">
@@ -23,4 +23,4 @@ const Mobler = ({ products }) => {
   );
 };
 
-export default Mobler;
+export default Textil;
