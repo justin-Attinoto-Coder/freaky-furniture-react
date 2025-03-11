@@ -36,7 +36,7 @@ function App() {
   // Check if the current route is an admin route
   const isAdminRoute = location.pathname.startsWith('/admin');
 
-  return (
+  return ( // Header/footer components will only be rendered if we're not on an admin route
     <>
       {!isAdminRoute && <Header handleSearch={handleSearch} />}
       <Routes>
