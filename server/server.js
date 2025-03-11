@@ -78,6 +78,39 @@ app.post('/api/furniture', (req, res) => {
   res.json({ id: info.lastInsertRowid });
 });
 
+// API route to get product details by URL slug
+app.get('/api/products/:slug', (req, res) => {
+  try {
+    const { slug } = req.params;
+    const product = db.prepare('SELECT * FROM furniture WHERE urlSlug = ?').get(slug);
+    if (product) {
+      res.json(product);
+    } else {
+      res.status(404).json({ error: 'Product not found' });
+    }
+  } catch (error) {
+    console.error('Error fetching product details:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+// API route to get similar products by URL slug
+app.get('/api/products/:slug/similar', (req, res) => {
+  try {
+    const { slug } = req.params;
+    const product = db.prepare('SELECT * FROM furniture WHERE urlSlug = ?').get(slug);
+    if (product) {
+      const similarProducts = db.prepare('SELECT * FROM furniture WHERE category = ? AND urlSlug != ? LIMIT 3').all(product.category, slug);
+      res.json(similarProducts);
+    } else {
+      res.status(404).json({ error: 'Product not found' });
+    }
+  } catch (error) {
+    console.error('Error fetching similar products:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
 // Register route
 app.post('/register', async (req, res) => {
   const { username, password, role } = req.body;
