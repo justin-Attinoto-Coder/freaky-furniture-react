@@ -29,8 +29,8 @@ function App() {
         <Route path="/" element={<Home searchResults={searchResults} handleSearch={handleSearch} />} />
         <Route path="/home" element={<Home searchResults={searchResults} handleSearch={handleSearch} />} />
         <Route path="/cart" element={<Cart handleSearch={handleSearch} />} />
-        <Route path="/product-details" element={<ProductDetails />} />
-        <Route path="/admin/*" element={<Admin />} /> {/* Add this line */}
+        <Route path="/products/:slug" element={<ProductDetails />} />
+        <Route path="/admin/*" element={<Admin />} />
       </Routes>
       {!isAdminRoute && <Footer />}
     </Router>
