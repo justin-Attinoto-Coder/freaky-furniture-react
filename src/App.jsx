@@ -8,7 +8,7 @@ import CheckoutShipping from './pages/CheckoutShipping';
 import CheckoutPayment from './pages/CheckoutPayment';
 import CheckoutReview from './pages/CheckoutReview';
 import CheckoutConfirmation from './pages/CheckoutConfirmation';
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 function App() {
   const [searchResults, setSearchResults] = useState([]);
