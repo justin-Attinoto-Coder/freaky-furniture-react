@@ -53,6 +53,5 @@ const Header = (props) => {
 Header.propTypes = {
   handleSearch: PropTypes.func.isRequired,
 };
-};
 
 export default Header;
