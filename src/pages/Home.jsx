@@ -1,13 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import Hero from '../components/Hero';
 import NewsSection from '../components/NewsSection';
-import Mobler from '../components/Mobler';
-import Forvaring from '../components/Forvaring';
-import Detaljer from '../components/Detaljer';
-import Textil from '../components/Textil';
 import Accordion from '../components/Accordion';
 import SearchResults from '../components/SearchResults';
+import ProductCard from '../components/ProductCard'; // Import ProductCard
 import PropTypes from 'prop-types';
 
 const HomePage = ({ handleSearch, furnitureItems }) => {
@@ -60,17 +57,37 @@ const HomePage = ({ handleSearch, furnitureItems }) => {
       <Hero />
       {searchPerformed && <SearchResults results={searchResults} searchPerformed={searchPerformed} />}
       <NewsSection products={recentProducts} />
-      <div id="mobler">
-        <Mobler products={moblerProducts} />
+      <div id="mobler" className="my-8">
+        <h2 className="text-2xl font-bold mb-4">Möbler</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          {moblerProducts.map(product => (
+            <ProductCard key={product.id} product={product} />
+          ))}
+        </div>
       </div>
-      <div id="forvaring">
-        <Forvaring products={forvaringProducts} />
+      <div id="forvaring" className="my-8">
+        <h2 className="text-2xl font-bold mb-4">Förvaring</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          {forvaringProducts.map(product => (
+            <ProductCard key={product.id} product={product} />
+          ))}
+        </div>
       </div>
-      <div id="detaljer">
-        <Detaljer products={detaljerProducts} />
+      <div id="detaljer" className="my-8">
+        <h2 className="text-2xl font-bold mb-4">Detaljer</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          {detaljerProducts.map(product => (
+            <ProductCard key={product.id} product={product} />
+          ))}
+        </div>
       </div>
-      <div id="textil">
-        <Textil products={textilProducts} />
+      <div id="textil" className="my-8">
+        <h2 className="text-2xl font-bold mb-4">Textil</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          {textilProducts.map(product => (
+            <ProductCard key={product.id} product={product} />
+          ))}
+        </div>
       </div>
       <Accordion />
     </div>

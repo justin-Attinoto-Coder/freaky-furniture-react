@@ -5,6 +5,7 @@ const bcrypt = require('bcrypt');
 const cors = require('cors'); // Import the cors package
 const app = express();
 const PORT = 8000;
+const __dirname = path.resolve();
 
 // Use the cors middleware
 app.use(cors());
@@ -65,8 +66,28 @@ app.use(express.json());
 
 // API route to get all furniture items
 app.get('/api/furniture', (req, res) => {
-  const furniture = db.prepare('SELECT * FROM furniture').all();
-  res.json(furniture);
+  const category = req.query.category;
+  let query = 'SELECT * FROM furniture';
+  const params = [];
+  if (category) {
+    query += ' WHERE category = ?';
+    params.push(category);
+  }
+  const furnitureItems = db.prepare(query).all(...params);
+  res.json(furnitureItems);
+});
+
+// API route to get a furniture item by URL slug
+app.get('/api/furniture/:urlSlug', (req, res) => {
+  console.log(`Received request for product with urlSlug: ${req.params.urlSlug}`);
+  const product = db.prepare('SELECT * FROM furniture WHERE urlSlug = ?').get(req.params.urlSlug);
+  if (product) {
+    console.log('Product found:', product);
+    res.json(product);
+  } else {
+    console.log('Product not found');
+    res.status(404).send('Product not found');
+  }
 });
 
 // API route to add a new furniture item
