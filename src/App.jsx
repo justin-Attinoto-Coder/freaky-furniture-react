@@ -4,16 +4,17 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import Home from './pages/Home';
 import Cart from './pages/Cart';
-import ProductUrlDetails from './pages/ProductUrlDetails';
+import ProductDetails from './pages/ProductDetails'; // Updated import
 import CheckoutShipping from './pages/CheckoutShipping';
 import CheckoutPayment from './pages/CheckoutPayment';
 import CheckoutReview from './pages/CheckoutReview';
 import CheckoutConfirmation from './pages/CheckoutConfirmation';
 
 function App() {
-  const [searchResults, setSearchResults] = useState([]); // Added state for search results
-  const [furnitureItems, setFurnitureItems] = useState([]); // Added state for furniture items
-  const navigate = useNavigate(); // Added useNavigate hook
+  const [searchResults, setSearchResults] = useState([]);
+  const [furnitureItems, setFurnitureItems] = useState([]);
+  const [cartItems, setCartItems] = useState([]); // Added state for cart items
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetch('http://localhost:8000/api/furniture')
@@ -30,14 +31,18 @@ function App() {
     navigate('/home', { state: { searchResults: results } }); // Redirect to the Home page with search results
   }, [furnitureItems, navigate]);
 
+  const addToCart = (product) => {
+    setCartItems(prevCartItems => [...prevCartItems, product]);
+  };
+
   return (
     <>
-      <Header handleSearch={handleSearch} /> {/* Passed handleSearch to Header */}
+      <Header handleSearch={handleSearch} />
       <Routes>
         <Route path="/" element={<Home searchResults={searchResults} handleSearch={handleSearch} furnitureItems={furnitureItems} />} />
         <Route path="/home" element={<Home searchResults={searchResults} handleSearch={handleSearch} furnitureItems={furnitureItems} />} />
-        <Route path="/cart" element={<Cart handleSearch={handleSearch} />} /> {/* Passed handleSearch to Cart */}
-        <Route path="/product/:urlSlug" element={<ProductUrlDetails furnitureItems={furnitureItems} />} /> {/* Passed furnitureItems to ProductUrlDetails */}
+        <Route path="/cart" element={<Cart cartItems={cartItems} />} /> {/* Passed cartItems to Cart */}
+        <Route path="/product/:urlSlug" element={<ProductDetails furnitureItems={furnitureItems} addToCart={addToCart} />} /> {/* Passed addToCart to ProductDetails */}
         <Route path="/checkout-shipping" element={<CheckoutShipping />} />
         <Route path="/checkout-payment" element={<CheckoutPayment />} />
         <Route path="/checkout-review" element={<CheckoutReview />} />
