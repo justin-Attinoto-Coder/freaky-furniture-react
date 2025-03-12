@@ -20,10 +20,11 @@ db.prepare(`
     brand TEXT,
     price REAL,
     description TEXT,
+    sku TEXT UNIQUE,
     publishing_date TEXT,
     urlSlug TEXT UNIQUE,
     category TEXT,
-    image TEXT
+    image TEXT,
   )
 `).run();
 
@@ -71,10 +72,10 @@ app.get('/api/furniture', (req, res) => {
 
 // API route to add a new furniture item
 app.post('/api/furniture', (req, res) => {
-  const { name, brand, price, description, publishing_date, category, image } = req.body;
+  const { name, brand, price, description, sku, publishing_date, category, image} = req.body;
   const urlSlug = generateSlug(name);
-  const stmt = db.prepare('INSERT INTO furniture (name, brand, price, description, publishing_date, urlSlug, category, image) VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
-  const info = stmt.run(name, brand, price, description, publishing_date, urlSlug, category, image);
+  const stmt = db.prepare('INSERT INTO furniture (name, brand, price, description, publishing_date, urlSlug, category, image, sku) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)');
+  const info = stmt.run(name, brand, price, description, sku, publishing_date, urlSlug, category, image);
   res.json({ id: info.lastInsertRowid });
 });
 
