@@ -24,7 +24,7 @@ db.prepare(`
     publishing_date TEXT,
     urlSlug TEXT UNIQUE,
     category TEXT,
-    image TEXT,
+    image TEXT
   )
 `).run();
 
