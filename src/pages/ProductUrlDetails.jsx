@@ -5,7 +5,7 @@ import ProductInformation from '../components/ProductInformation';
 import ProductDetailsImage from '../components/ProductDetailsImage';
 import SimilarProducts from '../components/SimilarProducts';
 
-const ProductDetails = ({ furnitureItems }) => {
+const ProductUrlDetails = ({ furnitureItems }) => {
   const { urlSlug } = useParams();
   const product = furnitureItems.find(item => item.urlSlug === urlSlug);
 
@@ -33,7 +33,7 @@ const ProductDetails = ({ furnitureItems }) => {
   );
 };
 
-ProductDetails.propTypes = {
+ProductUrlDetails.propTypes = {
   furnitureItems: PropTypes.arrayOf(
     PropTypes.shape({
       urlSlug: PropTypes.string.isRequired,
@@ -47,4 +47,4 @@ ProductDetails.propTypes = {
   ).isRequired,
 };
 
-export default ProductDetails;
+export default ProductUrlDetails;

@@ -17,7 +17,7 @@ const Header = (props) => {
       <div className="flex items-center">
         <HamburgerMenu isMenuOpen={isMenuOpen} toggleMenu={toggleMenu} />
         <Link to="/">
-          <img src="./public/images/logotyp90x50.png" alt="Logo" className="h-10 ml-2" />
+          <img src="../public/images/logotyp90x50.png" alt="Logo" className="h-10 ml-2" />
         </Link>
       </div>
       <Navbar handleSearch={props.handleSearch} />

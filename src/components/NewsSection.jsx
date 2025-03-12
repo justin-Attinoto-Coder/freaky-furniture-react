@@ -1,23 +1,33 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import ProductCard from './ProductCard';
 
 const NewsSection = ({ products }) => {
   return (
-    <section className="p-8 bg-gray-100">
-      <h2 className="text-3xl font-bold mb-6">New Products</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        {products.map((product) => (
-          <div key={product.id} className="bg-white p-4 rounded-lg shadow-md">
-            <img src={product.image} alt={product.name} className="w-full h-48 object-cover rounded-t-lg" />
-            <div className="p-4">
-              <h3 className="text-xl font-semibold mb-2">{product.name}</h3>
-              <p className="text-gray-700">{product.description}</p>
-              <p className="text-gray-900 font-bold">Price: ${product.price}</p>
-            </div>
-          </div>
-        ))}
+    <section className="p-8 mt-8 bg-gray-100">
+      <div className="container px-4">
+        <h2 className="text-3xl font-bold mb-4">Latest Products</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          {products.map(product => (
+            <ProductCard key={product.id} product={product} />
+          ))}
+        </div>
       </div>
     </section>
   );
+};
+
+NewsSection.propTypes = {
+  products: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+      description: PropTypes.string,
+      price: PropTypes.number.isRequired,
+      image: PropTypes.string.isRequired,
+      urlSlug: PropTypes.string.isRequired,
+    })
+  ).isRequired,
 };
 
 export default NewsSection;

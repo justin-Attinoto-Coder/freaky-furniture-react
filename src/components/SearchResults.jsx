@@ -33,6 +33,7 @@ SearchResults.propTypes = {
       description: PropTypes.string,
       price: PropTypes.number,
       image: PropTypes.string,
+      urlSlug: PropTypes.string.isRequired,
     })
   ).isRequired,
   searchPerformed: PropTypes.bool.isRequired,

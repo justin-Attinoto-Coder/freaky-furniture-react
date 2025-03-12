@@ -1,4 +1,4 @@
-import React from 'react';
+import PropTypes from 'prop-types';
 import AddToCartButton from './AddToCartButton';
 
 const ProductInformation = ({ title, brand, description, price, onAddToCart }) => {
@@ -11,6 +11,14 @@ const ProductInformation = ({ title, brand, description, price, onAddToCart }) =
       <AddToCartButton onAddToCart={onAddToCart} />
     </div>
   );
+};
+
+ProductInformation.propTypes = {
+  title: PropTypes.string.isRequired,
+  brand: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
+  price: PropTypes.number.isRequired,
+  onAddToCart: PropTypes.func.isRequired,
 };
 
 export default ProductInformation;
