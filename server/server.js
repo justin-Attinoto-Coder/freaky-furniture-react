@@ -5,6 +5,7 @@ const bcrypt = require('bcrypt');
 const cors = require('cors'); // Import the cors package
 const app = express();
 const PORT = 8000;
+const __dirname = path.resolve();
 
 // Use the cors middleware
 app.use(cors());
@@ -24,17 +25,7 @@ db.prepare(`
     publishing_date TEXT,
     urlSlug TEXT UNIQUE,
     category TEXT,
-    image TEXT,
-  )
-`).run();
-
-// Create users table if it doesn't exist
-db.prepare(`
-  CREATE TABLE IF NOT EXISTS users (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    username TEXT UNIQUE,
-    password TEXT,
-    role TEXT
+    image TEXT
   )
 `).run();
 
@@ -46,62 +37,13 @@ function generateSlug(name) {
     .replace(/(^-|-$)+/g, '');
 }
 
-// Automatically create an admin user if one doesn't exist
-async function createAdminUser() {
-  const adminExists = db.prepare('SELECT * FROM users WHERE role = ?').get('admin');
-  if (!adminExists) {
-    const username = 'admin';
-    const password = 'admin123'; // You should use a more secure password in production
-    const hashedPassword = await bcrypt.hash(password, 10);
-    db.prepare('INSERT INTO users (username, password, role) VALUES (?, ?, ?)').run(username, hashedPassword, 'admin');
-    console.log('Admin user created with username: admin and password: admin123');
-  }
-}
-
-createAdminUser();
-
-// Serve static files from the React app
-app.use(express.static(path.join(__dirname, '../dist')));
-app.use(express.json());
-
-// API route to get all furniture items
-app.get('/api/furniture', (req, res) => {
-  const furniture = db.prepare('SELECT * FROM furniture').all();
-  res.json(furniture);
-});
-
 // API route to add a new furniture item
 app.post('/api/furniture', (req, res) => {
-  const { name, brand, price, description, sku, publishing_date, category, image} = req.body;
+  const { name, brand, price, description, sku, publishing_date, category, image } = req.body;
   const urlSlug = generateSlug(name);
   const stmt = db.prepare('INSERT INTO furniture (name, brand, price, description, sku, publishing_date, urlSlug, category, image) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)');
   const info = stmt.run(name, brand, price, description, sku, publishing_date, urlSlug, category, image);
   res.json({ id: info.lastInsertRowid });
-});
-
-// Register route
-app.post('/register', async (req, res) => {
-  const { username, password, role } = req.body;
-  const hashedPassword = await bcrypt.hash(password, 10);
-  const stmt = db.prepare('INSERT INTO users (username, password, role) VALUES (?, ?, ?)');
-  try {
-    stmt.run(username, hashedPassword, role);
-    res.status(201).send('User registered');
-  } catch (err) {
-    res.status(400).send('User already exists');
-  }
-});
-
-// Login route
-app.post('/login', async (req, res) => {
-  const { username, password } = req.body;
-  const stmt = db.prepare('SELECT * FROM users WHERE username = ?');
-  const user = stmt.get(username);
-  if (user && await bcrypt.compare(password, user.password)) {
-    res.status(200).send({ message: 'Login successful', role: user.role });
-  } else {
-    res.status(400).send('Invalid credentials');
-  }
 });
 
 // All other routes should serve the React app

@@ -47,14 +47,30 @@ const AdminNewProduct = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateForm()) {
+      const productData = {
+        name: formData.namn,
+        description: formData.beskrivning,
+        image: formData.bild,
+        brand: formData.marke,
+        sku: formData.sku,
+        price: parseFloat(formData.pris),
+        publishing_date: formData.publiceringsdatum,
+        category: 'default' // Add a default category or make it a form field
+      };
+
       fetch('http://localhost:8000/api/furniture', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(formData)
+        body: JSON.stringify(productData)
       })
-        .then(response => response.json())
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.json();
+        })
         .then(data => {
           console.log('Form submitted:', data);
           // Navigate to the admin page
