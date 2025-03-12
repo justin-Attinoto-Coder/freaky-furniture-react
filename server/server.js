@@ -74,7 +74,7 @@ app.get('/api/furniture', (req, res) => {
 app.post('/api/furniture', (req, res) => {
   const { name, brand, price, description, sku, publishing_date, category, image} = req.body;
   const urlSlug = generateSlug(name);
-  const stmt = db.prepare('INSERT INTO furniture (name, brand, price, description, publishing_date, urlSlug, category, image, sku) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)');
+  const stmt = db.prepare('INSERT INTO furniture (name, brand, price, description, sku, publishing_date, urlSlug, category, image) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)');
   const info = stmt.run(name, brand, price, description, sku, publishing_date, urlSlug, category, image);
   res.json({ id: info.lastInsertRowid });
 });
