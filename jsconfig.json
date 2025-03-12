@@ -1,0 +1,8 @@
+{
+  "compilerOptions": {
+    "target": "ES6",
+    "module": "commonjs",
+    "typeRoots": ["node_modules/@types"]
+  },
+  "include": ["server/**/*.js"]
+}
