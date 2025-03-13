@@ -2,7 +2,12 @@
   "compilerOptions": {
     "target": "ES6",
     "module": "commonjs",
-    "typeRoots": ["node_modules/@types"]
+    "typeRoots": ["node_modules/@types"],
+    "baseUrl": ".",
+    "paths": {
+      "@client/*": ["client/src/*"],
+      "@server/*": ["server/*"]
+    }
   },
-  "include": ["server/**/*.js"]
+  "include": ["client/src/**/*.js", "server/**/*.js"]
 }
