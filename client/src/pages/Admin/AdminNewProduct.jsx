@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
 const AdminNewProduct = () => {
@@ -10,7 +10,8 @@ const AdminNewProduct = () => {
     marke: '',
     sku: '',
     pris: '',
-    publiceringsdatum: ''
+    publiceringsdatum: '',
+    kategori: 'mobler' // Default category
   });
 
   const [errors, setErrors] = useState({});
@@ -55,7 +56,7 @@ const AdminNewProduct = () => {
         sku: formData.sku,
         price: parseFloat(formData.pris),
         publishing_date: formData.publiceringsdatum,
-        category: 'default' // Add a default category or make it a form field
+        category: formData.kategori // Use the selected category
       };
 
       fetch('http://localhost:8000/api/furniture', {
@@ -177,6 +178,22 @@ const AdminNewProduct = () => {
               value={formData.publiceringsdatum}
               onChange={handleChange}
             />
+          </div>
+          <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="kategori">
+              Kategori
+            </label>
+            <select
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="kategori"
+              value={formData.kategori}
+              onChange={handleChange}
+            >
+              <option value="mobler">Möbler</option>
+              <option value="forvaring">Förvaring</option>
+              <option value="detaljer">Detaljer</option>
+              <option value="textil">Textil</option>
+            </select>
           </div>
           <button
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"

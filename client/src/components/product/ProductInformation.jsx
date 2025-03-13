@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import AddToCartButton from './AddToCartButton';
+import AddToCartButton from '../Cart/AddToCartButton';
 
 const ProductInformation = ({ title, brand, description, price, onAddToCart }) => {
   return (

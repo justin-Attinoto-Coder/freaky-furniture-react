@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import MyBasket from '../components/MyBasket';
-import CartCustomerForm from '../components/CartCustomerForm';
+import MyBasket from '../../components/Cart/MyBasket';
+import CartCustomerForm from '../../components/Cart/CartCustomerForm';
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
