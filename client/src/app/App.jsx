@@ -1,15 +1,16 @@
 import { BrowserRouter as Router, Route, Routes, useNavigate, useLocation } from 'react-router-dom';
 import { useState, useEffect, useCallback } from 'react';
-import Header from '../components/common/Header';
-import Footer from '../components/common/Footer';
-import Home from '../pages/Home/Home';
-import Cart from '../pages/Cart/Cart';
-import ProductDetails from '../pages/ProductDetails/ProductDetails';
-import CheckoutShipping from '../pages/Checkout/CheckoutShipping';
-import CheckoutPayment from '../pages/Checkout/CheckoutPayment';
-import CheckoutReview from '../pages/Checkout/CheckoutReview';
-import CheckoutConfirmation from '../pages/Checkout/CheckoutConfirmation';
-import AdminDashboard from '../pages/Admin/AdminDashboard';
+import Header from './components/Header';
+import Footer from './components/Footer';
+import Home from './pages/Home';
+import Cart from './pages/Cart';
+import ProductDetails from './pages/ProductDetails'; // Updated import
+import CheckoutShipping from './pages/CheckoutShipping';
+import CheckoutPayment from './pages/CheckoutPayment';
+import CheckoutReview from './pages/CheckoutReview';
+import CheckoutConfirmation from './pages/CheckoutConfirmation';
+import Search from './pages/Search'; // Import Search
+import Admin from './pages/Admin'; // Import the Admin page
 
 function App() {
   const [searchResults, setSearchResults] = useState([]);
@@ -19,7 +20,7 @@ function App() {
     setCartItems((prevItems) => [...prevItems, item]);
   };
 
-  const location = useLocation();
+  const location = useLocation(); // Get the current route
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -34,24 +35,26 @@ function App() {
       return item.name.toLowerCase().includes(query.toLowerCase());
     });
     setSearchResults(results);
-    navigate('/home', { state: { searchResults: results } });
+    navigate(`/search?q=${encodeURIComponent(query)}`); // Redirect to the SearchPage with search query in URL
   }, [furnitureItems, navigate]);
 
+  // Check if the current route is an admin route
   const isAdminRoute = location.pathname.startsWith('/admin');
 
-  return (
+  return ( // Header/footer components will only be rendered if we're not on an admin route
     <>
       {!isAdminRoute && <Header handleSearch={handleSearch} />}
       <Routes>
-        <Route path="/" element={<Home searchResults={searchResults} handleSearch={handleSearch} furnitureItems={furnitureItems} />} />
-        <Route path="/home" element={<Home searchResults={searchResults} handleSearch={handleSearch} furnitureItems={furnitureItems} />} />
-        <Route path="/cart" element={<Cart cartItems={cartItems} />} />
-        <Route path="/product/:urlSlug" element={<ProductDetails furnitureItems={furnitureItems} addToCart={addToCart} />} />
+        <Route path="/" element={<Home handleSearch={handleSearch} furnitureItems={furnitureItems} />} />
+        <Route path="/home" element={<Home handleSearch={handleSearch} furnitureItems={furnitureItems} />} />
+        <Route path="/cart" element={<Cart cartItems={cartItems} />} /> {/* Passed cartItems to Cart */}
+        <Route path="/product/:urlSlug" element={<ProductDetails furnitureItems={furnitureItems} addToCart={addToCart} />} /> {/* Passed addToCart to ProductDetails */}
         <Route path="/checkout-shipping" element={<CheckoutShipping />} />
         <Route path="/checkout-payment" element={<CheckoutPayment />} />
         <Route path="/checkout-review" element={<CheckoutReview />} />
         <Route path="/checkout-confirmation" element={<CheckoutConfirmation />} />
-        <Route path="/admin" element={<AdminDashboard />} />
+        <Route path="/search" element={<Search searchResults={searchResults} />} /> {/* Added Search route */}
+        <Route path="/admin/*" element={<Admin />} />
       </Routes>
       {!isAdminRoute && <Footer />}
     </>
