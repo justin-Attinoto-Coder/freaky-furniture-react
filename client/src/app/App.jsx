@@ -1,16 +1,16 @@
 import { BrowserRouter as Router, Route, Routes, useNavigate, useLocation } from 'react-router-dom';
 import { useState, useEffect, useCallback } from 'react';
-import Header from './components/Header';
-import Footer from './components/Footer';
-import Home from './pages/Home';
-import Cart from './pages/Cart';
-import ProductDetails from './pages/ProductDetails'; // Updated import
-import CheckoutShipping from './pages/CheckoutShipping';
-import CheckoutPayment from './pages/CheckoutPayment';
-import CheckoutReview from './pages/CheckoutReview';
-import CheckoutConfirmation from './pages/CheckoutConfirmation';
-import Search from './pages/Search'; // Import Search
-import Admin from './pages/Admin'; // Import the Admin page
+import Header from '../components/Common/Header';
+import Footer from '../components/Common/Footer';
+import Home from '../pages/Home/Home';
+import Cart from '../pages/Cart/Cart';
+import ProductDetails from '../pages/ProductDetails/ProductDetails'; // Updated import
+import CheckoutShipping from '../pages/Checkout/CheckoutShipping';
+import CheckoutPayment from '../pages/Checkout/CheckoutPayment';
+import CheckoutReview from '../pages/Checkout/CheckoutReview';
+import CheckoutConfirmation from '../pages/Checkout/CheckoutConfirmation';
+import Search from '../pages/Search/Search'; // Import Search
+import Admin from '../pages/Admin/AdminDashBoard'; // Import the Admin page
 
 function App() {
   const [searchResults, setSearchResults] = useState([]);

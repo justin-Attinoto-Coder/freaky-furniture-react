@@ -1,10 +1,7 @@
-import { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
-import Hero from '../components/Hero';
-import NewsSection from '../components/NewsSection';
-import Accordion from '../components/Accordion';
-import SearchResults from '../components/SearchResults';
-import ProductCard from '../components/ProductCard'; // Import ProductCard
+import Hero from '../../components/Home/Hero';
+import NewsSection from '../../components/Home/NewsSection';
+import Accordion from '../../components/Common/Accordion';
+import ProductCard from '../../components/Common/ProductCard'; // Import ProductCard
 import PropTypes from 'prop-types';
 
 const HomePage = ({ furnitureItems }) => {

@@ -4,6 +4,7 @@ const generateSlug = require('../utils/generateSlug');
 
 const router = express.Router();
 
+// Get all furniture items, optionally filtered by category
 router.get('/', (req, res) => {
   const category = req.query.category;
   let query = 'SELECT * FROM furniture';
@@ -16,6 +17,7 @@ router.get('/', (req, res) => {
   res.json(furnitureItems);
 });
 
+// Get a single furniture item by urlSlug
 router.get('/:urlSlug', (req, res) => {
   const product = db.prepare('SELECT * FROM furniture WHERE urlSlug = ?').get(req.params.urlSlug);
   if (product) {
@@ -25,12 +27,30 @@ router.get('/:urlSlug', (req, res) => {
   }
 });
 
+// Add a new furniture item
 router.post('/', (req, res) => {
   const { name, brand, price, description, sku, publishing_date, category, image } = req.body;
   const urlSlug = generateSlug(name);
   const stmt = db.prepare('INSERT INTO furniture (name, brand, price, description, sku, publishing_date, urlSlug, category, image) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)');
   const info = stmt.run(name, brand, price, description, sku, publishing_date, urlSlug, category, image);
   res.json({ id: info.lastInsertRowid });
+});
+
+// Update a furniture item
+router.put('/:id', (req, res) => {
+  const { id } = req.params;
+  const { name, brand, price, description, sku, publishing_date, urlSlug, category, image } = req.body;
+  const stmt = db.prepare('UPDATE furniture SET name = ?, brand = ?, price = ?, description = ?, sku = ?, publishing_date = ?, urlSlug = ?, category = ?, image = ? WHERE id = ?');
+  const info = stmt.run(name, brand, price, description, sku, publishing_date, urlSlug, category, image, id);
+  res.json({ changes: info.changes });
+});
+
+// Delete a furniture item
+router.delete('/:id', (req, res) => {
+  const { id } = req.params;
+  const stmt = db.prepare('DELETE FROM furniture WHERE id = ?');
+  const info = stmt.run(id);
+  res.json({ changes: info.changes });
 });
 
 module.exports = router;
