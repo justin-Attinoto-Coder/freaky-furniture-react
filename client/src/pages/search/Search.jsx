@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import SearchResults from '../components/SearchResults';
+import SearchResults from '../../components/common/SearchResults';
 
 const SearchPage = ({ searchResults }) => {
   return (
