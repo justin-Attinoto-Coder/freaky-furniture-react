@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import { useParams } from 'react-router-dom';
-import ProductInformation from '../../components/product/ProductInformation';
-import ProductDetailsImage from '../../components/product/ProductDetailsImage';
-import SimilarProducts from '../../components/product/SimilarProducts';
+import ProductInformation from '../../components/Product/ProductInformation';
+import ProductDetailsImage from '../../components/Product/ProductDetailsImage';
+import SimilarProducts from '../../components/Product/SimilarProducts';
 
 const ProductDetails = ({ furnitureItems }) => {
   const { urlSlug } = useParams();

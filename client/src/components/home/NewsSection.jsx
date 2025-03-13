@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import ProductCard from '../../components/common/ProductCard';
+import ProductCard from '../Common/ProductCard';
 
 const NewsSection = ({ products }) => {
   return (
