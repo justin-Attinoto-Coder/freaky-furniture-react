@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, useNavigate, useLocation } from 'react-router-dom';
 import { useState, useEffect, useCallback } from 'react';
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -9,11 +9,12 @@ import CheckoutShipping from './pages/CheckoutShipping';
 import CheckoutPayment from './pages/CheckoutPayment';
 import CheckoutReview from './pages/CheckoutReview';
 import CheckoutConfirmation from './pages/CheckoutConfirmation';
+import Admin from './pages/Admin'; // Import the Admin page
 
 function App() {
   const [searchResults, setSearchResults] = useState([]);
   const [furnitureItems, setFurnitureItems] = useState([]);
-  const [cartItems, setCartItems] = useState([]); // Added state for cart items
+  const location = useLocation(); // Get the current route
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -31,13 +32,12 @@ function App() {
     navigate('/home', { state: { searchResults: results } }); // Redirect to the Home page with search results
   }, [furnitureItems, navigate]);
 
-  const addToCart = (product) => {
-    setCartItems(prevCartItems => [...prevCartItems, product]);
-  };
+  // Check if the current route is an admin route
+  const isAdminRoute = location.pathname.startsWith('/admin');
 
-  return (
+  return ( // Header/footer components will only be rendered if we're not on an admin route
     <>
-      <Header handleSearch={handleSearch} />
+      {!isAdminRoute && <Header handleSearch={handleSearch} />}
       <Routes>
         <Route path="/" element={<Home searchResults={searchResults} handleSearch={handleSearch} furnitureItems={furnitureItems} />} />
         <Route path="/home" element={<Home searchResults={searchResults} handleSearch={handleSearch} furnitureItems={furnitureItems} />} />
@@ -47,18 +47,17 @@ function App() {
         <Route path="/checkout-payment" element={<CheckoutPayment />} />
         <Route path="/checkout-review" element={<CheckoutReview />} />
         <Route path="/checkout-confirmation" element={<CheckoutConfirmation />} />
+        <Route path="/admin/*" element={<Admin />} />
       </Routes>
-      <Footer />
+      {!isAdminRoute && <Footer />}
     </>
   );
 }
 
-function AppWithRouter() {
+export default function AppWithRouter() {
   return (
     <Router>
       <App />
     </Router>
   );
 }
-
-export default AppWithRouter;
