@@ -14,6 +14,13 @@ function generateSlug(name) {
     .replace(/(^-|-$)+/g, '');
 }
 
+// Utility function to generate SKU
+function generateSKU() {
+  const letters = chance.string({ length: 3, pool: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' });
+  const numbers = chance.string({ length: 3, pool: '0123456789' });
+  return letters + numbers;
+}
+
 // Function to create random products
 function createRandomProducts(count) {
   const categories = ['mobler', 'forvaring', 'detaljer', 'textil'];
@@ -26,12 +33,13 @@ function createRandomProducts(count) {
     const urlSlug = generateSlug(name);
     const category = categories[Math.floor(Math.random() * categories.length)];
     const image = chance.url({ extensions: ['jpg', 'png', 'gif'] });
+    const sku = generateSKU(); // Generate SKU
 
-    const stmt = db.prepare('INSERT INTO furniture (name, brand, price, description, publishing_date, urlSlug, category, image) VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
-    stmt.run(name, brand, price, description, publishing_date, urlSlug, category, image);
+    const stmt = db.prepare('INSERT INTO furniture (name, brand, price, description, publishing_date, urlSlug, category, image, sku) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)');
+    stmt.run(name, brand, price, description, publishing_date, urlSlug, category, image, sku);
   }
   console.log(`${count} random products inserted into the database.`);
 }
 
 // Create 10 random products
-createRandomProducts(10);
+createRandomProducts(100);
