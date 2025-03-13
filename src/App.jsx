@@ -45,8 +45,8 @@ function App() {
     <>
       {!isAdminRoute && <Header handleSearch={handleSearch} />}
       <Routes>
-        <Route path="/" element={<Home handleSearch={handleSearch} furnitureItems={furnitureItems} />} />
-        <Route path="/home" element={<Home handleSearch={handleSearch} furnitureItems={furnitureItems} />} />
+        <Route path="/" element={<Home searchResults={searchResults} handleSearch={handleSearch} furnitureItems={furnitureItems} />} />
+        <Route path="/home" element={<Home searchResults={searchResults} handleSearch={handleSearch} furnitureItems={furnitureItems} />} />
         <Route path="/cart" element={<Cart cartItems={cartItems} />} /> {/* Passed cartItems to Cart */}
         <Route path="/product/:urlSlug" element={<ProductDetails furnitureItems={furnitureItems} addToCart={addToCart} />} /> {/* Passed addToCart to ProductDetails */}
         <Route path="/checkout-shipping" element={<CheckoutShipping />} />
