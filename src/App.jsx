@@ -15,6 +15,11 @@ import Admin from './pages/Admin'; // Import the Admin page
 function App() {
   const [searchResults, setSearchResults] = useState([]);
   const [furnitureItems, setFurnitureItems] = useState([]);
+  const [cartItems, setCartItems] = useState([]);
+  const addToCart = (item) => {
+    setCartItems((prevItems) => [...prevItems, item]);
+  };
+
   const location = useLocation(); // Get the current route
   const navigate = useNavigate();
 
