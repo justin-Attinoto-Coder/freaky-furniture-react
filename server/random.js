@@ -41,5 +41,5 @@ function createRandomProducts(count) {
   console.log(`${count} random products inserted into the database.`);
 }
 
-// Create 10 random products
+// Create 100 random products
 createRandomProducts(100);

@@ -9,11 +9,17 @@ import CheckoutShipping from './pages/CheckoutShipping';
 import CheckoutPayment from './pages/CheckoutPayment';
 import CheckoutReview from './pages/CheckoutReview';
 import CheckoutConfirmation from './pages/CheckoutConfirmation';
+import Search from './pages/Search'; // Import Search
 import Admin from './pages/Admin'; // Import the Admin page
 
 function App() {
   const [searchResults, setSearchResults] = useState([]);
   const [furnitureItems, setFurnitureItems] = useState([]);
+  const [cartItems, setCartItems] = useState([]);
+  const addToCart = (item) => {
+    setCartItems((prevItems) => [...prevItems, item]);
+  };
+
   const location = useLocation(); // Get the current route
   const navigate = useNavigate();
 
@@ -29,7 +35,7 @@ function App() {
       return item.name.toLowerCase().includes(query.toLowerCase());
     });
     setSearchResults(results);
-    navigate('/home', { state: { searchResults: results } }); // Redirect to the Home page with search results
+    navigate(`/search?q=${encodeURIComponent(query)}`); // Redirect to the SearchPage with search query in URL
   }, [furnitureItems, navigate]);
 
   // Check if the current route is an admin route
@@ -39,14 +45,15 @@ function App() {
     <>
       {!isAdminRoute && <Header handleSearch={handleSearch} />}
       <Routes>
-        <Route path="/" element={<Home searchResults={searchResults} handleSearch={handleSearch} furnitureItems={furnitureItems} />} />
-        <Route path="/home" element={<Home searchResults={searchResults} handleSearch={handleSearch} furnitureItems={furnitureItems} />} />
+        <Route path="/" element={<Home handleSearch={handleSearch} furnitureItems={furnitureItems} />} />
+        <Route path="/home" element={<Home handleSearch={handleSearch} furnitureItems={furnitureItems} />} />
         <Route path="/cart" element={<Cart cartItems={cartItems} />} /> {/* Passed cartItems to Cart */}
         <Route path="/product/:urlSlug" element={<ProductDetails furnitureItems={furnitureItems} addToCart={addToCart} />} /> {/* Passed addToCart to ProductDetails */}
         <Route path="/checkout-shipping" element={<CheckoutShipping />} />
         <Route path="/checkout-payment" element={<CheckoutPayment />} />
         <Route path="/checkout-review" element={<CheckoutReview />} />
         <Route path="/checkout-confirmation" element={<CheckoutConfirmation />} />
+        <Route path="/search" element={<Search searchResults={searchResults} />} /> {/* Added Search route */}
         <Route path="/admin/*" element={<Admin />} />
       </Routes>
       {!isAdminRoute && <Footer />}

@@ -1,32 +1,11 @@
 import { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
 import Hero from '../components/Hero';
 import NewsSection from '../components/NewsSection';
 import Accordion from '../components/Accordion';
-import SearchResults from '../components/SearchResults';
 import ProductCard from '../components/ProductCard'; // Import ProductCard
 import PropTypes from 'prop-types';
 
-const HomePage = ({ handleSearch, furnitureItems }) => {
-  const [searchPerformed, setSearchPerformed] = useState(false);
-  const [searchResults, setSearchResults] = useState([]);
-  const location = useLocation();
-
-  useEffect(() => {
-    const params = new URLSearchParams(location.search);
-    const searchQuery = params.get('search');
-    if (searchQuery) {
-      // Perform search with searchQuery and update searchResults
-      handleSearch(searchQuery);
-      setSearchPerformed(true);
-    } else if (location.state && location.state.searchResults) {
-      setSearchResults(location.state.searchResults);
-      setSearchPerformed(true);
-    } else {
-      setSearchPerformed(false);
-    }
-  }, [location.search, location.state, handleSearch]);
-
+const HomePage = ({ furnitureItems }) => {
   // Filter products to only include those with a publishing date within the past 7 days
   const filterRecentProducts = (products) => {
     const sevenDaysAgo = new Date();
@@ -55,7 +34,6 @@ const HomePage = ({ handleSearch, furnitureItems }) => {
     <div>
       <h1>Welcome to Freaky Furniture</h1>
       <Hero />
-      {searchPerformed && <SearchResults results={searchResults} searchPerformed={searchPerformed} />}
       <NewsSection products={recentProducts} />
       <div id="mobler" className="my-8">
         <h2 className="text-2xl font-bold mb-4">Möbler</h2>
@@ -95,7 +73,6 @@ const HomePage = ({ handleSearch, furnitureItems }) => {
 };
 
 HomePage.propTypes = {
-  handleSearch: PropTypes.func.isRequired,
   furnitureItems: PropTypes.array.isRequired,
 };
 

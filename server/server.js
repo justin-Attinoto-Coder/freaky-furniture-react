@@ -5,7 +5,6 @@ const bcrypt = require('bcrypt');
 const cors = require('cors'); // Import the cors package
 const app = express();
 const PORT = 8000;
-const __dirname = path.resolve();
 
 // Use the cors middleware
 app.use(cors());
@@ -62,6 +61,7 @@ async function createAdminUser() {
 createAdminUser();
 
 // Serve static files from the React app
+const __dirname = path.dirname(new URL(import.meta.url).pathname);
 app.use(express.static(path.join(__dirname, '../dist')));
 app.use(express.json());
 
@@ -93,7 +93,7 @@ app.get('/api/furniture/:urlSlug', (req, res) => {
 
 // API route to add a new furniture item
 app.post('/api/furniture', (req, res) => {
-  const { name, brand, price, description, sku, publishing_date, category, image} = req.body;
+  const { name, brand, price, description, sku, publishing_date, category, image } = req.body;
   const urlSlug = generateSlug(name);
   const stmt = db.prepare('INSERT INTO furniture (name, brand, price, description, sku, publishing_date, urlSlug, category, image) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)');
   const info = stmt.run(name, brand, price, description, sku, publishing_date, urlSlug, category, image);
@@ -108,7 +108,7 @@ app.post('/register', async (req, res) => {
   try {
     stmt.run(username, hashedPassword, role);
     res.status(201).send('User registered');
-  } catch (err) {
+  } catch {
     res.status(400).send('User already exists');
   }
 });
