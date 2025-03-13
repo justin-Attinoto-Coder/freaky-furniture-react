@@ -1,15 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 const ProductCard = ({ product }) => {
   return (
-    <div className="bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
-      <img src={product.image} alt={product.name} className="w-full h-48 object-cover rounded-t-lg" />
-      <div className="p-4">
-        <h3 className="text-xl font-semibold mb-2">{product.name}</h3>
-        <p className="text-gray-700 mb-4">{product.description}</p>
-        <p className="text-gray-900 font-bold">Price: ${product.price}</p>
-      </div>
+    <div className="product-card border border-gray-200 p-4 rounded-lg shadow-sm">
+      <Link to={`/product/${product.urlSlug}`}>
+        <img src={product.image} alt={product.name} className="h-48 w-full object-cover mb-4 rounded-lg" />
+        <h2 className="text-lg font-semibold">{product.name}</h2>
+        <p className="text-gray-600">${product.price}</p>
+      </Link>
     </div>
   );
 };
@@ -19,8 +19,9 @@ ProductCard.propTypes = {
     id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
     description: PropTypes.string,
-    price: PropTypes.number,
-    image: PropTypes.string,
+    price: PropTypes.number.isRequired,
+    image: PropTypes.string.isRequired,
+    urlSlug: PropTypes.string.isRequired,
   }).isRequired,
 };
 

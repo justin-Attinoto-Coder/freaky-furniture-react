@@ -4,7 +4,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import Home from './pages/Home';
 import Cart from './pages/Cart';
-import ProductDetails from './pages/ProductDetails';
+import ProductDetails from './pages/ProductDetails'; // Updated import
 import CheckoutShipping from './pages/CheckoutShipping';
 import CheckoutPayment from './pages/CheckoutPayment';
 import CheckoutReview from './pages/CheckoutReview';
@@ -25,7 +25,6 @@ function App() {
   }, []);
 
   const handleSearch = useCallback((query) => {
-    console.log(`Handling search for query: ${query}`);
     const results = furnitureItems.filter((item) => {
       return item.name.toLowerCase().includes(query.toLowerCase());
     });
@@ -42,8 +41,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Home searchResults={searchResults} handleSearch={handleSearch} furnitureItems={furnitureItems} />} />
         <Route path="/home" element={<Home searchResults={searchResults} handleSearch={handleSearch} furnitureItems={furnitureItems} />} />
-        <Route path="/cart" element={<Cart handleSearch={handleSearch} />} />
-        <Route path="/product-details" element={<ProductDetails />} />
+        <Route path="/cart" element={<Cart cartItems={cartItems} />} /> {/* Passed cartItems to Cart */}
+        <Route path="/product/:urlSlug" element={<ProductDetails furnitureItems={furnitureItems} addToCart={addToCart} />} /> {/* Passed addToCart to ProductDetails */}
         <Route path="/checkout-shipping" element={<CheckoutShipping />} />
         <Route path="/checkout-payment" element={<CheckoutPayment />} />
         <Route path="/checkout-review" element={<CheckoutReview />} />
