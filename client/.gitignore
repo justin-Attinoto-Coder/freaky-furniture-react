@@ -121,3 +121,21 @@ node_modules/.cache
 
 # Database files
 *.db
+
+# Ignore jsconfig.json
+jsconfig.json
+
+# Ignore package-lock.json in the client directory
+client/package-lock.json
+
+# Ignore package.json in the client directory
+client/package.json
+
+# Ignore postcss.config.cjs in the client directory
+client/postcss.config.cjs
+
+# Ignore other files or directories if needed
+# Add any other files or directories you want to keep private
+# For example:
+# client/.env
+# client/local-config.js
