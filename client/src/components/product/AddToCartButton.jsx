@@ -1,4 +1,4 @@
-import React from 'react';
+import PropTypes from 'prop-types';
 
 const AddToCartButton = ({ onAddToCart }) => {
   return (
@@ -9,6 +9,10 @@ const AddToCartButton = ({ onAddToCart }) => {
       Lägg i varukorg
     </button>
   );
+};
+
+AddToCartButton.propTypes = {
+  onAddToCart: PropTypes.func.isRequired,
 };
 
 export default AddToCartButton;

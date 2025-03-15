@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "ES6",
-    "module": "commonjs",
+    "module": "ESNext",
     "typeRoots": ["node_modules/@types"],
     "baseUrl": ".",
     "paths": {
@@ -9,5 +9,5 @@
       "@server/*": ["server/*"]
     }
   },
-  "include": ["client/src/**/*.js", "server/**/*.js", "client/postcss.config.js"]
+  "include": ["client/src/**/*", "server/**/*", "client/postcss.config.cjs"]
 }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const CheckoutPayment = () => {
@@ -71,7 +71,7 @@ const CheckoutPayment = () => {
         {paymentDetails.paymentMethod === 'creditCard' && (
           <>
             <div className="mb-4">
-              <label className="block text-gray-700">Card Holder's Name</label>
+              <label className="block text-gray-700">Card Holder&apos;s Name</label>
               <input
                 type="text"
                 name="cardHolderName"
@@ -117,7 +117,7 @@ const CheckoutPayment = () => {
           </>
         )}
         <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">
-          Confirm
+          Proceed to Review
         </button>
       </form>
     </div>

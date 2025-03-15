@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const CheckoutShipping = () => {
@@ -98,7 +98,7 @@ const CheckoutShipping = () => {
           />
         </div>
         <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">
-          Confirm
+          Proceed to Payment
         </button>
       </form>
     </div>
