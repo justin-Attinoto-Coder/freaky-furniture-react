@@ -8,10 +8,20 @@ const Cart = () => {
   const navigate = useNavigate();
 
   const fetchCartItems = () => {
-    axios.get(`http://localhost:8000/api/cart`)
+    axios.get('http://localhost:8000/api/cart')
       .then(response => {
         console.log('Cart items fetched:', response.data);
-        setCartItems(response.data);
+        // Aggregate items with the same urlSlug
+        const aggregatedItems = response.data.reduce((acc, item) => {
+          const existingItem = acc.find(i => i.urlSlug === item.urlSlug);
+          if (existingItem) {
+            existingItem.quantity += item.quantity;
+          } else {
+            acc.push({ ...item });
+          }
+          return acc;
+        }, []);
+        setCartItems(aggregatedItems);
       })
       .catch(error => {
         console.error('Error fetching cart items:', error);
