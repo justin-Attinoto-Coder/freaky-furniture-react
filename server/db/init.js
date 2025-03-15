@@ -27,4 +27,16 @@ db.prepare(`
   )
 `).run();
 
+// Create cart table if it doesn't exist
+db.prepare(`
+  CREATE TABLE IF NOT EXISTS cart (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    userId INTEGER,
+    productId INTEGER,
+    quantity INTEGER,
+    FOREIGN KEY (userId) REFERENCES users(id),
+    FOREIGN KEY (productId) REFERENCES furniture(id)
+  )
+`).run();
+
 module.exports = db;

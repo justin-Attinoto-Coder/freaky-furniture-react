@@ -15,10 +15,10 @@ const HamburgerMenu = ({ isMenuOpen, toggleMenu }) => {
     <div>
       <button
         id="hamburger-button"
-        className={`text-3xl cursor-pointer relative w-8 h-8 ${isMenuOpen ? 'toggle-btn' : ''}`}
+        className={`text-2xl cursor-pointer relative w-6 h-6 ${isMenuOpen ? 'toggle-btn' : ''}`}
         onClick={toggleMenu}
       >
-        <div className="bg-black w-8 h-1 rounded absolute top-4 -mt-0.5 transition-all duration-500 before:content-[''] before:bg-black before:w-8 before:h-1 before:rounded before:absolute before:-translate-x-4 before:-translate-y-3 before:transition-all before:duration-500 after:content-[''] after:bg-black after:w-8 after:h-1 after:rounded after:absolute after:-translate-x-4 after:translate-y-3 after:transition-all after:duration-500"></div>
+        <div className="bg-black w-6 h-0.5 rounded absolute top-3 -mt-0.5 transition-all duration-500 before:content-[''] before:bg-black before:w-6 before:h-0.5 before:rounded before:absolute before:-translate-x-3 before:-translate-y-2 before:transition-all before:duration-500 after:content-[''] after:bg-black after:w-6 after:h-0.5 after:rounded after:absolute after:-translate-x-3 after:translate-y-2 after:transition-all after:duration-500"></div>
       </button>
       {isMenuOpen && (
         <div className="menu-content">

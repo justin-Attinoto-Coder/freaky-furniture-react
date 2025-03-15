@@ -1,11 +1,10 @@
-import React from 'react';
 import SearchBar from './SearchBar';
 import PropTypes from 'prop-types';
 
 const Navbar = ({ handleSearch }) => {
   return (
-    <nav className="flex justify-between items-center px-6 bg-gray-100 shadow-md">
-      <ul className="flex space-x-1">
+    <nav className="flex flex-col items-left px-2 mt-4 w-full">
+      <ul className="flex space-x-1 mb-4">
         <li className="cursor-pointer hover:text-blue-500">
           <a href="#mobler">Möbler</a>
         </li>
@@ -19,7 +18,7 @@ const Navbar = ({ handleSearch }) => {
           <a href="#textil">Textil</a>
         </li>
       </ul>
-      <div className="flex items-center">
+      <div className="w-full">
         <SearchBar handleSearch={handleSearch} />
       </div>
     </nav>

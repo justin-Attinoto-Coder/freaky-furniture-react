@@ -29,6 +29,9 @@ export default {
         dropdown: 'dropdown 0.5s forwards',
         dropup: 'dropup 0.5s forwards',
       },
+      screens: {
+        'xs': '480px', // Custom breakpoint at 480px
+      },
     },
   },
   plugins: [],
