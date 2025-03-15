@@ -1,13 +1,24 @@
-import { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
-import Hero from '../../components/home/Hero';
-import NewsSection from '../../components/home/NewsSection';
+import Hero from '../../components/Home/Hero';
+import NewsSection from '../../components/Home/NewsSection';
 import Accordion from '../../components/Common/Accordion';
-import SearchResults from '../../components/Common/SearchResults';
 import ProductCard from '../../components/Common/ProductCard';
 import PropTypes from 'prop-types';
+import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 
-const HomePage = ({ furnitureItems }) => {
+const Home = ({ furnitureItems }) => {
+  const location = useLocation();
+
+  useEffect(() => {
+    const hash = location.hash.substring(1); // Remove the leading '#'
+    if (hash) {
+      const categoryElement = document.getElementById(hash);
+      if (categoryElement) {
+        categoryElement.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  }, [location]);
+
   // Filter products to only include those with a publishing date within the past 7 days
   const filterRecentProducts = (products) => {
     const sevenDaysAgo = new Date();
@@ -74,8 +85,8 @@ const HomePage = ({ furnitureItems }) => {
   );
 };
 
-HomePage.propTypes = {
+Home.propTypes = {
   furnitureItems: PropTypes.array.isRequired,
 };
 
-export default HomePage;
+export default Home;

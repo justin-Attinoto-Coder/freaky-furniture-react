@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import SearchResults from '../../components/common/SearchResults';
+import SearchResults from '../../components/Common/SearchResults';
 
 const SearchPage = ({ searchResults }) => {
   return (

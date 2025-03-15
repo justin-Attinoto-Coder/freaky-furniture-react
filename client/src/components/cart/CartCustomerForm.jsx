@@ -1,69 +1,85 @@
-import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 
-const CartCustomerForm = ({ totalPrice }) => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    address: '',
-  });
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Handle form submission logic here
-    console.log('Form submitted:', formData);
-  };
-
+const CartCustomerForm = ({ totalPrice, handleChange, shippingDetails }) => {
   return (
-    <form onSubmit={handleSubmit} className="p-8 bg-white shadow-md rounded-md">
-      <h2 className="text-2xl font-bold mb-6">Order Information</h2>
+    <div className="p-8 bg-white shadow-md rounded-md">
       <div className="mb-4">
-        <label className="block text-gray-700">Name</label>
+        <label className="block text-gray-700">Full Name</label>
         <input
           type="text"
-          name="name"
-          value={formData.name}
+          name="fullName"
+          value={shippingDetails.fullName}
           onChange={handleChange}
-          className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full p-2 border rounded"
           required
         />
       </div>
       <div className="mb-4">
-        <label className="block text-gray-700">Email</label>
+        <label className="block text-gray-700">Phone Number</label>
         <input
-          type="email"
-          name="email"
-          value={formData.email}
+          type="text"
+          name="phoneNumber"
+          value={shippingDetails.phoneNumber}
           onChange={handleChange}
-          className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full p-2 border rounded"
           required
         />
       </div>
       <div className="mb-4">
-        <label className="block text-gray-700">Address</label>
-        <textarea
-          name="address"
-          value={formData.address}
+        <label className="block text-gray-700">Province</label>
+        <input
+          type="text"
+          name="province"
+          value={shippingDetails.province}
           onChange={handleChange}
-          className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full p-2 border rounded"
           required
-        ></textarea>
+        />
       </div>
-      <button
-        type="submit"
-        className="w-full px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700"
-      >
-        Pay ${totalPrice.toFixed(2)}
-      </button>
-    </form>
+      <div className="mb-4">
+        <label className="block text-gray-700">City</label>
+        <input
+          type="text"
+          name="city"
+          value={shippingDetails.city}
+          onChange={handleChange}
+          className="w-full p-2 border rounded"
+          required
+        />
+      </div>
+      <div className="mb-4">
+        <label className="block text-gray-700">Street Address</label>
+        <input
+          type="text"
+          name="streetAddress"
+          value={shippingDetails.streetAddress}
+          onChange={handleChange}
+          className="w-full p-2 border rounded"
+          required
+        />
+      </div>
+      <div className="mb-4">
+        <label className="block text-gray-700">Postal Code</label>
+        <input
+          type="text"
+          name="postalCode"
+          value={shippingDetails.postalCode}
+          onChange={handleChange}
+          className="w-full p-2 border rounded"
+          required
+        />
+      </div>
+      <div className="mt-4">
+        <strong>Total Price: ${totalPrice.toFixed(2)}</strong>
+      </div>
+    </div>
   );
+};
+
+CartCustomerForm.propTypes = {
+  totalPrice: PropTypes.number.isRequired,
+  handleChange: PropTypes.func.isRequired,
+  shippingDetails: PropTypes.object.isRequired,
 };
 
 export default CartCustomerForm;

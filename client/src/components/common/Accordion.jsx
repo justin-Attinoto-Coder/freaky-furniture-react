@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import PropTypes from 'prop-types';
 
 const AccordionItem = ({ title, children }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -74,6 +75,10 @@ const Accordion = () => {
       </AccordionItem>
     </div>
   );
+};
+AccordionItem.propTypes = {
+  title: PropTypes.string.isRequired,
+  children: PropTypes.node.isRequired,
 };
 
 export default Accordion;

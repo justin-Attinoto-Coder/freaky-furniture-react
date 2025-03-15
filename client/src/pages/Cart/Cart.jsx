@@ -1,16 +1,24 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import MyBasket from '../../components/Cart/MyBasket';
-import CartCustomerForm from '../../components/Cart/CartCustomerForm';
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
   const navigate = useNavigate();
 
+  const fetchCartItems = () => {
+    axios.get('http://localhost:8000/api/cart')
+      .then(response => {
+        setCartItems(response.data);
+      })
+      .catch(error => {
+        console.error('Error fetching cart items:', error);
+      });
+  };
+
   useEffect(() => {
-    // Fetch cart items from global state, context, or local storage
-    const storedCartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
-    setCartItems(storedCartItems);
+    fetchCartItems();
   }, []);
 
   const totalPrice = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
@@ -23,7 +31,9 @@ const Cart = () => {
     <div className="p-8">
       <h1 className="text-3xl font-bold mb-6">Shopping Cart</h1>
       <MyBasket cartItems={cartItems} />
-      <CartCustomerForm totalPrice={totalPrice} />
+      <div className="mt-4">
+        <strong>Total Price: ${totalPrice.toFixed(2)}</strong>
+      </div>
       <button onClick={handleCheckout} className="bg-blue-500 text-white px-4 py-2 rounded mt-4">
         Proceed to Checkout
       </button>
