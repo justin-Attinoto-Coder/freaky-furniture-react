@@ -17,24 +17,14 @@ db.prepare(`
   )
 `).run();
 
-// Create users table if it doesn't exist
-db.prepare(`
-  CREATE TABLE IF NOT EXISTS users (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    username TEXT UNIQUE,
-    password TEXT,
-    role TEXT
-  )
-`).run();
-
 // Create cart table if it doesn't exist
 db.prepare(`
   CREATE TABLE IF NOT EXISTS cart (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    userId INTEGER,
     productId INTEGER,
-    quantity INTEGER,
-    FOREIGN KEY (userId) REFERENCES users(id),
+    name TEXT NOT NULL,
+    price REAL NOT NULL,
+    quantity INTEGER NOT NULL,
     FOREIGN KEY (productId) REFERENCES furniture(id)
   )
 `).run();

@@ -15,6 +15,7 @@ const ProductDetails = ({ furnitureItems }) => {
 
   const handleAddToCart = () => {
     axios.post('http://localhost:8000/api/cart', {
+      urlSlug: product.urlSlug,
       name: product.name,
       price: product.price,
       quantity: 1, // Default quantity
@@ -33,7 +34,7 @@ const ProductDetails = ({ furnitureItems }) => {
     .slice(0, 3);
 
   return (
-    <div>
+    <div className="p-8">
       <ProductDetailsImage image={product.image} name={product.name} />
       <ProductInformation
         title={product.name}

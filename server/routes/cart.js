@@ -2,19 +2,27 @@ const express = require('express');
 const router = express.Router();
 const db = require('../db/init');
 
-// Get all cart items for a user
-router.get('/:userId', (req, res) => {
-  const userId = req.params.userId;
-  const stmt = db.prepare('SELECT * FROM cart WHERE userId = ?');
-  const cartItems = stmt.all(userId);
-  res.json(cartItems);
+// Get all cart items
+router.get('/', (req, res) => {
+  const stmt = db.prepare(`
+    SELECT cart.*, furniture.urlSlug 
+    FROM cart 
+    JOIN furniture ON cart.productId = furniture.id
+  `);
+  const cartItems = stmt.all();
+  res.json(cartItems); // Ensure this returns an array
 });
 
 // Add an item to the cart
 router.post('/', (req, res) => {
-  const { userId, productId, quantity } = req.body;
-  const stmt = db.prepare('INSERT INTO cart (userId, productId, quantity) VALUES (?, ?, ?)');
-  const info = stmt.run(userId, productId, quantity);
+  const { urlSlug, name, price, quantity } = req.body;
+  const productStmt = db.prepare('SELECT id FROM furniture WHERE urlSlug = ?');
+  const product = productStmt.get(urlSlug);
+  if (!product) {
+    return res.status(404).json({ error: 'Product not found' });
+  }
+  const stmt = db.prepare('INSERT INTO cart (productId, name, price, quantity) VALUES (?, ?, ?, ?)');
+  const info = stmt.run(product.id, name, price, quantity);
   res.json({ id: info.lastInsertRowid });
 });
 

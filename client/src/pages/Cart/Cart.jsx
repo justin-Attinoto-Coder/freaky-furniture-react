@@ -4,16 +4,37 @@ import axios from 'axios';
 import MyBasket from '../../components/Cart/MyBasket';
 
 const Cart = () => {
-  const [cartItems, setCartItems] = useState([]);
+  const [cartItems, setCartItems] = useState([]); // Ensure initial state is an empty array
   const navigate = useNavigate();
 
   const fetchCartItems = () => {
-    axios.get('http://localhost:8000/api/cart')
+    axios.get(`http://localhost:8000/api/cart`)
       .then(response => {
+        console.log('Cart items fetched:', response.data);
         setCartItems(response.data);
       })
       .catch(error => {
         console.error('Error fetching cart items:', error);
+      });
+  };
+
+  const updateCartItem = (urlSlug, quantity) => {
+    axios.put(`http://localhost:8000/api/cart/${urlSlug}`, { quantity })
+      .then(() => {
+        fetchCartItems();
+      })
+      .catch(error => {
+        console.error('Error updating cart item:', error);
+      });
+  };
+
+  const deleteCartItem = (urlSlug) => {
+    axios.delete(`http://localhost:8000/api/cart/${urlSlug}`)
+      .then(() => {
+        fetchCartItems();
+      })
+      .catch(error => {
+        console.error('Error deleting cart item:', error);
       });
   };
 
@@ -30,7 +51,11 @@ const Cart = () => {
   return (
     <div className="p-8">
       <h1 className="text-3xl font-bold mb-6">Shopping Cart</h1>
-      <MyBasket cartItems={cartItems} />
+      <MyBasket
+        cartItems={cartItems}
+        updateCartItem={updateCartItem}
+        deleteCartItem={deleteCartItem}
+      />
       <div className="mt-4">
         <strong>Total Price: ${totalPrice.toFixed(2)}</strong>
       </div>
