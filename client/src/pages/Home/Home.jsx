@@ -1,7 +1,6 @@
 import Hero from '../../components/Home/Hero';
 import NewsSection from '../../components/Home/NewsSection';
 import Accordion from '../../components/Common/Accordion';
-import ProductCard from '../../components/Common/ProductCard';
 import PropTypes from 'prop-types';
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';

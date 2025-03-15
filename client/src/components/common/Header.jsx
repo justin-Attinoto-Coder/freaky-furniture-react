@@ -32,27 +32,6 @@ const Header = (props) => {
       <div className="xs:flex w-full">
         <Navbar handleSearch={props.handleSearch} />
       </div>
-      {isMenuOpen && (
-        <div className="absolute top-16 left-0 w-full bg-white shadow-md z-10 animate-open-menu">
-          <ul className="flex flex-col items-center py-4">
-            <li className="my-2">
-              <Link to="/#mobler" onClick={toggleMenu} className="text-lg">Mobler</Link>
-            </li>
-            <li className="my-2">
-              <Link to="/#forvaring" onClick={toggleMenu} className="text-lg">Forvaring</Link>
-            </li>
-            <li className="my-2">
-              <Link to="/#detaljer" onClick={toggleMenu} className="text-lg">Detaljer</Link>
-            </li>
-            <li className="my-2">
-              <Link to="/#textil" onClick={toggleMenu} className="text-lg">Textil</Link>
-            </li>
-          </ul>
-          <div className="p-4">
-            <Navbar handleSearch={props.handleSearch} />
-          </div>
-        </div>
-      )}
     </header>
   );
 };
