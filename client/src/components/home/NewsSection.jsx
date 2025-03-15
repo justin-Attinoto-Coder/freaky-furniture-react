@@ -3,14 +3,12 @@ import ProductCard from '../Common/ProductCard';
 
 const NewsSection = ({ products }) => {
   return (
-    <section className="p-8 mt-8 bg-gray-100">
-      <div className="container px-4">
-        <h2 className="text-3xl font-bold mb-4">Latest Products</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {products.map(product => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-        </div>
+    <section id="recent" className="my-8">
+      <h2 className="text-2xl text-center font-bold mb-4">Nyheter</h2>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        {products.map(product => (
+          <ProductCard key={product.id} product={product} />
+        ))}
       </div>
     </section>
   );

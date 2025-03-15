@@ -5,6 +5,10 @@ import ProductCard from '../../components/Common/ProductCard';
 import PropTypes from 'prop-types';
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import Mobler from '../../components/Home/Mobler';
+import Forvaring from '../../components/Home/Forvaring';
+import Detaljer from '../../components/Home/Detaljer';
+import Textil from '../../components/Home/Textil';
 
 const Home = ({ furnitureItems }) => {
   const location = useLocation();
@@ -37,7 +41,7 @@ const Home = ({ furnitureItems }) => {
     return shuffled.slice(0, limit);
   };
 
-  const recentProducts = getRandomProducts(filterRecentProducts(furnitureItems), 4);
+  const recentProducts = getRandomProducts(filterRecentProducts(furnitureItems, 'recent'), 4);
   const moblerProducts = getRandomProducts(filterByCategory(furnitureItems, 'mobler'), 4);
   const forvaringProducts = getRandomProducts(filterByCategory(furnitureItems, 'forvaring'), 4);
   const detaljerProducts = getRandomProducts(filterByCategory(furnitureItems, 'detaljer'), 4);
@@ -45,41 +49,12 @@ const Home = ({ furnitureItems }) => {
 
   return (
     <div>
-      <h1>Welcome to Freaky Furniture</h1>
       <Hero />
       <NewsSection products={recentProducts} />
-      <div id="mobler" className="my-8">
-        <h2 className="text-2xl font-bold mb-4">Möbler</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {moblerProducts.map(product => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-        </div>
-      </div>
-      <div id="forvaring" className="my-8">
-        <h2 className="text-2xl font-bold mb-4">Förvaring</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {forvaringProducts.map(product => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-        </div>
-      </div>
-      <div id="detaljer" className="my-8">
-        <h2 className="text-2xl font-bold mb-4">Detaljer</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {detaljerProducts.map(product => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-        </div>
-      </div>
-      <div id="textil" className="my-8">
-        <h2 className="text-2xl font-bold mb-4">Textil</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {textilProducts.map(product => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-        </div>
-      </div>
+      <Mobler products={moblerProducts} />
+      <Forvaring products={forvaringProducts} />
+      <Detaljer products={detaljerProducts} />
+      <Textil products={textilProducts} />
       <Accordion />
     </div>
   );
