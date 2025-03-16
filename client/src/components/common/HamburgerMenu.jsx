@@ -4,11 +4,24 @@ import '../../index.css';
 
 const HamburgerMenu = ({ isMenuOpen, toggleMenu }) => {
   const categories = ['mobler', 'forvaring', 'detaljer', 'textil'];
+  const additionalLinks = [
+    { name: 'Mina sidor', href: '#mina-sidor' },
+    { name: 'Kontakta oss', href: '#kontakta-oss' },
+    { name: 'Social Media', href: '#footer' }, // Updated href to #footer
+  ];
   const navigate = useNavigate();
 
   const handleCategoryClick = (category) => {
     toggleMenu(); // Close the menu
     navigate(`#${category}`);
+  };
+
+  const handleLinkClick = (href) => {
+    toggleMenu(); // Close the menu
+    const element = document.querySelector(href);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   return (
@@ -26,6 +39,12 @@ const HamburgerMenu = ({ isMenuOpen, toggleMenu }) => {
             {categories.map((category, index) => (
               <li key={index} className="text-2xl my-4" onClick={() => handleCategoryClick(category)}>
                 {category.charAt(0).toUpperCase() + category.slice(1)}
+              </li>
+            ))}
+            <hr className="w-3/4 my-4 border-t-2 border-gray-300" /> {/* Horizontal rule */}
+            {additionalLinks.map((link, index) => (
+              <li key={index} className="text-2xl my-4" onClick={() => handleLinkClick(link.href)}>
+                {link.name}
               </li>
             ))}
           </ul>
