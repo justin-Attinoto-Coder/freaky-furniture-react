@@ -1,7 +1,7 @@
 const Hero = () => {
     return (
-        <div className="hero-container">
-            <img src="../../public/images/hero-one.jfif" alt="hero" />
+        <div className="sm:w-full">
+            <img src="../../public/images/hero-one.jfif" alt="hero" className="sm:w-full"/>
         </div>
     );
 }

@@ -26,53 +26,59 @@ const AccordionItem = ({ title, children, id }) => {
 
 const Accordion = () => {
   return (
-    <div className="max-w-md mx-auto my-8">
-      <AccordionItem title="Kategorier" id="kategorier">
-        <ul>
-          <li><a href="#mobler">Möbler</a></li>
-          <li><a href="#forvaring">Förvaring</a></li>
-          <li><a href="#detaljer">Detaljer</a></li>
-          <li><a href="#textil">Textil</a></li>
-        </ul>
-      </AccordionItem>
-      <AccordionItem title="Mina sidor" id="mina-sidor">
-        <ul>
-          <li><a href="/">Hem</a></li>
-          <li><a href="/about">Om oss</a></li>
-          <li><a href="/shop">Handla</a></li>
-          <li><a href="/contact">Kontakt oss</a></li>
-        </ul>
-      </AccordionItem>
-      <AccordionItem title="Kontakta Oss" id="kontakta-oss">
-        <form>
-          <div className="mb-4">
-            <label className="block text-gray-700">Namn</label>
-            <input
-              type="text"
-              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block text-gray-700">Mejladress</label>
-            <input
-              type="email"
-              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block text-gray-700">Meddelande</label>
-            <textarea
-              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            ></textarea>
-          </div>
-          <button
-            type="submit"
-            className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700"
-          >
-            Skicka
-          </button>
-        </form>
-      </AccordionItem>
+    <div className="w-full mx-auto my-8 sm:my-0"> {/* Set width to full and remove margin */}
+      {/* Accordion for smaller screens */}
+      <div className="block sm:hidden">
+        <AccordionItem title="Kategorier" id="kategorier">
+          <ul>
+            <li><a href="#mobler">Möbler</a></li>
+            <li><a href="#forvaring">Förvaring</a></li>
+            <li><a href="#detaljer">Detaljer</a></li>
+            <li><a href="#textil">Textil</a></li>
+          </ul>
+        </AccordionItem>
+        <AccordionItem title="Mina sidor" id="mina-sidor">
+          <ul>
+            <li><a href="#">Mitt konto</a></li>
+          </ul>
+        </AccordionItem>
+        <AccordionItem title="Kontakta Oss" id="kontakta-oss">
+          <ul>
+            <li><a href="#">Kundservice</a></li>
+            <li><a href="#">Reklamation</a></li>
+            <li><a href="#">Vanliga frågor</a></li>
+            <li><a href="#">Leverans</a></li>
+          </ul>
+        </AccordionItem>
+      </div>
+
+      {/* Static columns for sm breakpoint and above */}
+      <div className="hidden sm:flex sm:flex-row sm:space-x-4 sm:bg-gray-100 sm:p-4 "> {/* Align columns to the left */}
+        <div className="flex-1">
+          <h3 className="font-bold mb-2">Kategorier</h3>
+          <ul>
+            <li><a href="#mobler">Möbler</a></li>
+            <li><a href="#forvaring">Förvaring</a></li>
+            <li><a href="#detaljer">Detaljer</a></li>
+            <li><a href="#textil">Textil</a></li>
+          </ul>
+        </div>
+        <div className="flex-1">
+          <h3 className="font-bold mb-2">Mina sidor</h3>
+          <ul>
+            <li><a href="#">Mitt konto</a></li>
+          </ul>
+        </div>
+        <div className="flex-1">
+          <h3 className="font-bold mb-2">Kontakta Oss</h3>
+          <ul>
+            <li><a href="#">Kundservice</a></li>
+            <li><a href="#">Reklamation</a></li>
+            <li><a href="#">Vanliga frågor</a></li>
+            <li><a href="#">Leverans</a></li>
+          </ul>
+        </div>
+      </div>
     </div>
   );
 };
