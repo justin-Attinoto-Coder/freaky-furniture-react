@@ -2,9 +2,6 @@
 
 
 @layer utilities{
-    .section-min-height{
-        min-height: calc(100vh - 68px)
-    }
 
     .toggle-btn {
         @apply [&>div::before]:translate-y-0 [&>div::before]:rotate-45

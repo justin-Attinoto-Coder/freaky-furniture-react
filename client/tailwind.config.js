@@ -30,9 +30,6 @@ export default {
       animation: {
         bounceIn: 'bounceIn 0.5s ease',
       },
-      screens: {
-        'xs': '480px', // Custom breakpoint at 480px
-      },
     },
   },
   plugins: [],
