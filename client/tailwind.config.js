@@ -22,12 +22,16 @@ export default {
           '0%': { opacity: '1', transform: 'translateY(0)' },
           '100%': { opacity: '0', transform: 'translateY(-20px)' },
         },
+        bounceIn: {
+          '0%, 20%, 40%, 60%, 80%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-10px)' },
+        },
       },
       animation: {
-        spinIn: 'spinIn 0.5s forwards',
-        spinOut: 'spinOut 0.5s forwards',
-        dropdown: 'dropdown 0.5s forwards',
-        dropup: 'dropup 0.5s forwards',
+        bounceIn: 'bounceIn 0.5s ease',
+      },
+      screens: {
+        'xs': '480px', // Custom breakpoint at 480px
       },
     },
   },

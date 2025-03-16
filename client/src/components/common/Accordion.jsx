@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 
-const AccordionItem = ({ title, children }) => {
+const AccordionItem = ({ title, children, id }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleAccordion = () => {
@@ -9,7 +9,7 @@ const AccordionItem = ({ title, children }) => {
   };
 
   return (
-    <div className="border-b">
+    <div className="border-b" id={id}>
       <button
         className="w-full text-left p-4 bg-gray-100 hover:bg-gray-200 focus:outline-none"
         onClick={toggleAccordion}
@@ -27,7 +27,7 @@ const AccordionItem = ({ title, children }) => {
 const Accordion = () => {
   return (
     <div className="max-w-md mx-auto my-8">
-      <AccordionItem title="Categories">
+      <AccordionItem title="Kategorier" id="kategorier">
         <ul>
           <li><a href="#mobler">Möbler</a></li>
           <li><a href="#forvaring">Förvaring</a></li>
@@ -35,32 +35,32 @@ const Accordion = () => {
           <li><a href="#textil">Textil</a></li>
         </ul>
       </AccordionItem>
-      <AccordionItem title="My Pages">
+      <AccordionItem title="Mina sidor" id="mina-sidor">
         <ul>
-          <li><a href="/">Home</a></li>
-          <li><a href="/about">About</a></li>
-          <li><a href="/shop">Shop</a></li>
-          <li><a href="/contact">Contact</a></li>
+          <li><a href="/">Hem</a></li>
+          <li><a href="/about">Om oss</a></li>
+          <li><a href="/shop">Handla</a></li>
+          <li><a href="/contact">Kontakt oss</a></li>
         </ul>
       </AccordionItem>
-      <AccordionItem title="Contact Form">
+      <AccordionItem title="Kontakta Oss" id="kontakta-oss">
         <form>
           <div className="mb-4">
-            <label className="block text-gray-700">Name</label>
+            <label className="block text-gray-700">Namn</label>
             <input
               type="text"
               className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700">Email</label>
+            <label className="block text-gray-700">Mejladress</label>
             <input
               type="email"
               className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700">Message</label>
+            <label className="block text-gray-700">Meddelande</label>
             <textarea
               className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             ></textarea>
@@ -69,16 +69,18 @@ const Accordion = () => {
             type="submit"
             className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700"
           >
-            Submit
+            Skicka
           </button>
         </form>
       </AccordionItem>
     </div>
   );
 };
+
 AccordionItem.propTypes = {
   title: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
+  id: PropTypes.string.isRequired,
 };
 
 export default Accordion;

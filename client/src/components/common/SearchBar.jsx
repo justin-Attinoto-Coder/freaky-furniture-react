@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
+import { FaSearch } from 'react-icons/fa';
 
 const SearchBar = ({ handleSearch }) => {
   const [query, setQuery] = useState('');
@@ -10,20 +11,19 @@ const SearchBar = ({ handleSearch }) => {
   };
 
   return (
-    <form onSubmit={onSubmit} className="flex items-center">
-      <input
-        type="text"
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-        className="px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-        placeholder="Search for products..."
-      />
-      <button
-        type="submit"
-        className="ml-2 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700"
-      >
-        Search
-      </button>
+    <form onSubmit={onSubmit} className="flex items-center w-full">
+      <div className="relative w-full">
+        <span className="absolute inset-y-0 left-0 flex items-center pl-3">
+          <FaSearch className="text-gray-500" />
+        </span>
+        <input
+          type="text"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          className="w-full pl-10 pr-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="Search"
+        />
+      </div>
     </form>
   );
 };

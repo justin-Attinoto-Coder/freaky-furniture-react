@@ -1,4 +1,5 @@
-import React from 'react';
+import PropTypes from 'prop-types';
+import ProductCard from '../Common/ProductCard';
 
 const Textil = ({ products }) => {
   if (!products || products.length === 0) {
@@ -6,21 +7,28 @@ const Textil = ({ products }) => {
   }
 
   return (
-    <section className="p-8 bg-gray-100">
-      <h2 className="text-3xl font-bold mb-6">Textile Items</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        {products.map((item) => (
-          <div key={item.id} className="bg-white p-4 rounded-lg shadow-md">
-            <img src={item.image} alt={item.name} className="w-full h-48 object-cover rounded-t-lg" />
-            <div className="p-4">
-              <h3 className="text-xl font-semibold mb-2">{item.name}</h3>
-              <p className="text-gray-700">{item.description}</p>
-            </div>
-          </div>
+    <section id="textil" className="my-8">
+      <h2 className="text-2xl font-bold mb-4 text-center">Textil</h2>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        {products.map(product => (
+          <ProductCard key={product.id} product={product} />
         ))}
       </div>
     </section>
   );
+};
+
+Textil.propTypes = {
+  products: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+      description: PropTypes.string,
+      price: PropTypes.number.isRequired,
+      image: PropTypes.string.isRequired,
+      urlSlug: PropTypes.string.isRequired,
+    })
+  ).isRequired,
 };
 
 export default Textil;

@@ -2,7 +2,7 @@ import { FaFacebook, FaInstagram, FaMapMarkerAlt } from 'react-icons/fa';
 
 const Footer = () => {
   return (
-    <footer className="flex justify-between items-center p-4 bg-gray-800 text-white">
+    <footer id="footer" className="flex justify-between items-center p-4 bg-gray-800 text-white"> {/* Added id="footer" */}
       <div className="flex items-center">
         <span className="text-2xl font-bold">F</span>
         <span className="ml-2 text-xl">Freaky Furniture</span>
