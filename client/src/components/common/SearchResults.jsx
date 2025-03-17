@@ -1,23 +1,22 @@
 import PropTypes from 'prop-types';
 import ProductCard from './ProductCard';
 
-const SearchResults = ({ results, searchPerformed }) => {
+const SearchResults = ({ results = [], searchPerformed }) => {
   if (!searchPerformed) {
     return null;
   }
 
   if (results.length === 0) {
-    return <div>No results found</div>;
+    return <p className="px-8 text-5xl font-bold">No results found</p>;
   }
 
   return (
-    <section className="p-8 mt-8 bg-gray-100">
-      <div className="container px-4">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {results.map((item) => (
-            <ProductCard key={item.id} product={item} />
-          ))}
-        </div>
+    <section className="my-8">
+      <h2 className="text-2xl font-bold text-center mb-4"></h2>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        {results.map(product => (
+          <ProductCard key={product.id} product={product} />
+        ))}
       </div>
     </section>
   );
