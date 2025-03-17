@@ -28,7 +28,7 @@ const Accordion = () => {
   return (
     <div className="w-full mx-auto my-8 sm:my-0"> {/* Set width to full and remove margin */}
       {/* Accordion for smaller screens */}
-      <div className="block sm:hidden">
+      <div className="block sm:hidden w-full"> {/* Ensure full width on mobile */}
         <AccordionItem title="Kategorier" id="kategorier">
           <ul>
             <li><a href="#mobler">Möbler</a></li>
@@ -53,7 +53,7 @@ const Accordion = () => {
       </div>
 
       {/* Static columns for sm breakpoint and above */}
-      <div className="hidden sm:flex sm:flex-row sm:space-x-4 sm:bg-gray-100 sm:p-4 "> {/* Align columns to the left */}
+      <div className="hidden sm:flex sm:flex-row sm:space-x-4 sm:bg-gray-100 sm:p-4"> {/* Align columns to the left */}
         <div className="flex-1">
           <h3 className="font-bold mb-2">Kategorier</h3>
           <ul>

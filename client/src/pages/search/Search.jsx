@@ -1,13 +1,100 @@
+import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import SearchResults from '../../components/Common/SearchResults';
+import Modal from '../../components/Common/Modal'; // Import the Modal component
 
-const SearchPage = ({ searchResults }) => {
+const SearchPage = ({ searchResults, searchQuery }) => {
+  const [sortOption, setSortOption] = useState('Namn');
+  const [filteredResults, setFilteredResults] = useState(searchResults);
+  const [isSortModalOpen, setIsSortModalOpen] = useState(false);
+  const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
+  const [filterValue, setFilterValue] = useState(''); // Add filterValue state
+
+  useEffect(() => {
+    setFilteredResults(searchResults);
+  }, [searchResults]);
+
+  const handleSortChange = (sortValue) => {
+    setSortOption(sortValue);
+    const sortKey = sortValue === 'Namn' ? 'name' : sortValue === 'Pris' ? 'price' : sortValue === 'Datum Publiserat' ? 'date' : '';
+    sortResults(sortKey);
+    setIsSortModalOpen(false); // Close the modal after selecting an option
+  };
+
+  const sortResults = (sortKey) => {
+    const sortedResults = [...filteredResults].sort((a, b) => {
+      if (sortKey === 'name') {
+        return a.name.localeCompare(b.name);
+      } else if (sortKey === 'price') {
+        return a.price - b.price;
+      } else if (sortKey === 'date') {
+        return new Date(b.dateAdded) - new Date(a.dateAdded);
+      }
+      return 0;
+    });
+    setFilteredResults(sortedResults);
+  };
+
+  const handleFilterChange = (filterValue) => {
+    setFilterValue(filterValue); // Update filterValue state
+    filterResults(filterValue);
+    setIsFilterModalOpen(false); // Close the modal after selecting an option
+  };
+
+  const filterResults = (filterValue) => {
+    const filtered = searchResults.filter((item) => {
+      // Filtering logic based on category
+      return filterValue === '' || item.category === filterValue;
+    });
+    setFilteredResults(filtered);
+  };
+
   return (
-    <section className="p-8 mt-8 bg-gray-100">
-      <div className="container px-4">
-        <h2 className="text-3xl font-bold mb-4">Search Results</h2>
-        <SearchResults results={searchResults} searchPerformed={true} />
+    <section className="mt-8 min-h-[72vh] w-full"> {/* Set min-height to 72vh */}
+      <div className="mx-auto w-full"> {/* Ensure full width */}
+        <h2 className="px-6 text-2xl font-bold mb-4">Search Results</h2>
+        {searchQuery && (
+          <p className="px-6 text-5xl font-bold mb-4">&quot;<span className="font-semibold">{searchQuery}</span>&quot;</p>
+        )}
+        <div className="flex justify-between items-center mb-4 px-6">
+          <div>
+            <label htmlFor="sort" className="text-lg mr-2 cursor-pointer underline" onClick={() => setIsSortModalOpen(true)}>
+              Sortera efter
+            </label>
+            <span>{sortOption}</span>
+          </div>
+          <div>
+            <label htmlFor="filter" className="text-lg mr-2 cursor-pointer underline" onClick={() => setIsFilterModalOpen(true)}>
+              Filter
+            </label>
+            <span>{filterValue}</span>
+          </div>
+        </div>
+        <SearchResults results={filteredResults} searchPerformed={true} />
+        {/* Include the existing Accordion component to push the footer down */}
       </div>
+
+      {/* Sort Modal */}
+      <Modal isOpen={isSortModalOpen} onClose={() => setIsSortModalOpen(false)}>
+        <h2 className="text-xl font-bold mb-4">Sortera efter</h2>
+        <ul>
+          <li className="mb-2 cursor-pointer" onClick={() => handleSortChange('Namn')}>Namn</li>
+          <li className="mb-2 cursor-pointer" onClick={() => handleSortChange('Pris')}>Pris</li>
+          <li className="mb-2 cursor-pointer" onClick={() => handleSortChange('Datum Publiserat')}>Datum Publiserat</li>
+        </ul>
+      </Modal>
+
+      {/* Filter Modal */}
+      <Modal isOpen={isFilterModalOpen} onClose={() => setIsFilterModalOpen(false)}>
+        <h2 className="text-xl font-bold mb-4">Filter</h2>
+        <ul>
+          <li className="mb-2 cursor-pointer" onClick={() => handleFilterChange('')}>All</li>
+          <li className="mb-2 cursor-pointer" onClick={() => handleFilterChange('mobler')}>Mobler</li>
+          <li className="mb-2 cursor-pointer" onClick={() => handleFilterChange('forvaring')}>Forvaring</li>
+          <li className="mb-2 cursor-pointer" onClick={() => handleFilterChange('textil')}>Textil</li>
+          <li className="mb-2 cursor-pointer" onClick={() => handleFilterChange('detaljer')}>Detaljer</li>
+        </ul>
+      </Modal>
     </section>
   );
 };
@@ -21,8 +108,12 @@ SearchPage.propTypes = {
       price: PropTypes.number,
       image: PropTypes.string,
       urlSlug: PropTypes.string.isRequired,
+      dateAdded: PropTypes.string.isRequired, // Ensure dateAdded is included in the prop types
+      category: PropTypes.string.isRequired, // Ensure category is included in the prop types
     })
   ).isRequired,
+  searchQuery: PropTypes.string, // Add searchQuery prop
+  handleSearch: PropTypes.func.isRequired, // Add handleSearch prop
 };
 
 export default SearchPage;

@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Route, Routes, useNavigate, useLocation } from
 import { useState, useEffect, useCallback } from 'react';
 import Header from '../components/Common/Header';
 import Footer from '../components/Common/Footer';
+import Accordion from '../components/Common/Accordion'; // Import the existing Accordion component
 import Home from '../pages/Home/Home';
 import Cart from '../pages/Cart/Cart';
 import ProductDetails from '../pages/ProductDetails/ProductDetails';
@@ -14,6 +15,7 @@ import Admin from '../pages/Admin/AdminDashboard';
 
 function App() {
   const [searchResults, setSearchResults] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
   const [furnitureItems, setFurnitureItems] = useState([]);
   const [cartItems, setCartItems] = useState([]);
   const addToCart = (item) => {
@@ -31,6 +33,7 @@ function App() {
   }, []);
 
   const handleSearch = useCallback((query) => {
+    setSearchQuery(query);
     const results = furnitureItems.filter((item) => {
       return item.name.toLowerCase().includes(query.toLowerCase());
     });
@@ -52,9 +55,10 @@ function App() {
         <Route path="/checkout-payment" element={<CheckoutPayment />} />
         <Route path="/checkout-review" element={<CheckoutReview />} />
         <Route path="/checkout-confirmation" element={<CheckoutConfirmation />} />
-        <Route path="/search" element={<Search searchResults={searchResults} />} />
+        <Route path="/search" element={<Search searchResults={searchResults} searchQuery={searchQuery} handleSearch={handleSearch} />} />
         <Route path="/admin/*" element={<Admin />} />
       </Routes>
+      {!isAdminRoute && <Accordion />} {/* Include the Accordion component above the Footer */}
       {!isAdminRoute && <Footer />}
     </>
   );

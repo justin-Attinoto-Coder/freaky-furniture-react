@@ -11,8 +11,8 @@ const SearchBar = ({ handleSearch }) => {
   };
 
   return (
-    <form onSubmit={onSubmit} className="flex items-center w-full sm:absolute sm:right-30 sm:w-1/4">
-      <div className="relative w-full">
+    <form onSubmit={onSubmit} className="flex items-center w-full sm:w-1/4 sm:absolute sm:right-30 sm:top-2">
+      <div className="relative w-full sm:w-64">
         <span className="absolute inset-y-0 left-0 flex items-center pl-3">
           <FaSearch className="text-gray-500" />
         </span>

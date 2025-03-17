@@ -1,6 +1,5 @@
 import Hero from '../../components/Home/Hero';
 import NewsSection from '../../components/Home/NewsSection';
-import Accordion from '../../components/Common/Accordion';
 import PropTypes from 'prop-types';
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
@@ -54,7 +53,6 @@ const Home = ({ furnitureItems }) => {
       <Forvaring products={forvaringProducts} />
       <Detaljer products={detaljerProducts} />
       <Textil products={textilProducts} />
-      <Accordion />
     </div>
   );
 };
