@@ -32,7 +32,7 @@ const ProductDetails = ({ furnitureItems }) => {
     .slice(0, 3);
 
   return (
-    <div className="p-8">
+    <div className="mt-8">
       <FocusProductCard product={product} averageRating={averageRating} />
       <Link to={`/reviews/${product.id}`} className="text-blue-500 underline">
         See all reviews
