@@ -1,10 +1,9 @@
-// filepath: /c:/Workspace/JavaScript2/Freaky Furniture Javascript 2 Projekt/freaky-furniture-react/server/random.js
 const Database = require('better-sqlite3');
 const Chance = require('chance');
 const chance = new Chance();
 
 // Initialize SQLite database
-const db = new Database('furniture.db', { verbose: console.log });
+const db = new Database('./db/furniture.db', { verbose: console.log });
 
 // Utility function to generate URL slugs
 function generateSlug(name) {
@@ -21,9 +20,21 @@ function generateSKU() {
   return letters + numbers;
 }
 
+// Function to clear tables
+function clearTables() {
+  db.prepare('DELETE FROM reviews').run();
+  db.prepare('DELETE FROM cart').run(); // Delete cart table first to avoid foreign key dependency
+  db.prepare('DELETE FROM furniture').run();
+  db.prepare('VACUUM').run(); // Optional: Reclaim space
+  console.log('Tables cleared.');
+}
+
 // Function to create random products
 function createRandomProducts(count) {
   const categories = ['mobler', 'forvaring', 'detaljer', 'textil'];
+  const materials = ['Wood', 'Metal', 'Plastic', 'Glass', 'Fabric'];
+  const images = ['../public/images/hero-one.jfif', '../public/images/hero-two.jfif'];
+  
   for (let i = 0; i < count; i++) {
     const name = chance.sentence({ words: 3 }).slice(0, -1);
     const brand = chance.company();
@@ -32,14 +43,35 @@ function createRandomProducts(count) {
     const publishing_date = chance.date({ year: 2022 }).toISOString().split('T')[0];
     const urlSlug = generateSlug(name);
     const category = categories[Math.floor(Math.random() * categories.length)];
-    const image = chance.url({ extensions: ['jpg', 'png', 'gif'] });
+    const image = images[i % images.length]; // Alternate between the two images
     const sku = generateSKU(); // Generate SKU
+    const size = `${chance.integer({ min: 50, max: 200 })}x${chance.integer({ min: 50, max: 200 })}x${chance.integer({ min: 50, max: 200 })} cm`;
+    const dimensions = `${chance.integer({ min: 50, max: 200 })}x${chance.integer({ min: 50, max: 200 })}x${chance.integer({ min: 50, max: 200 })} cm`;
+    const weight = `${chance.floating({ min: 1, max: 50, fixed: 2 })} kg`;
+    const material = materials[Math.floor(Math.random() * materials.length)];
+    const specifications = `Material: ${material}, Color: ${chance.color({ format: 'name' })}, Assembly required: ${chance.bool() ? 'Yes' : 'No'}, Warranty: ${chance.integer({ min: 1, max: 5 })} years, Made in: ${chance.country({ full: true })}`;
 
-    const stmt = db.prepare('INSERT INTO furniture (name, brand, price, description, publishing_date, urlSlug, category, image, sku) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)');
-    stmt.run(name, brand, price, description, publishing_date, urlSlug, category, image, sku);
+    const stmt = db.prepare('INSERT INTO furniture (name, brand, price, description, publishing_date, urlSlug, category, image, sku, size, dimensions, weight, material, specifications) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
+    const info = stmt.run(name, brand, price, description, publishing_date, urlSlug, category, image, sku, size, dimensions, weight, material, specifications);
+
+    // Add random reviews for the product
+    createRandomReviews(info.lastInsertRowid, chance.integer({ min: 1, max: 5 }));
   }
   console.log(`${count} random products inserted into the database.`);
 }
 
-// Create 100 random products
-createRandomProducts(100);
+// Function to create random reviews for a product
+function createRandomReviews(productId, count) {
+  for (let i = 0; i < count; i++) {
+    const rating = chance.integer({ min: 1, max: 5 });
+    const reviewText = chance.sentence();
+    const reviewerName = chance.name();
+    const stmt = db.prepare('INSERT INTO reviews (productId, rating, reviewText, reviewerName) VALUES (?, ?, ?, ?)');
+    stmt.run(productId, rating, reviewText, reviewerName);
+  }
+  console.log(`${count} random reviews inserted for product ID ${productId}.`);
+}
+
+// Clear tables and create 1000 random products
+clearTables();
+createRandomProducts(1000);

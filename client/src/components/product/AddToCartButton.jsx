@@ -1,10 +1,26 @@
 import PropTypes from 'prop-types';
+import axios from 'axios';
 
-const AddToCartButton = ({ onAddToCart }) => {
+const AddToCartButton = ({ product, quantity }) => {
+  const handleAddToCart = () => {
+    axios.post('http://localhost:8000/api/cart', {
+      urlSlug: product.urlSlug,
+      name: product.name,
+      price: product.price,
+      quantity: quantity, // Use the selected quantity
+    })
+    .then(response => {
+      console.log('Product added to cart:', response.data);
+    })
+    .catch(error => {
+      console.error('Error adding product to cart:', error);
+    });
+  };
+
   return (
-    <button 
-      onClick={onAddToCart} 
-      className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700"
+    <button
+      onClick={handleAddToCart}
+      className="w-full px-4 py-3 bg-green-700 text-white rounded-lg border-2 border-black transition duration-300 ease-in-out hover:bg-green-800 on-click:bg-green-900"
     >
       Lägg i varukorg
     </button>
@@ -12,7 +28,12 @@ const AddToCartButton = ({ onAddToCart }) => {
 };
 
 AddToCartButton.propTypes = {
-  onAddToCart: PropTypes.func.isRequired,
+  product: PropTypes.shape({
+    urlSlug: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired,
+  }).isRequired,
+  quantity: PropTypes.number.isRequired,
 };
 
 export default AddToCartButton;

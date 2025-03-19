@@ -1,5 +1,5 @@
 const Database = require('better-sqlite3');
-const db = new Database('furniture.db', { verbose: console.log });
+const db = new Database('./db/furniture.db', { verbose: console.log });
 
 // Create furniture table if it doesn't exist
 db.prepare(`
@@ -13,7 +13,12 @@ db.prepare(`
     publishing_date TEXT,
     urlSlug TEXT UNIQUE,
     category TEXT,
-    image TEXT
+    image TEXT,
+    size TEXT,          -- New field for size
+    dimensions TEXT,    -- New field for dimensions
+    weight TEXT,        -- New field for weight
+    material TEXT,      -- New field for material
+    specifications TEXT -- New field for specifications
   )
 `).run();
 
@@ -25,6 +30,19 @@ db.prepare(`
     name TEXT NOT NULL,
     price REAL NOT NULL,
     quantity INTEGER NOT NULL,
+    FOREIGN KEY (productId) REFERENCES furniture(id)
+  )
+`).run();
+
+// Create reviews table if it doesn't exist
+db.prepare(`
+  CREATE TABLE IF NOT EXISTS reviews (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    productId INTEGER NOT NULL,
+    rating INTEGER NOT NULL,
+    reviewText TEXT,
+    reviewerName TEXT NOT NULL,
+    createdAt TEXT DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (productId) REFERENCES furniture(id)
   )
 `).run();

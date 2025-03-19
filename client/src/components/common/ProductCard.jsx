@@ -37,8 +37,8 @@ const ProductCard = ({ product }) => {
         </div>
         <div className="product-info flex flex-col justify-between w-full">
           <div className="product-details">
-            <h3 className="text-gray-500 text-xs">{product.brand}</h3>
-            <p className="text-sm font-semibold">{product.name}</p>
+            <h3 className="text-gray-500 text-sm truncate">{product.brand}</h3> {/* Add truncate class */}
+            <p className="text-sm font-semibold truncate">{product.name}</p> {/* Add truncate class */}
           </div>
           <div className="product-price text-right absolute bottom-8 right-6">
             <p className="text-sm font-bold">${product.price.toFixed(2)}</p>
