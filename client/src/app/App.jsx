@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Route, Routes, useNavigate, useLocation } from
 import { useState, useEffect, useCallback } from 'react';
 import Header from '../components/Common/Header';
 import Footer from '../components/Common/Footer';
-import Accordion from '../components/Common/Accordion'; // Import the existing Accordion component
+import CommonAccordion from '../components/Common/CommonAccordion'; // Import the existing Accordion component
 import Home from '../pages/Home/Home';
 import Cart from '../pages/Cart/Cart';
 import ProductDetails from '../pages/ProductDetails/ProductDetails';
@@ -12,6 +12,7 @@ import CheckoutReview from '../pages/Checkout/CheckoutReview';
 import CheckoutConfirmation from '../pages/Checkout/CheckoutConfirmation';
 import Search from '../pages/Search/Search';
 import Admin from '../pages/Admin/AdminDashboard';
+import AllReviews from '../pages/ProductDetails/AllReviews/AllReviews';
 
 function App() {
   const [searchResults, setSearchResults] = useState([]);
@@ -57,8 +58,9 @@ function App() {
         <Route path="/checkout-confirmation" element={<CheckoutConfirmation />} />
         <Route path="/search" element={<Search searchResults={searchResults} searchQuery={searchQuery} handleSearch={handleSearch} />} />
         <Route path="/admin/*" element={<Admin />} />
+        <Route path="/reviews/:productId" element={<AllReviews />} />
       </Routes>
-      {!isAdminRoute && <Accordion />} {/* Include the Accordion component above the Footer */}
+      {!isAdminRoute && <CommonAccordion />} {/* Include the Accordion component above the Footer */}
       {!isAdminRoute && <Footer />}
     </>
   );

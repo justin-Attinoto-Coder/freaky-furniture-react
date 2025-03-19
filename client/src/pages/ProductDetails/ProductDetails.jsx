@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
-import { useParams, Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import { useState, useEffect } from 'react';
 import FocusProductCard from '../../components/Product/FocusProductCard';
 import SimilarProducts from '../../components/Product/SimilarProducts';
-import { useState, useEffect } from 'react';
 
 const ProductDetails = ({ furnitureItems }) => {
   const { urlSlug } = useParams();
@@ -19,6 +19,8 @@ const ProductDetails = ({ furnitureItems }) => {
         .catch(error => {
           console.error('Error fetching average rating:', error);
         });
+
+      // Removed unused axios call
     }
   }, [product]);
 
@@ -34,9 +36,6 @@ const ProductDetails = ({ furnitureItems }) => {
   return (
     <div className="mt-8">
       <FocusProductCard product={product} averageRating={averageRating} />
-      <Link to={`/reviews/${product.id}`} className="text-blue-500 underline">
-        See all reviews
-      </Link>
       <SimilarProducts similarItems={similarItems} />
     </div>
   );

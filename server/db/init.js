@@ -13,7 +13,12 @@ db.prepare(`
     publishing_date TEXT,
     urlSlug TEXT UNIQUE,
     category TEXT,
-    image TEXT
+    image TEXT,
+    size TEXT,          -- New field for size
+    dimensions TEXT,    -- New field for dimensions
+    weight TEXT,        -- New field for weight
+    material TEXT,      -- New field for material
+    specifications TEXT -- New field for specifications
   )
 `).run();
 

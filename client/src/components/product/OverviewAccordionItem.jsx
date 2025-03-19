@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 
-const AccordionItem = ({ title, children, id, customClass }) => {
+const OverviewAccordionItem = ({ title, children, customClass }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleAccordion = () => {
@@ -9,7 +9,7 @@ const AccordionItem = ({ title, children, id, customClass }) => {
   };
 
   return (
-    <div className={`border-1 rounded-xs ${customClass}`} id={id}>
+    <div className={`border border-gray-300 rounded-xs ${customClass}`}>
       <button
         className="w-full text-left p-4 focus:outline-none"
         onClick={toggleAccordion}
@@ -19,16 +19,19 @@ const AccordionItem = ({ title, children, id, customClass }) => {
           <span>{isOpen ? '-' : '+'}</span>
         </div>
       </button>
-      {isOpen && <div className="p-4 bg-white">{children}</div>}
+      {isOpen && <div className="p-4">{children}</div>}
     </div>
   );
 };
 
-AccordionItem.propTypes = {
+OverviewAccordionItem.propTypes = {
   title: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
-  id: PropTypes.string.isRequired,
   customClass: PropTypes.string,
 };
 
-export default AccordionItem;
+OverviewAccordionItem.defaultProps = {
+  customClass: '',
+};
+
+export default OverviewAccordionItem;

@@ -20,6 +20,20 @@ app.use('/api/furniture', furnitureRoutes);
 app.use('/api/cart', cartRoutes);
 app.use('/api/reviews', reviewsRoutes); // Add reviews routes
 
+app.get('/api/products/:id', (req, res) => {
+  const product = db.prepare('SELECT * FROM furniture WHERE id = ?').get(req.params.id);
+  if (product) {
+    res.json(product);
+  } else {
+    res.status(404).json({ error: 'Product not found' });
+  }
+});
+
+app.get('/api/reviews/:productId', (req, res) => {
+  const reviews = db.prepare('SELECT * FROM reviews WHERE productId = ?').all(req.params.productId);
+  res.json(reviews);
+});
+
 // Serve the React app for all other routes
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/dist', 'index.html'));

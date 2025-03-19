@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types';
 import { useState, useEffect } from 'react';
 import AddToCartButton from './AddToCartButton';
-import OverviewAccordion from './OverviewAccordion';
+import FocusOverviewAccordion from './FocusOverviewAccordion'; // Correct import
 import { FaStar, FaRegStar } from 'react-icons/fa';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 const FocusProductInformation = ({ product, averageRating, onAddToCart }) => {
   const [quantity, setQuantity] = useState(1);
@@ -50,12 +51,14 @@ const FocusProductInformation = ({ product, averageRating, onAddToCart }) => {
         >
           +
         </button>
-        <div className="flex-grow ml-4">
+        <div className="flex-grow ml-4 relative">
+          <Link to={`/reviews/${product.id}`} className="text-blue-500 underline absolute -right-1 -top-35">
+            See all reviews
+          </Link>
           <AddToCartButton product={product} quantity={quantity} onAddToCart={onAddToCart} />
         </div>
       </div>
-      {/* Add OverviewAccordion component */}
-      <OverviewAccordion product={product} reviews={reviews} />
+      <FocusOverviewAccordion product={product} reviews={reviews} /> {/* Correct usage */}
     </div>
   );
 };
@@ -69,7 +72,9 @@ FocusProductInformation.propTypes = {
     price: PropTypes.number.isRequired,
     urlSlug: PropTypes.string.isRequired,
     size: PropTypes.string,
+    dimensions: PropTypes.string,
     weight: PropTypes.string,
+    material: PropTypes.string,
     specifications: PropTypes.string,
   }).isRequired,
   averageRating: PropTypes.number.isRequired,
