@@ -36,7 +36,7 @@ OverviewAccordionItem.defaultProps = {
 
 const FocusOverviewAccordion = ({ product, reviews = [] }) => {
   return (
-    <div className="w-full mx-auto my-8 border-0 rounded-xs">
+    <div className="w-full mx-auto my-12 border-0 rounded-xs">
       <OverviewAccordionItem title="Overview" id="overview" customClass="bg-gradient-to-r from-blue-500 to-purple-500">
         <p>Size and Dimensions: {product.size}</p>
         <p>Weight: {product.weight}</p>

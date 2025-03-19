@@ -19,8 +19,6 @@ const ProductDetails = ({ furnitureItems }) => {
         .catch(error => {
           console.error('Error fetching average rating:', error);
         });
-
-      // Removed unused axios.get call
     }
   }, [product]);
 
@@ -28,10 +26,9 @@ const ProductDetails = ({ furnitureItems }) => {
     return <div>Product not found</div>;
   }
 
-  // Find similar products based on category and limit to 3
+  // Find similar products based on category and limit to 5
   const similarItems = furnitureItems
-    .filter(item => item.category === product.category && item.urlSlug !== product.urlSlug)
-    .slice(0, 3);
+    .filter(item => item.category === product.category && item.urlSlug !== product.urlSlug);
 
   return (
     <div className="mt-8">

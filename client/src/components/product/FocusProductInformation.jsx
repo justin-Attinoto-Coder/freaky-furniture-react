@@ -46,7 +46,7 @@ const FocusProductInformation = ({ product, onAddToCart }) => {
           +
         </button>
         <div className="flex-grow ml-4 relative">
-          <Link to={`/reviews/${product.id}`} className="text-blue-500 underline absolute -right-1 -top-35">
+          <Link to={`/reviews/${product.id}`} className="text-blue-500 underline absolute -right-1 -top-42">
             See all reviews
           </Link>
           <AddToCartButton product={product} quantity={quantity} onAddToCart={onAddToCart} />
