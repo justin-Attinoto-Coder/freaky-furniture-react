@@ -2,11 +2,10 @@ import PropTypes from 'prop-types';
 import { useState, useEffect } from 'react';
 import AddToCartButton from './AddToCartButton';
 import FocusOverviewAccordion from './FocusOverviewAccordion'; // Correct import
-import { FaStar, FaRegStar } from 'react-icons/fa';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
-const FocusProductInformation = ({ product, averageRating, onAddToCart }) => {
+const FocusProductInformation = ({ product, onAddToCart }) => {
   const [quantity, setQuantity] = useState(1);
   const [reviews, setReviews] = useState([]);
 
@@ -31,11 +30,6 @@ const FocusProductInformation = ({ product, averageRating, onAddToCart }) => {
       <p className="text-gray-600 mb-4">{product.description}</p>
       <p className="text-xl font-semibold mb-4">${product.price}</p>
       <div className="product-rating absolute top-5 right-2 flex items-center">
-        {[...Array(5)].map((_, index) => (
-          <span key={index} className="text-2xl">
-            {index < averageRating ? <FaStar className="text-yellow-500" /> : <FaRegStar className="text-gray-300" />}
-          </span>
-        ))}
       </div>
       <div className="quantity-selector flex items-center mb-4 relative">
         <button

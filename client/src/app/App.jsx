@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Route, Routes, useNavigate, useLocation } from
 import { useState, useEffect, useCallback } from 'react';
 import Header from '../components/Common/Header';
 import Footer from '../components/Common/Footer';
-import CommonAccordion from '../components/Common/CommonAccordion'; // Import the existing Accordion component
+import CommonAccordion from '../components/Common/CommonAccordion';
 import Home from '../pages/Home/Home';
 import Cart from '../pages/Cart/Cart';
 import ProductDetails from '../pages/ProductDetails/ProductDetails';
@@ -46,25 +46,27 @@ function App() {
   const isAdminRoute = location.pathname.startsWith('/admin');
 
   return (
-    <>
+    <div className="min-h-screen flex flex-col">
       {!isAdminRoute && <Header handleSearch={handleSearch} />}
-      <Routes>
-        <Route path="/" element={<Home handleSearch={handleSearch} furnitureItems={furnitureItems} />} />
-        <Route path="/home" element={<Home handleSearch={handleSearch} furnitureItems={furnitureItems} />} />
-        <Route path="/cart" element={<Cart cartItems={cartItems} />} />
-        <Route path="/product/:urlSlug" element={<ProductDetails furnitureItems={furnitureItems} addToCart={addToCart} />} />
-        <Route path="/category/:category" element={<Category furnitureItems={furnitureItems} />} />
-        <Route path="/checkout-shipping" element={<CheckoutShipping />} />
-        <Route path="/checkout-payment" element={<CheckoutPayment />} />
-        <Route path="/checkout-review" element={<CheckoutReview />} />
-        <Route path="/checkout-confirmation" element={<CheckoutConfirmation />} />
-        <Route path="/search" element={<Search searchResults={searchResults} searchQuery={searchQuery} handleSearch={handleSearch} />} />
-        <Route path="/admin/*" element={<Admin />} />
-        <Route path="/reviews/:productId" element={<AllReviews />} />
-      </Routes>
+      <div className="flex-grow">
+        <Routes>
+          <Route path="/" element={<Home handleSearch={handleSearch} furnitureItems={furnitureItems} />} />
+          <Route path="/home" element={<Home handleSearch={handleSearch} furnitureItems={furnitureItems} />} />
+          <Route path="/cart" element={<Cart cartItems={cartItems} />} />
+          <Route path="/product/:urlSlug" element={<ProductDetails furnitureItems={furnitureItems} addToCart={addToCart} />} />
+          <Route path="/category/:category" element={<Category furnitureItems={furnitureItems} />} />
+          <Route path="/checkout-shipping" element={<CheckoutShipping />} />
+          <Route path="/checkout-payment" element={<CheckoutPayment />} />
+          <Route path="/checkout-review" element={<CheckoutReview />} />
+          <Route path="/checkout-confirmation" element={<CheckoutConfirmation />} />
+          <Route path="/search" element={<Search searchResults={searchResults} searchQuery={searchQuery} handleSearch={handleSearch} />} />
+          <Route path="/admin/*" element={<Admin />} />
+          <Route path="/reviews/:productId" element={<AllReviews />} />
+        </Routes>
+      </div>
       {!isAdminRoute && <CommonAccordion />} {/* Include the Accordion component above the Footer */}
       {!isAdminRoute && <Footer />}
-    </>
+    </div>
   );
 }
 
