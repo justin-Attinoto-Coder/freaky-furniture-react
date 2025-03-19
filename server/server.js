@@ -34,6 +34,17 @@ app.get('/api/reviews/:productId', (req, res) => {
   res.json(reviews);
 });
 
+// Example endpoint to fetch categories
+app.get('/api/categories', (req, res) => {
+  const categories = [
+    { id: 'mobler', name: 'Möbler' },
+    { id: 'forvaring', name: 'Förvaring' },
+    { id: 'detaljer', name: 'Detaljer' },
+    { id: 'textil', name: 'Textil' },
+  ];
+  res.json(categories);
+});
+
 // Serve the React app for all other routes
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/dist', 'index.html'));

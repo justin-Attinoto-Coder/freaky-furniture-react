@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import FocusProductCard from '../../components/Product/FocusProductCard';
@@ -20,7 +20,7 @@ const ProductDetails = ({ furnitureItems }) => {
           console.error('Error fetching average rating:', error);
         });
 
-      // Removed unused axios call
+      // Removed unused axios.get call
     }
   }, [product]);
 
@@ -35,6 +35,11 @@ const ProductDetails = ({ furnitureItems }) => {
 
   return (
     <div className="mt-8">
+      <div className="breadcrumbs mb-4">
+        <Link to="/" className="text-blue-500 underline ml-5">Home</Link> &gt; 
+        <Link to={`/category/${product.category}`} className="text-blue-500 underline"> {product.category}</Link> &gt; 
+        <span>{product.name}</span>
+      </div>
       <FocusProductCard product={product} averageRating={averageRating} />
       <SimilarProducts similarItems={similarItems} />
     </div>

@@ -13,6 +13,7 @@ import CheckoutConfirmation from '../pages/Checkout/CheckoutConfirmation';
 import Search from '../pages/Search/Search';
 import Admin from '../pages/Admin/AdminDashboard';
 import AllReviews from '../pages/ProductDetails/AllReviews/AllReviews';
+import Category from '../pages/Category/Category';
 
 function App() {
   const [searchResults, setSearchResults] = useState([]);
@@ -52,6 +53,7 @@ function App() {
         <Route path="/home" element={<Home handleSearch={handleSearch} furnitureItems={furnitureItems} />} />
         <Route path="/cart" element={<Cart cartItems={cartItems} />} />
         <Route path="/product/:urlSlug" element={<ProductDetails furnitureItems={furnitureItems} addToCart={addToCart} />} />
+        <Route path="/category/:category" element={<Category furnitureItems={furnitureItems} />} />
         <Route path="/checkout-shipping" element={<CheckoutShipping />} />
         <Route path="/checkout-payment" element={<CheckoutPayment />} />
         <Route path="/checkout-review" element={<CheckoutReview />} />

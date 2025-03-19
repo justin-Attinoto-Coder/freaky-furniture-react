@@ -53,6 +53,22 @@ const Home = ({ furnitureItems }) => {
       <Forvaring products={forvaringProducts} />
       <Detaljer products={detaljerProducts} />
       <Textil products={textilProducts} />
+      <div id="mobler">
+        <h2>Möbler</h2>
+        {/* Möbler content */}
+      </div>
+      <div id="forvaring">
+        <h2>Förvaring</h2>
+        {/* Förvaring content */}
+      </div>
+      <div id="detaljer">
+        <h2>Detaljer</h2>
+        {/* Detaljer content */}
+      </div>
+      <div id="textil">
+        <h2>Textil</h2>
+        {/* Textil content */}
+      </div>
     </div>
   );
 };
