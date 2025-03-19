@@ -1,32 +1,30 @@
 import PropTypes from 'prop-types';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
-import ProductInformation from '../../components/Product/ProductInformation';
-import ProductDetailsImage from '../../components/Product/ProductDetailsImage';
+import FocusProductCard from '../../components/Product/FocusProductCard';
 import SimilarProducts from '../../components/Product/SimilarProducts';
+import { useState, useEffect } from 'react';
 
 const ProductDetails = ({ furnitureItems }) => {
   const { urlSlug } = useParams();
   const product = furnitureItems.find(item => item.urlSlug === urlSlug);
+  const [averageRating, setAverageRating] = useState(0);
+
+  useEffect(() => {
+    if (product) {
+      axios.get(`http://localhost:8000/api/reviews/${product.id}/average`)
+        .then(response => {
+          setAverageRating(response.data.averageRating);
+        })
+        .catch(error => {
+          console.error('Error fetching average rating:', error);
+        });
+    }
+  }, [product]);
 
   if (!product) {
     return <div>Product not found</div>;
   }
-
-  const handleAddToCart = () => {
-    axios.post('http://localhost:8000/api/cart', {
-      urlSlug: product.urlSlug,
-      name: product.name,
-      price: product.price,
-      quantity: 1, // Default quantity
-    })
-    .then(response => {
-      console.log('Product added to cart:', response.data);
-    })
-    .catch(error => {
-      console.error('Error adding product to cart:', error);
-    });
-  };
 
   // Find similar products based on category and limit to 3
   const similarItems = furnitureItems
@@ -35,14 +33,10 @@ const ProductDetails = ({ furnitureItems }) => {
 
   return (
     <div className="p-8">
-      <ProductDetailsImage image={product.image} name={product.name} />
-      <ProductInformation
-        title={product.name}
-        brand={product.brand}
-        description={product.description}
-        price={product.price}
-        onAddToCart={handleAddToCart}
-      />
+      <FocusProductCard product={product} averageRating={averageRating} />
+      <Link to={`/reviews/${product.id}`} className="text-blue-500 underline">
+        See all reviews
+      </Link>
       <SimilarProducts similarItems={similarItems} />
     </div>
   );
