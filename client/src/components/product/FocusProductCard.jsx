@@ -34,7 +34,7 @@ const FocusProductCard = ({ product, averageRating, onAddToCart }) => {
             />
           )}
         </div>
-        <div className="product-rating absolute -bottom-16 right-2 flex items-center">
+        <div className="product-rating absolute -bottom-20 right-2 flex items-center">
           {[...Array(5)].map((_, index) => (
             <span key={index} className="text-2xl">
               {index < averageRating ? <FaStar className="text-yellow-500" /> : <FaRegStar className="text-gray-300" />}
