@@ -1,47 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import PropTypes from 'prop-types';
 import MyBasket from '../../components/Cart/MyBasket';
 import CartCustomerForm from '../../components/Cart/CartCustomerForm';
 
-const Cart = () => {
-  const [cartItems, setCartItems] = useState([]);
+const Cart = ({ cartItems, updateCartItem, deleteCartItem }) => {
   const navigate = useNavigate();
-
-  const fetchCartItems = () => {
-    axios.get('http://localhost:8000/api/cart')
-      .then(response => {
-        console.log('Cart items fetched:', response.data);
-        setCartItems(response.data);
-      })
-      .catch(error => {
-        console.error('Error fetching cart items:', error);
-      });
-  };
-
-  const updateCartItem = (urlSlug, quantity) => {
-    axios.put(`http://localhost:8000/api/cart/${urlSlug}`, { quantity })
-      .then(() => {
-        fetchCartItems();
-      })
-      .catch(error => {
-        console.error('Error updating cart item:', error);
-      });
-  };
-
-  const deleteCartItem = (urlSlug) => {
-    axios.delete(`http://localhost:8000/api/cart/${urlSlug}`)
-      .then(() => {
-        fetchCartItems();
-      })
-      .catch(error => {
-        console.error('Error deleting cart item:', error);
-      });
-  };
-
-  useEffect(() => {
-    fetchCartItems();
-  }, []);
 
   const totalPrice = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
 
@@ -64,6 +29,19 @@ const Cart = () => {
       <CartCustomerForm onSubmit={handleCheckout} total={totalPrice} />
     </div>
   );
+};
+
+Cart.propTypes = {
+  cartItems: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+      price: PropTypes.number.isRequired,
+      quantity: PropTypes.number.isRequired,
+    })
+  ).isRequired,
+  updateCartItem: PropTypes.func.isRequired,
+  deleteCartItem: PropTypes.func.isRequired,
 };
 
 export default Cart;
