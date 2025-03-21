@@ -26,9 +26,11 @@ const ProductDetails = ({ furnitureItems }) => {
     return <div>Product not found</div>;
   }
 
-  // Find similar products based on category and limit to 5
+  // Find similar products based on category and limit to 4
   const similarItems = furnitureItems
-    .filter(item => item.category === product.category && item.urlSlug !== product.urlSlug);
+    .filter(item => item.category === product.category && item.urlSlug !== product.urlSlug)
+    .sort(() => 0.5 - Math.random())
+    .slice(0, 4);
 
   return (
     <div className="mt-8">
@@ -37,7 +39,7 @@ const ProductDetails = ({ furnitureItems }) => {
         <Link to={`/category/${product.category}`} className="text-blue-500 underline"> {product.category}</Link> &gt; 
         <span>{product.name}</span>
       </div>
-      <FocusProductCard product={product} averageRating={averageRating} />
+      <FocusProductCard product={product} averageRating={averageRating} onAddToCart={() => {}} />
       <SimilarProducts similarItems={similarItems} />
     </div>
   );

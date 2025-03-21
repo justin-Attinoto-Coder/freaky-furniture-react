@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import axios from 'axios';
 
-const AddToCartButton = ({ product, quantity }) => {
+const AddToCartButton = ({ product, quantity, className }) => {
   const handleAddToCart = () => {
     axios.post('http://localhost:8000/api/cart', {
       urlSlug: product.urlSlug,
@@ -20,7 +20,7 @@ const AddToCartButton = ({ product, quantity }) => {
   return (
     <button
       onClick={handleAddToCart}
-      className="w-full px-4 py-3 bg-green-700 text-white rounded-lg border-2 border-black transition duration-300 ease-in-out hover:bg-green-800 on-click:bg-green-900"
+      className={`px-4 py-3 bg-green-700 text-white rounded-lg border-2 border-black transition duration-300 ease-in-out hover:bg-green-800 ${className}`}
     >
       Lägg i varukorg
     </button>
@@ -34,6 +34,7 @@ AddToCartButton.propTypes = {
     price: PropTypes.number.isRequired,
   }).isRequired,
   quantity: PropTypes.number.isRequired,
+  className: PropTypes.string,
 };
 
 export default AddToCartButton;

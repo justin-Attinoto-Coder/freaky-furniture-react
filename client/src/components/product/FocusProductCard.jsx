@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import { useState } from 'react';
 import ProductDetailsImage from './FocusProductDetailsImage';
 import FocusProductInformation from './FocusProductInformation';
-import { FaStar, FaRegStar, FaHeart, FaRegHeart } from 'react-icons/fa';
+import { FaHeart, FaRegHeart } from 'react-icons/fa';
 
 const FocusProductCard = ({ product, averageRating, onAddToCart }) => {
   const [isFavorite, setIsFavorite] = useState(false);
@@ -12,8 +12,8 @@ const FocusProductCard = ({ product, averageRating, onAddToCart }) => {
   };
 
   return (
-    <div className="focus-product-card-container p-4 flex flex-col items-center w-full relative">
-      <div className="image-container border border-gray-200 rounded-lg shadow-md p-2 mb-4 relative">
+    <div className="focus-product-card-container p-4 flex flex-col sm:flex-row items-stretch w-full relative">
+      <div className="image-container border border-gray-200 rounded-lg shadow-md p-2 mb-4 sm:mb-0 sm:mr-4 sm:w-2/5 lg:w-2/5 relative flex-shrink-0 sm:h-172">
         <ProductDetailsImage image={product.image} name={product.name} />
         <div className="absolute bottom-4 right-4">
           {isFavorite ? (
@@ -34,15 +34,8 @@ const FocusProductCard = ({ product, averageRating, onAddToCart }) => {
             />
           )}
         </div>
-        <div className="product-rating absolute -bottom-16 right-2 flex items-center">
-          {[...Array(5)].map((_, index) => (
-            <span key={index} className="text-2xl">
-              {index < averageRating ? <FaStar className="text-yellow-500" /> : <FaRegStar className="text-gray-300" />}
-            </span>
-          ))}
-        </div>
       </div>
-      <div className="flex justify-between w-full mt-4">
+      <div className="flex flex-col w-full sm:w-2/3 mt-4 sm:mt-0 sm:absolute sm:top-0 sm:-right-1/11 sm:h-full">
         <FocusProductInformation product={product} averageRating={averageRating} onAddToCart={onAddToCart} />
       </div>
     </div>

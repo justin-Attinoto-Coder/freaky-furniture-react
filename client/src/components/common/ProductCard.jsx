@@ -15,7 +15,7 @@ const ProductCard = ({ product }) => {
       <Link to={`/product/${product.urlSlug}`} className="w-full">
         <div className="image-container border border-gray-200 p-2 mb-4 rounded-lg relative">
           <img src={product.image} alt={product.name} className="w-full h-auto rounded-lg" />
-          <div className="absolute bottom-4 right-4">
+          <div className="absolute bottom-6 right-6">
             {isFavorite ? (
               <FaHeart
                 className="text-2xl text-red-500"

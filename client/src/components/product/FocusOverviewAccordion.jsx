@@ -19,7 +19,11 @@ const OverviewAccordionItem = ({ title, children, customClass }) => {
           <span>{isOpen ? '-' : '+'}</span>
         </div>
       </button>
-      {isOpen && <div className="p-4 bg-white">{children}</div>}
+      {isOpen && (
+        <div className="p-4 bg-white max-h-40 overflow-y-auto">
+          {children}
+        </div>
+      )}
     </div>
   );
 };
