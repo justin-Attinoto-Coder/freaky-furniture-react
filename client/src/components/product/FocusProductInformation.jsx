@@ -26,37 +26,43 @@ const FocusProductInformation = ({ product, averageRating, onAddToCart }) => {
 
   return (
     <div className="product-information p-4 relative">
-      <h2 className="text-2xl font-bold mb-2">{product.name}</h2>
-      <h3 className="text-xl text-gray-700 mb-2">{product.brand}</h3>
-      <div className="product-rating flex items-center mb-4">
-        {[...Array(5)].map((_, index) => (
-          <span key={index} className="text-2xl">
-            {index < averageRating ? <FaStar className="text-yellow-500" /> : <FaRegStar className="text-gray-300" />}
-          </span>
-        ))}
+      <div className="flex flex-col sm:flex-row">
+        <div className="flex-1">
+          <h2 className="text-2xl font-bold mb-2">{product.name}</h2>
+          <h3 className="text-xl text-gray-700 mb-2">{product.brand}</h3>
+          <p className="text-xl font-semibold mb-4">${product.price}</p>
+          <p className="text-gray-600 mb-4">{product.description}</p>
+          <div className="quantity-selector flex items-center mb-4">
+            <button
+              className="w-8 h-8 flex items-center justify-center bg-gray-200 text-gray-700 rounded-full border border-gray-400"
+              onClick={() => handleQuantityChange(-1)}
+            >
+              -
+            </button>
+            <span className="mx-2">{quantity}</span>
+            <button
+              className="w-8 h-8 flex items-center justify-center bg-gray-200 text-gray-700 rounded-full border border-gray-400"
+              onClick={() => handleQuantityChange(1)}
+            >
+              +
+            </button>
+            <AddToCartButton product={product} quantity={quantity} onAddToCart={onAddToCart} className="ml-4" />
+          </div>
+          <FocusOverviewAccordion product={product} reviews={reviews} />
+        </div>
+        <div className="flex-1 sm:ml-4">
+          <div className="absolute top-0 right-0 product-rating flex items-center mb-4">
+            {[...Array(5)].map((_, index) => (
+              <span key={index} className="text-2xl">
+                {index < averageRating ? <FaStar className="text-yellow-500" /> : <FaRegStar className="text-gray-300" />}
+              </span>
+            ))}
+          </div>
+          <Link to={`/reviews/${product.id}`} className="text-blue-500 absolute top-0 right-0 underline mt-4 block">
+            See all reviews
+          </Link>
+        </div>
       </div>
-      <p className="text-xl font-semibold mb-4">${product.price}</p>
-      <p className="text-gray-600 mb-4">{product.description}</p>
-      <div className="quantity-selector flex items-center mb-4">
-        <button
-          className="w-8 h-8 flex items-center justify-center bg-gray-200 text-gray-700 rounded-full border border-gray-400"
-          onClick={() => handleQuantityChange(-1)}
-        >
-          -
-        </button>
-        <span className="mx-2">{quantity}</span>
-        <button
-          className="w-8 h-8 flex items-center justify-center bg-gray-200 text-gray-700 rounded-full border border-gray-400"
-          onClick={() => handleQuantityChange(1)}
-        >
-          +
-        </button>
-      </div>
-      <AddToCartButton product={product} quantity={quantity} onAddToCart={onAddToCart} />
-      <Link to={`/reviews/${product.id}`} className="text-blue-500 underline mt-4 block sm:absolute sm:-right-1 sm:-top-42">
-        See all reviews
-      </Link>
-      <FocusOverviewAccordion product={product} reviews={reviews} />
     </div>
   );
 };

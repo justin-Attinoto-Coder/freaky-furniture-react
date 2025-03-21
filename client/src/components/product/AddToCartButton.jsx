@@ -20,7 +20,7 @@ const AddToCartButton = ({ product, quantity }) => {
   return (
     <button
       onClick={handleAddToCart}
-      className="w-full px-4 py-3 bg-green-700 text-white rounded-lg border-2 border-black transition duration-300 ease-in-out hover:bg-green-800 on-click:bg-green-900"
+      className="absolute right-0 top-1/3 w-2/3 sm:w-full px-4 py-3 bg-green-700 text-white rounded-lg border-2 border-black transition duration-300 ease-in-out hover:bg-green-800 on-click:bg-green-900"
     >
       Lägg i varukorg
     </button>
