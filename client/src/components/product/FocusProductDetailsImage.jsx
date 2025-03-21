@@ -2,7 +2,9 @@ import PropTypes from 'prop-types';
 
 const FocusProductDetailsImage = ({ image, name }) => {
   return (
-    <img src={image} alt={name} className="w-full h-auto rounded-lg" />
+    <div className="w-full h-full flex items-center justify-center">
+      <img src={image} alt={name} className="object-cover h-full w-full rounded-lg" />
+    </div>
   );
 };
 
