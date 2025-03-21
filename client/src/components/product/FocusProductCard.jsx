@@ -13,9 +13,9 @@ const FocusProductCard = ({ product, averageRating, onAddToCart }) => {
 
   return (
     <div className="focus-product-card-container p-4 flex flex-col sm:flex-row items-stretch w-full relative">
-      <div className="image-container border border-gray-200 rounded-lg shadow-md p-2 mb-4 sm:mb-0 sm:mr-4 sm:w-2/5 lg:w-2/5 relative flex-shrink-0 sm:h-156">
+      <div className="image-container border border-gray-200 rounded-lg shadow-md p-2 mb-4 sm:mb-0 sm:mr-4 sm:w-2/5 lg:w-2/5 relative flex-shrink-0 sm:h-172">
         <ProductDetailsImage image={product.image} name={product.name} />
-        <div className="absolute bottom-12 right-12">
+        <div className="absolute bottom-4 right-4">
           {isFavorite ? (
             <FaHeart
               className="text-2xl text-red-500"
@@ -35,7 +35,7 @@ const FocusProductCard = ({ product, averageRating, onAddToCart }) => {
           )}
         </div>
       </div>
-      <div className="flex flex-col w-full sm:w-1/3 lg:w-1/3 mt-4 sm:mt-0 sm:absolute sm:top-0 sm:right-1/4 sm:h-full">
+      <div className="flex flex-col w-full sm:w-2/3 mt-4 sm:mt-0 sm:absolute sm:top-0 sm:-right-1/11 sm:h-full">
         <FocusProductInformation product={product} averageRating={averageRating} onAddToCart={onAddToCart} />
       </div>
     </div>
