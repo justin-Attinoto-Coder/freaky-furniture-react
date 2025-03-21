@@ -30,6 +30,8 @@ db.prepare(`
     name TEXT NOT NULL,
     price REAL NOT NULL,
     quantity INTEGER NOT NULL,
+    imageURL TEXT NOT NULL,
+    brand TEXT NOT NULL,
     FOREIGN KEY (productId) REFERENCES furniture(id)
   )
 `).run();
@@ -44,6 +46,19 @@ db.prepare(`
     reviewerName TEXT NOT NULL,
     createdAt TEXT DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (productId) REFERENCES furniture(id)
+  )
+`).run();
+
+// Create customers table if it doesn't exist
+db.prepare(`
+  CREATE TABLE IF NOT EXISTS customers (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    firstName TEXT NOT NULL,
+    lastName TEXT NOT NULL,
+    email TEXT NOT NULL,
+    street TEXT NOT NULL,
+    postalCode TEXT NOT NULL,
+    city TEXT NOT NULL
   )
 `).run();
 

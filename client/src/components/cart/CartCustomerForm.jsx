@@ -1,85 +1,118 @@
+import { useState } from 'react';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 
-const CartCustomerForm = ({ totalPrice, handleChange, shippingDetails }) => {
+const CartCustomerForm = ({ onSubmit, total }) => {
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    street: '',
+    postalCode: '',
+    city: '',
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    axios.post('http://localhost:3000/api/customer', formData)
+      .then(response => {
+        console.log('Customer added:', response.data);
+        onSubmit(formData);
+      })
+      .catch(error => {
+        console.error('Error adding customer:', error);
+      });
+  };
+
   return (
-    <div className="p-8 bg-white shadow-md rounded-md">
+    <form onSubmit={handleSubmit} className="mt-4">
       <div className="mb-4">
-        <label className="block text-gray-700">Full Name</label>
+        <label className="block text-gray-700 mb-2">First Name</label>
         <input
           type="text"
-          name="fullName"
-          value={shippingDetails.fullName}
+          name="firstName"
+          value={formData.firstName}
           onChange={handleChange}
           className="w-full p-2 border rounded"
           required
         />
       </div>
       <div className="mb-4">
-        <label className="block text-gray-700">Phone Number</label>
+        <label className="block text-gray-700 mb-2">Last Name</label>
         <input
           type="text"
-          name="phoneNumber"
-          value={shippingDetails.phoneNumber}
+          name="lastName"
+          value={formData.lastName}
           onChange={handleChange}
           className="w-full p-2 border rounded"
           required
         />
       </div>
       <div className="mb-4">
-        <label className="block text-gray-700">Province</label>
+        <label className="block text-gray-700 mb-2">Epost</label>
         <input
-          type="text"
-          name="province"
-          value={shippingDetails.province}
+          type="email"
+          name="email"
+          value={formData.email}
           onChange={handleChange}
           className="w-full p-2 border rounded"
           required
         />
       </div>
       <div className="mb-4">
-        <label className="block text-gray-700">City</label>
+        <label className="block text-gray-700 mb-2">Street</label>
         <input
           type="text"
-          name="city"
-          value={shippingDetails.city}
+          name="street"
+          value={formData.street}
           onChange={handleChange}
           className="w-full p-2 border rounded"
           required
         />
       </div>
       <div className="mb-4">
-        <label className="block text-gray-700">Street Address</label>
-        <input
-          type="text"
-          name="streetAddress"
-          value={shippingDetails.streetAddress}
-          onChange={handleChange}
-          className="w-full p-2 border rounded"
-          required
-        />
-      </div>
-      <div className="mb-4">
-        <label className="block text-gray-700">Postal Code</label>
+        <label className="block text-gray-700 mb-2">Postal Code</label>
         <input
           type="text"
           name="postalCode"
-          value={shippingDetails.postalCode}
+          value={formData.postalCode}
           onChange={handleChange}
           className="w-full p-2 border rounded"
           required
         />
       </div>
-      <div className="mt-4">
-        <strong>Total Price: ${totalPrice.toFixed(2)}</strong>
+      <div className="mb-4">
+        <label className="block text-gray-700 mb-2">City</label>
+        <input
+          type="text"
+          name="city"
+          value={formData.city}
+          onChange={handleChange}
+          className="w-full p-2 border rounded"
+          required
+        />
       </div>
-    </div>
+      <div className="my-10">
+        <p className="text-gray-700">Total inclusive moms: <span className="font-bold">${total.toFixed(2)}</span></p>
+      </div>
+      <button type="submit" className="bg-blue-500 text-white mb-20 px-4 py-2 rounded w-full sm:w-auto">
+        Purchase
+      </button>
+    </form>
   );
 };
 
 CartCustomerForm.propTypes = {
-  totalPrice: PropTypes.number.isRequired,
-  handleChange: PropTypes.func.isRequired,
-  shippingDetails: PropTypes.object.isRequired,
+  onSubmit: PropTypes.func.isRequired,
+  total: PropTypes.number.isRequired,
 };
 
 export default CartCustomerForm;

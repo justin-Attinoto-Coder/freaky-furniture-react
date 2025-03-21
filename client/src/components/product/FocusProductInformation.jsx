@@ -42,8 +42,8 @@ const FocusProductInformation = ({ product, averageRating, onAddToCart }) => {
         </Link>
       </div>
       <p className="text-gray-600 mb-4">{product.description}</p>
-      <div className="quantity-selector flex items-center mb-4 sm:mb-0 sm:flex-col sm:items-start">
-        <div className="flex items-center mb-4 sm:mb-0">
+      <div className="quantity-selector flex items-center mb-4 sm:mb-0">
+        <div className="flex items-center">
           <button
             className="w-8 h-8 flex items-center justify-center bg-gray-200 text-gray-700 rounded-full border border-gray-400"
             onClick={() => handleQuantityChange(-1)}
@@ -58,7 +58,12 @@ const FocusProductInformation = ({ product, averageRating, onAddToCart }) => {
             +
           </button>
         </div>
-        <AddToCartButton product={product} quantity={quantity} onAddToCart={onAddToCart} className="w-full sm:w-full sm:mt-4" />
+        <div className="ml-4 w-full sm:hidden"> {/* Add margin to the left and make full width on mobile */}
+          <AddToCartButton product={product} quantity={quantity} onAddToCart={onAddToCart} className="w-full" />
+        </div>
+      </div>
+      <div className="hidden sm:flex sm:items-center sm:mt-4 w-full"> {/* Show on small screens and above */}
+        <AddToCartButton product={product} quantity={quantity} onAddToCart={onAddToCart} className="w-full" />
       </div>
       <FocusOverviewAccordion product={product} reviews={reviews} className="mt-8 sm:mt-16" />
     </div>
