@@ -21,6 +21,7 @@ function App() {
   const [searchQuery, setSearchQuery] = useState('');
   const [furnitureItems, setFurnitureItems] = useState([]);
   const [cartItems, setCartItems] = useState([]);
+  const [recommendedItems, setRecommendedItems] = useState([]);
 
   const fetchCartItems = () => {
     axios.get('http://localhost:8000/api/cart')
@@ -30,6 +31,21 @@ function App() {
       })
       .catch(error => {
         console.error('Error fetching cart items:', error);
+      });
+  };
+
+  const fetchRecommendedItems = () => {
+    axios.get('http://localhost:8000/api/recommended')
+      .then(response => {
+        console.log('Recommended items fetched:', response.data);
+        if (Array.isArray(response.data)) {
+          setRecommendedItems(response.data);
+        } else {
+          console.error('Unexpected response format:', response.data);
+        }
+      })
+      .catch(error => {
+        console.error('Error fetching recommended items:', error);
       });
   };
 
@@ -55,6 +71,7 @@ function App() {
 
   useEffect(() => {
     fetchCartItems();
+    fetchRecommendedItems();
   }, []);
 
   const addToCart = (item) => {
@@ -98,7 +115,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home handleSearch={handleSearch} furnitureItems={furnitureItems} />} />
           <Route path="/home" element={<Home handleSearch={handleSearch} furnitureItems={furnitureItems} />} />
-          <Route path="/cart" element={<Cart cartItems={cartItems} updateCartItem={updateCartItem} deleteCartItem={deleteCartItem} />} />
+          <Route path="/cart" element={<Cart cartItems={cartItems} updateCartItem={updateCartItem} deleteCartItem={deleteCartItem} recommendedItems={recommendedItems} />} />
           <Route path="/product/:urlSlug" element={<ProductDetails furnitureItems={furnitureItems} addToCart={addToCart} />} />
           <Route path="/category/:category" element={<Category furnitureItems={furnitureItems} />} />
           <Route path="/checkout-shipping" element={<CheckoutShipping />} />

@@ -62,4 +62,23 @@ db.prepare(`
   )
 `).run();
 
+// Create recommended table if it doesn't exist
+db.prepare(`
+  CREATE TABLE IF NOT EXISTS recommended (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    product_id INTEGER NOT NULL,
+    FOREIGN KEY (product_id) REFERENCES furniture(id)
+  )
+`).run();
+
+// Automatically fill the recommended table if it's empty
+const recommendedCount = db.prepare('SELECT COUNT(*) AS count FROM recommended').get().count;
+if (recommendedCount === 0) {
+  const furnitureItems = db.prepare('SELECT id FROM furniture').all();
+  const insertRecommended = db.prepare('INSERT INTO recommended (product_id) VALUES (?)');
+  furnitureItems.forEach(item => {
+    insertRecommended.run(item.id);
+  });
+}
+
 module.exports = db;
