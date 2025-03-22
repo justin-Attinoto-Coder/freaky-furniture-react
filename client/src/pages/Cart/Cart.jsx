@@ -18,13 +18,29 @@ const Cart = ({ cartItems, updateCartItem, deleteCartItem, recommendedItems }) =
     <div className="p-4 sm:p-8">
       <h1 className="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6">Shopping Cart</h1>
       <div className="sm:flex sm:space-x-8">
-        <div className="sm:w-1/2">
-          <MyBasket
-            cartItems={cartItems}
-            updateCartItem={updateCartItem}
-            deleteCartItem={deleteCartItem}
-          />
-          <CartCustomerForm onSubmit={handleCheckout} total={totalPrice} />
+        <div className="sm:w-1/2 flex flex-col justify-between">
+          <div>
+            <MyBasket
+              cartItems={cartItems}
+              updateCartItem={updateCartItem}
+              deleteCartItem={deleteCartItem}
+            />
+            <CartCustomerForm onSubmit={handleCheckout} total={totalPrice} />
+          </div>
+          <div className="flex justify-between items-center mt-4 sm:mt-0">
+            <button
+              className="bg-blue-500 text-white px-4 py-2 rounded mt-2 sm:mt-0"
+              onClick={() => navigate('/')}
+            >
+              Continue Shopping
+            </button>
+            <button
+              className="bg-green-500 text-white px-4 py-2 rounded mt-2 hidden sm:block"
+              onClick={handleCheckout}
+            >
+              Purchase
+            </button>
+          </div>
         </div>
         <div className="sm:w-1/2">
           <MaybeYouAlsoLike items={recommendedItems} />

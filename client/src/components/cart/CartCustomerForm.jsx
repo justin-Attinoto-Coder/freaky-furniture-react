@@ -104,7 +104,7 @@ const CartCustomerForm = ({ onSubmit, total }) => {
       <div className="my-10">
         <p className="text-gray-700">Total inclusive moms: <span className="font-bold">${total.toFixed(2)}</span></p>
       </div>
-      <button type="submit" className="bg-green-500 text-white mb-20 px-4 py-3 rounded w-full sm:w-auto font-bold">
+      <button type="submit" className="bg-green-500 text-white mb-20 px-4 py-3 rounded w-full sm:hidden font-bold">
         Purchase
       </button>
     </form>
