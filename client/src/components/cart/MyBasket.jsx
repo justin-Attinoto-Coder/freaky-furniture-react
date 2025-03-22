@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import BasketProductCard from './BasketProductCard';
 
 const MyBasket = ({ cartItems, updateCartItem, deleteCartItem }) => {
   return (
@@ -8,23 +9,12 @@ const MyBasket = ({ cartItems, updateCartItem, deleteCartItem }) => {
       ) : (
         <ul>
           {cartItems.map((item) => (
-            <li key={item.id} className="flex justify-between items-center mb-4">
-              <div>
-                <p>{item.name}</p>
-                <p>${item.price.toFixed(2)}</p>
-              </div>
-              <div className="flex items-center">
-                <input
-                  type="number"
-                  value={item.quantity}
-                  onChange={(e) => updateCartItem(item.id, parseInt(e.target.value))}
-                  className="border rounded px-2 py-1 mr-2"
-                  min="1"
-                />
-                <button onClick={() => deleteCartItem(item.id)} className="bg-red-500 text-white px-4 py-2 rounded">
-                  Remove
-                </button>
-              </div>
+            <li key={item.urlSlug}>
+              <BasketProductCard
+                item={item}
+                updateCartItem={updateCartItem}
+                deleteCartItem={deleteCartItem}
+              />
             </li>
           ))}
         </ul>

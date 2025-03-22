@@ -5,11 +5,15 @@ const db = require('./db/init'); // Import database initialization
 const furnitureRoutes = require('./routes/furniture'); // Import furniture routes
 const cartRoutes = require('./routes/cart'); // Import cart routes
 const reviewsRoutes = require('./routes/reviews'); // Import reviews routes
+const customerRoutes = require('./routes/customer'); // Import customer routes
 const bcrypt = require('bcrypt'); // Import bcrypt for password hashing
 const bodyParser = require('body-parser'); // Import body-parser for parsing JSON
 
 const app = express();
 const PORT = process.env.PORT || 8000;
+
+// Serve static files from the "public" directory
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(cors());
 app.use(express.json());
@@ -19,6 +23,7 @@ app.use(bodyParser.json());
 app.use('/api/furniture', furnitureRoutes);
 app.use('/api/cart', cartRoutes);
 app.use('/api/reviews', reviewsRoutes); // Add reviews routes
+app.use('/api/customer', customerRoutes); // Add customer routes
 
 app.get('/api/products/:id', (req, res) => {
   const product = db.prepare('SELECT * FROM furniture WHERE id = ?').get(req.params.id);

@@ -1,5 +1,6 @@
 const Database = require('better-sqlite3');
 const Chance = require('chance');
+const axios = require('axios');
 const chance = new Chance();
 
 // Initialize SQLite database
@@ -25,6 +26,7 @@ function clearTables() {
   db.prepare('DELETE FROM reviews').run();
   db.prepare('DELETE FROM cart').run(); // Delete cart table first to avoid foreign key dependency
   db.prepare('DELETE FROM furniture').run();
+  db.prepare('DELETE FROM customers').run(); // Clear customers table
   db.prepare('VACUUM').run(); // Optional: Reclaim space
   console.log('Tables cleared.');
 }
@@ -55,23 +57,50 @@ function createRandomProducts(count) {
     const info = stmt.run(name, brand, price, description, publishing_date, urlSlug, category, image, sku, size, dimensions, weight, material, specifications);
 
     // Add random reviews for the product
-    createRandomReviews(info.lastInsertRowid, chance.integer({ min: 1, max: 5 }));
+    createRandomReviews(info.lastInsertRowid, 4); // Create 4 random reviews per product
   }
   console.log(`${count} random products inserted into the database.`);
 }
 
 // Function to create random reviews for a product
-function createRandomReviews(productId, count) {
+async function createRandomReviews(productId, count) {
   for (let i = 0; i < count; i++) {
     const rating = chance.integer({ min: 1, max: 5 });
     const reviewText = chance.sentence();
     const reviewerName = chance.name();
-    const stmt = db.prepare('INSERT INTO reviews (productId, rating, reviewText, reviewerName) VALUES (?, ?, ?, ?)');
-    stmt.run(productId, rating, reviewText, reviewerName);
+    const reviewData = {
+      productId,
+      rating,
+      reviewText,
+      reviewerName,
+    };
+
+    try {
+      const response = await axios.post('http://localhost:8000/api/reviews', reviewData);
+      console.log('Review added:', response.data);
+    } catch (error) {
+      console.error('Error adding review:', error);
+    }
   }
   console.log(`${count} random reviews inserted for product ID ${productId}.`);
 }
 
-// Clear tables and create 1000 random products
+// Function to create random customers
+function createRandomCustomers(count) {
+  for (let i = 0; i < count; i++) {
+    const firstName = chance.first();
+    const lastName = chance.last();
+    const email = chance.email();
+    const street = chance.address();
+    const postalCode = chance.zip();
+    const city = chance.city();
+    const stmt = db.prepare('INSERT INTO customers (firstName, lastName, email, street, postalCode, city) VALUES (?, ?, ?, ?, ?, ?)');
+    stmt.run(firstName, lastName, email, street, postalCode, city);
+  }
+  console.log(`${count} random customers inserted into the database.`);
+}
+
+// Clear tables and create random data
 clearTables();
 createRandomProducts(1000);
+createRandomCustomers(100); // Create 100 random customers

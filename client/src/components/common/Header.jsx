@@ -5,12 +5,14 @@ import { FaHeart, FaUser, FaShoppingBasket } from 'react-icons/fa';
 import Navbar from './Navbar';
 import HamburgerMenu from './HamburgerMenu';
 
-const Header = (props) => {
+const Header = ({ handleSearch, cartItems }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
+
+  const totalItemsInCart = cartItems.reduce((total, item) => total + item.quantity, 0);
 
   return (
     <header className="relative flex flex-col justify-between sm:text-sm md:text-xl items-center p-4 bg-white shadow-md">
@@ -21,19 +23,24 @@ const Header = (props) => {
             <img src="/images/logotyp90x50.png" alt="Logo" className="h-10 ml-5" />
           </Link>
           <div className="hidden sm:flex sm:flex-row ml-5">
-            <Navbar handleSearch={props.handleSearch} />
+            <Navbar handleSearch={handleSearch} />
           </div>
         </div>
-        <div className="flex items-center ml-auto">
+        <div className="flex items-center ml-auto relative">
           <FaHeart className="mx-2 cursor-pointer text-2xl" />
           <FaUser className="mx-2 cursor-pointer text-2xl" />
-          <Link to="/cart">
+          <Link to="/cart" className="relative">
             <FaShoppingBasket className="mx-2 cursor-pointer text-2xl" />
+            {totalItemsInCart > 0 && (
+              <span className="absolute top-0 right-0 bg-blue-500 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center">
+                {totalItemsInCart}
+              </span>
+            )}
           </Link>
         </div>
       </div>
       <div className="sm:hidden w-full mt-4">
-        <Navbar handleSearch={props.handleSearch} />
+        <Navbar handleSearch={handleSearch} />
       </div>
     </header>
   );
@@ -41,6 +48,12 @@ const Header = (props) => {
 
 Header.propTypes = {
   handleSearch: PropTypes.func.isRequired,
+  cartItems: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      quantity: PropTypes.number.isRequired,
+    })
+  ).isRequired,
 };
 
 export default Header;

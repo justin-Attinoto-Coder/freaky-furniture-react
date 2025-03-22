@@ -1,40 +1,42 @@
-import PropTypes from 'prop-types';
 import axios from 'axios';
+import PropTypes from 'prop-types';
 
-const AddToCartButton = ({ product, quantity, className }) => {
+const AddToCartButton = ({ product, quantity, onAddToCart }) => {
   const handleAddToCart = () => {
     axios.post('http://localhost:8000/api/cart', {
-      urlSlug: product.urlSlug,
+      productId: product.id,
       name: product.name,
       price: product.price,
-      quantity: quantity, // Use the selected quantity
+      quantity,
+      imageURL: product.image,
+      brand: product.brand,
     })
-    .then(response => {
-      console.log('Product added to cart:', response.data);
-    })
-    .catch(error => {
-      console.error('Error adding product to cart:', error);
-    });
+      .then(response => {
+        console.log('Product added to cart:', response.data);
+        onAddToCart(product);
+      })
+      .catch(error => {
+        console.error('Error adding product to cart:', error);
+      });
   };
 
   return (
-    <button
-      onClick={handleAddToCart}
-      className={`px-4 py-3 bg-green-700 text-white rounded-lg border-2 border-black transition duration-300 ease-in-out hover:bg-green-800 ${className}`}
-    >
-      Lägg i varukorg
+    <button onClick={handleAddToCart} className="bg-blue-500 text-white px-4 py-2 rounded">
+      Add to Cart
     </button>
   );
 };
 
 AddToCartButton.propTypes = {
   product: PropTypes.shape({
-    urlSlug: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
+    image: PropTypes.string.isRequired,
+    brand: PropTypes.string.isRequired,
   }).isRequired,
   quantity: PropTypes.number.isRequired,
-  className: PropTypes.string,
+  onAddToCart: PropTypes.func.isRequired,
 };
 
 export default AddToCartButton;
