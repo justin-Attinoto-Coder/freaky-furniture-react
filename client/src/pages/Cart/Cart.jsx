@@ -1,6 +1,4 @@
-import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import PropTypes from 'prop-types';
 import MyBasket from '../../components/Cart/MyBasket';
 import CartCustomerForm from '../../components/Cart/CartCustomerForm';
@@ -23,9 +21,6 @@ const Cart = ({ cartItems, updateCartItem, deleteCartItem }) => {
         updateCartItem={updateCartItem}
         deleteCartItem={deleteCartItem}
       />
-      <div className="mt-4">
-        <strong>Total Price: ${totalPrice.toFixed(2)}</strong>
-      </div>
       <CartCustomerForm onSubmit={handleCheckout} total={totalPrice} />
     </div>
   );
@@ -38,6 +33,7 @@ Cart.propTypes = {
       name: PropTypes.string.isRequired,
       price: PropTypes.number.isRequired,
       quantity: PropTypes.number.isRequired,
+      urlSlug: PropTypes.string.isRequired,
     })
   ).isRequired,
   updateCartItem: PropTypes.func.isRequired,
