@@ -62,6 +62,22 @@ db.prepare(`
   )
 `).run();
 
+// Create shipping_details table if it doesn't exist
+db.prepare(`
+  CREATE TABLE IF NOT EXISTS shipping_details (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    fullName TEXT NOT NULL,
+    phoneNumber TEXT NOT NULL,
+    province TEXT NOT NULL,
+    city TEXT NOT NULL,
+    streetAddress TEXT NOT NULL,
+    postalCode TEXT NOT NULL,
+    shippingMethod TEXT NOT NULL,
+    carrier TEXT NOT NULL,
+    deliveryTime TEXT NOT NULL
+  )
+`).run();
+
 // Create recommended table if it doesn't exist
 db.prepare(`
   CREATE TABLE IF NOT EXISTS recommended (
