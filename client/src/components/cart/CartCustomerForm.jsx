@@ -22,7 +22,7 @@ const CartCustomerForm = ({ onSubmit, total }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post('http://localhost:3000/api/customer', formData)
+    axios.post('http://localhost:8000/api/customers-details', formData)
       .then(response => {
         console.log('Customer added:', response.data);
         onSubmit(formData);

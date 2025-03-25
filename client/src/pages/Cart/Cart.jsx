@@ -10,8 +10,30 @@ const Cart = ({ cartItems, updateCartItem, deleteCartItem, recommendedItems }) =
   const totalPrice = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
 
   const handleCheckout = (formData) => {
-    console.log('Customer details:', formData);
-    navigate('/checkout-shipping');
+    console.log('Sending request to:', 'http://localhost:8000/api/customers-details'); // Log the request URL
+    console.log('Request payload:', formData); // Log the request payload
+
+    fetch('http://localhost:8000/api/customers-details', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData),
+    })
+      .then(response => {
+        console.log('Response status:', response.status); // Log the response status
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log('Customer details saved:', data); // Log the response data
+        navigate('/checkout-shipping');
+      })
+      .catch(error => {
+        console.error('Error saving customer details:', error);
+      });
   };
 
   return (
