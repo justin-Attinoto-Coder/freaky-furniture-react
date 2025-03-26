@@ -53,12 +53,12 @@ db.prepare(`
 db.prepare(`
   CREATE TABLE IF NOT EXISTS customers (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    firstName TEXT NOT NULL,
-    lastName TEXT NOT NULL,
-    email TEXT NOT NULL,
-    street TEXT NOT NULL,
-    postalCode TEXT NOT NULL,
-    city TEXT NOT NULL
+    fullName TEXT NOT NULL,
+    phoneNumber TEXT NOT NULL,
+    province TEXT NOT NULL,
+    city TEXT NOT NULL,
+    streetAddress TEXT NOT NULL,
+    postalCode TEXT NOT NULL
   )
 `).run();
 

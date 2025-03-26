@@ -1,118 +1,128 @@
-import { useState } from 'react';
 import PropTypes from 'prop-types';
-import axios from 'axios';
 
-const CartCustomerForm = ({ onSubmit, total }) => {
-  const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    street: '',
-    postalCode: '',
-    city: '',
-  });
+const provinces = [
+  "Stockholm", "Västra Götaland", "Skåne", "Uppsala", "Södermanland", "Östergötland", "Jönköping", "Kronoberg", "Kalmar", "Gotland", "Blekinge", "Halland", "Värmland", "Örebro", "Västmanland", "Dalarna", "Gävleborg", "Västernorrland", "Jämtland", "Västerbotten", "Norrbotten"
+];
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
+const cities = [
+  "Stockholm", "Gothenburg", "Malmö", "Uppsala", "Västerås", "Örebro", "Linköping", "Helsingborg", "Jönköping", "Norrköping", "Lund", "Umeå", "Gävle", "Borås", "Södertälje", "Eskilstuna", "Karlstad", "Täby", "Växjö", "Halmstad"
+];
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    axios.post('http://localhost:8000/api/customers-details', formData)
-      .then(response => {
-        console.log('Customer added:', response.data);
-        onSubmit(formData);
-      })
-      .catch(error => {
-        console.error('Error adding customer:', error);
-      });
-  };
-
+const CartCustomerForm = ({ formData, onChange, total }) => {
   return (
-    <form onSubmit={handleSubmit} className="mt-8"> {/* Adjusted margin */}
-      <h2 className="text-center text-2xl font-bold mb-6">Customer Info</h2> {/* Added title */}
+    <div className="mt-8">
+      <h2 className="text-center text-2xl font-bold mb-6">Customer Info</h2>
+
+      {/* Full Name */}
       <div className="mb-4">
-        <label className="block text-gray-700 mb-2">First Name</label>
+        <label className="block text-gray-700 mb-2">Full Name</label>
         <input
           type="text"
-          name="firstName"
-          value={formData.firstName}
-          onChange={handleChange}
+          name="fullName"
+          value={formData.fullName}
+          onChange={onChange}
           className="w-full p-2 border rounded"
           required
         />
       </div>
+
+      {/* Phone Number */}
       <div className="mb-4">
-        <label className="block text-gray-700 mb-2">Last Name</label>
+        <label className="block text-gray-700 mb-2">Phone Number</label>
         <input
           type="text"
-          name="lastName"
-          value={formData.lastName}
-          onChange={handleChange}
+          name="phoneNumber"
+          value={formData.phoneNumber}
+          onChange={onChange}
           className="w-full p-2 border rounded"
           required
         />
       </div>
+
+      {/* Province Dropdown */}
       <div className="mb-4">
-        <label className="block text-gray-700 mb-2">Epost</label>
-        <input
-          type="email"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
+        <label className="block text-gray-700 mb-2">Province</label>
+        <select
+          name="province"
+          value={formData.province}
+          onChange={onChange}
           className="w-full p-2 border rounded"
           required
-        />
+        >
+          <option value="">Select Province</option>
+          {provinces.map((province) => (
+            <option key={province} value={province}>
+              {province}
+            </option>
+          ))}
+        </select>
       </div>
+
+      {/* City Dropdown */}
       <div className="mb-4">
-        <label className="block text-gray-700 mb-2">Street</label>
+        <label className="block text-gray-700 mb-2">City</label>
+        <select
+          name="city"
+          value={formData.city}
+          onChange={onChange}
+          className="w-full p-2 border rounded"
+          required
+        >
+          <option value="">Select City</option>
+          {cities.map((city) => (
+            <option key={city} value={city}>
+              {city}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      {/* Street Address */}
+      <div className="mb-4">
+        <label className="block text-gray-700 mb-2">Street Address</label>
         <input
           type="text"
-          name="street"
-          value={formData.street}
-          onChange={handleChange}
+          name="streetAddress"
+          value={formData.streetAddress}
+          onChange={onChange}
           className="w-full p-2 border rounded"
           required
         />
       </div>
+
+      {/* Postal Code */}
       <div className="mb-4">
         <label className="block text-gray-700 mb-2">Postal Code</label>
         <input
           type="text"
           name="postalCode"
           value={formData.postalCode}
-          onChange={handleChange}
+          onChange={onChange}
           className="w-full p-2 border rounded"
           required
         />
       </div>
-      <div className="mb-4">
-        <label className="block text-gray-700 mb-2">City</label>
-        <input
-          type="text"
-          name="city"
-          value={formData.city}
-          onChange={handleChange}
-          className="w-full p-2 border rounded"
-          required
-        />
-      </div>
+
+      {/* Total Price */}
       <div className="my-10">
-        <p className="text-gray-700">Total inclusive moms: <span className="font-bold">${total.toFixed(2)}</span></p>
+        <p className="text-gray-700">
+          Total inclusive moms: <span className="font-bold">${total.toFixed(2)}</span>
+        </p>
       </div>
-      <button type="submit" className="bg-green-500 text-white mb-20 px-4 py-3 rounded w-full sm:hidden font-bold">
-        Purchase
-      </button>
-    </form>
+    </div>
   );
 };
 
 CartCustomerForm.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
+  formData: PropTypes.shape({
+    fullName: PropTypes.string.isRequired,
+    phoneNumber: PropTypes.string.isRequired,
+    province: PropTypes.string.isRequired,
+    city: PropTypes.string.isRequired,
+    streetAddress: PropTypes.string.isRequired,
+    postalCode: PropTypes.string.isRequired,
+  }).isRequired,
+  onChange: PropTypes.func.isRequired,
   total: PropTypes.number.isRequired,
 };
 

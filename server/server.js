@@ -7,7 +7,7 @@ const cartRoutes = require('./routes/cart'); // Import cart routes
 const reviewsRoutes = require('./routes/reviews'); // Import reviews routes
 const recommendedRoutes = require('./routes/recommended'); // Import the recommended routes
 const shippingDetailsRoutes = require('./routes/shipping-details'); // Import shipping details routes
-const customersDetailsRoutes = require('./routes/customer-details'); // Import customer details routes
+const customersDetailsRoutes = require('./routes/customers'); // Import customer details routes
 const bcrypt = require('bcrypt'); // Import bcrypt for password hashing
 const bodyParser = require('body-parser'); // Import body-parser for parsing JSON
 
@@ -25,7 +25,8 @@ app.use('/api/cart', cartRoutes);
 app.use('/api/reviews', reviewsRoutes); // Add reviews routes
 app.use('/api/recommended', recommendedRoutes); // Use the recommended routes
 app.use('/api/shipping-details', shippingDetailsRoutes); // Use the shipping details routes
-app.use('/api/customers-details', customersDetailsRoutes); // Use the customer details routes
+app.use('/api/customers', customersDetailsRoutes); // Use the customer details routes
+console.log('Customers details route registered'); // Log when the route is registered
 
 app.get('/api/products/:id', (req, res) => {
   const product = db.prepare('SELECT * FROM furniture WHERE id = ?').get(req.params.id);
