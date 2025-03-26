@@ -7,7 +7,7 @@ const cartRoutes = require('./routes/cart'); // Import cart routes
 const reviewsRoutes = require('./routes/reviews'); // Import reviews routes
 const recommendedRoutes = require('./routes/recommended'); // Import the recommended routes
 const shippingDetailsRoutes = require('./routes/shipping-details'); // Import shipping details routes
-const customersDetailsRoutes = require('./routes/customers-details'); // Import customer details routes
+const customersDetailsRoutes = require('./routes/customer-details'); // Import customer details routes
 const bcrypt = require('bcrypt'); // Import bcrypt for password hashing
 const bodyParser = require('body-parser'); // Import body-parser for parsing JSON
 
