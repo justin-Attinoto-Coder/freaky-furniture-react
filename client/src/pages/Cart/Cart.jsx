@@ -65,7 +65,13 @@ const Cart = ({ cartItems, updateCartItem, deleteCartItem, recommendedItems }) =
         console.log('Customer details submitted successfully:', data);
         setSuccess(true); // Set success state
         alert('Customer details submitted successfully!'); // Optional success alert
-        navigate('/checkout-shipping'); // Navigate to /checkout-shipping
+        navigate('/checkout-shipping', {
+          state: {
+            customerDetails: formData,
+            cartItems: cartItems,
+            totalPrice: totalPrice,
+          },
+        }); // Navigate to /checkout-shipping with customer details
       })
       .catch((error) => {
         console.error('Error submitting customer details:', error);
