@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { FaArrowLeft, FaBoxOpen, FaCreditCard, FaClipboardCheck } from 'react-icons/fa';
+import { GoPackageDependents } from "react-icons/go";
 
 const provinces = [
   "Stockholm", "Västra Götaland", "Skåne", "Uppsala", "Södermanland", "Östergötland", "Jönköping", "Kronoberg", "Kalmar", "Gotland", "Blekinge", "Halland", "Värmland", "Örebro", "Västmanland", "Dalarna", "Gävleborg", "Västernorrland", "Jämtland", "Västerbotten", "Norrbotten"
@@ -81,7 +82,7 @@ const CheckoutShipping = () => {
           {/* Progress Bar */}
           <div className="flex items-center justify-between mb-8 mx-auto" style={{ maxWidth: '80%' }}>
             <div className="flex flex-col items-center">
-              <FaBoxOpen
+              <GoPackageDependents
                 className={`text-2xl ${
                   currentStep === 'shipping'
                     ? 'text-black border-2 border-black bg-white'
@@ -251,6 +252,32 @@ const CheckoutShipping = () => {
               <span>${totalPrice.toFixed(2)}</span>
             </li>
           </ul>
+
+          {/* Discount Code Form */}
+          <div className="mt-6">
+            <label className="block text-gray-700 font-bold mb-2">Discount Code</label>
+            <input
+              type="text"
+              placeholder="Enter discount code"
+              className="w-full p-2 border rounded"
+            />
+            <button className="mt-2 bg-blue-500 text-white px-4 py-2 rounded w-full">
+              Apply
+            </button>
+          </div>
+
+          {/* Newsletter Subscription */}
+          <div className="mt-8">
+            <label className="block text-gray-700 font-bold mb-2">Subscribe to Newsletter</label>
+            <input
+              type="email"
+              placeholder="Enter your email address"
+              className="w-full p-2 border rounded"
+            />
+            <button className="mt-2 bg-green-500 text-white px-4 py-2 rounded w-full">
+              Subscribe
+            </button>
+          </div>
         </div>
       </div>
     </div>
