@@ -87,6 +87,17 @@ db.prepare(`
   )
 `).run();
 
+// Create payment_details table if it doesn't exist
+db.prepare(`
+  CREATE TABLE IF NOT EXISTS payment_details (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    card_holder_name TEXT NOT NULL,
+    card_number TEXT NOT NULL, -- Encrypted
+    expiry_date TEXT NOT NULL,
+    cvv TEXT NOT NULL -- Encrypted
+  )
+`).run();
+
 // Automatically fill the recommended table if it's empty
 const recommendedCount = db.prepare('SELECT COUNT(*) AS count FROM recommended').get().count;
 if (recommendedCount === 0) {

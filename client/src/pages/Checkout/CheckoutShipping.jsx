@@ -316,7 +316,7 @@ const CheckoutShipping = () => {
             <div className="col-span-1 sm:col-span-2 flex sm:ml-auto">
               <button
                 type="submit"
-                className="mt-8 mb-8 w-md mx-auto sm:w-auto bg-black sm:bg-blue-500 text-white px-4 py-2 rounded-full sm:rounded sm:font-bold sm:text-xl"
+                className="mt-8 mb-8 w-md mx-auto sm:w-auto bg-black sm:bg-blue-500 text-white px-4 py-2 rounded-full sm:rounded sm:font-bold sm:text-lg"
               >
                 {/* Mobile Text */}
                 <span className="block sm:hidden">Confirm</span>
