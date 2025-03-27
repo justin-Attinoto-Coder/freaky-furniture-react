@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { FaArrowLeft, FaBoxOpen, FaCreditCard, FaClipboardCheck } from 'react-icons/fa';
-import { GoPackageDependents } from "react-icons/go";
 
 const provinces = [
   "Stockholm", "Västra Götaland", "Skåne", "Uppsala", "Södermanland", "Östergötland", "Jönköping", "Kronoberg", "Kalmar", "Gotland", "Blekinge", "Halland", "Värmland", "Örebro", "Västmanland", "Dalarna", "Gävleborg", "Västernorrland", "Jämtland", "Västerbotten", "Norrbotten"
@@ -15,7 +14,6 @@ const CheckoutShipping = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  // Access customer details, cart items, and total price passed from Cart.jsx
   const customerDetails = location.state?.customerDetails || {};
   const cartItems = location.state?.cartItems || [];
   const totalPrice = location.state?.totalPrice || 0;
@@ -27,20 +25,58 @@ const CheckoutShipping = () => {
     city: '',
     streetAddress: '',
     postalCode: '',
+    shippingMethod: '',
+    carrier: '',
+    deliveryTime: '',
   });
 
-  const [currentStep, setCurrentStep] = useState('shipping');
+  const carrierDeliveryTimes = {
+    "DHL Express": "08:00-16:00",
+    "EarlyBird": "02:20-06:00",
+    "AirMe": "17:00-22:00",
+    "DHL": "08:00-16:00",
+    "Schenker Parcel": "08:00-16:00",
+    "InstaBox": "08:00-16:00",
+    "PostNord": "08:00-16:00",
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setShippingDetails((prevDetails) => ({
-      ...prevDetails,
-      [name]: value,
-    }));
+
+    setShippingDetails((prevDetails) => {
+      const updatedDetails = { ...prevDetails, [name]: value };
+
+      // Automatically set delivery time based on carrier
+      if (name === "carrier") {
+        updatedDetails.deliveryTime = carrierDeliveryTimes[value] || "";
+      }
+
+      return updatedDetails;
+    });
+  };
+
+  const getCarrierOptions = () => {
+    switch (shippingDetails.shippingMethod) {
+      case 'Home Delivery':
+        return ['AirMe', 'EarlyBird', 'PostNord'];
+      case 'Pickup at Service Point':
+        return ['DHL', 'Schenker Parcel', 'InstaBox'];
+      case 'Express Shipping':
+        return ['DHL Express', 'AirMe', 'EarlyBird'];
+      default:
+        return [];
+    }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    // Validate the form fields
+    const isFormValid = Object.values(shippingDetails).every((field) => field.trim() !== '');
+    if (!isFormValid) {
+      console.error('Form validation failed. Please fill out all fields.');
+      return;
+    }
 
     fetch('http://localhost:8000/api/shipping-details', {
       method: 'POST',
@@ -56,7 +92,6 @@ const CheckoutShipping = () => {
         return response.json();
       })
       .then(() => {
-        setCurrentStep('payment');
         navigate('/checkout-payment');
       })
       .catch((error) => {
@@ -68,45 +103,45 @@ const CheckoutShipping = () => {
     <div className="container mx-auto px-4 py-4">
       {/* Header Section */}
       <div className="flex items-center justify-center mb-4 relative">
-        <FaArrowLeft
-          className="text-xl cursor-pointer absolute left-4 text-blue-500"
+        <div
+          className="absolute left-4 flex items-center cursor-pointer text-blue-500"
           onClick={() => navigate('/cart')}
-        />
+        >
+          <FaArrowLeft className="text-xl" />
+          <span className="hidden sm:inline-flex ml-2 text-lg font-medium">Return to Cart</span>
+        </div>
         <h2 className="text-xl sm:text-2xl font-bold">Checkout</h2>
+      </div>
+
+      {/* Progress Bar */}
+      <div className="flex items-center justify-between mb-8 mx-auto" style={{ maxWidth: '80%' }}>
+        {/* Shipping Step */}
+        <div className="flex flex-col items-center">
+          <FaBoxOpen
+            className="text-2xl text-black border-2 border-black bg-white p-2 rounded-full"
+          />
+          <span className="text-sm font-bold">Shipping</span>
+        </div>
+        <div className="flex-grow border-t border-gray-300 mx-2"></div>
+        {/* Payment Step */}
+        <div className="flex flex-col items-center">
+          <FaCreditCard className="text-2xl text-gray-300" />
+          <span className="text-sm text-gray-300 font-bold">Payment</span>
+        </div>
+        <div className="flex-grow border-t border-gray-300 mx-2"></div>
+        {/* Review Step */}
+        <div className="flex flex-col items-center">
+          <FaClipboardCheck className="text-2xl text-gray-300" />
+          <span className="text-sm text-gray-300 font-bold">Review</span>
+        </div>
       </div>
 
       {/* Main Content */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
         {/* Left Column: Shipping Form */}
         <div className="sm:col-span-2">
-          {/* Progress Bar */}
-          <div className="flex items-center justify-between mb-8 mx-auto" style={{ maxWidth: '80%' }}>
-            <div className="flex flex-col items-center">
-              <GoPackageDependents
-                className={`text-2xl ${
-                  currentStep === 'shipping'
-                    ? 'text-black border-2 border-black bg-white'
-                    : 'text-gray-300'
-                } p-2 rounded-full`}
-              />
-              <span className="text-sm font-bold">Shipping</span>
-            </div>
-            <div className="flex-grow border-t border-gray-300 mx-2"></div>
-            <div className="flex flex-col items-center">
-              <FaCreditCard className="text-2xl text-gray-300" />
-              <span className="text-sm text-gray-300 font-bold">Payment</span>
-            </div>
-            <div className="flex-grow border-t border-gray-300 mx-2"></div>
-            <div className="flex flex-col items-center">
-              <FaClipboardCheck className="text-2xl text-gray-300" />
-              <span className="text-sm text-gray-300 font-bold">Review</span>
-            </div>
-          </div>
-
-          {/* Section Title */}
           <h3 className="text-xl sm:text-2xl text-center font-bold mb-4">Enter Shipping Details</h3>
 
-          {/* Form Section */}
           <form onSubmit={handleSubmit} className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {/* Full Name */}
             <div>
@@ -202,6 +237,55 @@ const CheckoutShipping = () => {
               />
             </div>
 
+            {/* Shipping Method */}
+            <div>
+              <label className="block text-gray-700 font-bold">Shipping Method *</label>
+              <select
+                name="shippingMethod"
+                value={shippingDetails.shippingMethod}
+                onChange={handleChange}
+                className="w-full p-2 bg-gray-100 rounded-xl"
+                required
+              >
+                <option value="">Select Shipping Method</option>
+                <option value="Home Delivery">Home Delivery</option>
+                <option value="Pickup at Service Point">Pickup at Service Point</option>
+                <option value="Express Shipping">Express Shipping</option>
+              </select>
+            </div>
+
+            {/* Carrier */}
+            <div>
+              <label className="block text-gray-700 font-bold">Carrier *</label>
+              <select
+                name="carrier"
+                value={shippingDetails.carrier}
+                onChange={handleChange}
+                className="w-full p-2 bg-gray-100 rounded-xl"
+                required
+                disabled={!shippingDetails.shippingMethod} // Disable if no shipping method is selected
+              >
+                <option value="">Select Carrier</option>
+                {getCarrierOptions().map((carrier) => (
+                  <option key={carrier} value={carrier}>
+                    {carrier}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Delivery Time */}
+            <div>
+              <label className="block text-gray-700 font-bold">Delivery Time *</label>
+              <input
+                type="text"
+                name="deliveryTime"
+                value={shippingDetails.deliveryTime}
+                readOnly
+                className="w-full p-2 bg-gray-100 rounded-xl"
+              />
+            </div>
+
             {/* Checkbox for Same Address */}
             <div className="col-span-1 sm:col-span-2 mt-4">
               <label className="inline-flex items-center">
@@ -217,6 +301,9 @@ const CheckoutShipping = () => {
                         city: customerDetails.city || '',
                         streetAddress: customerDetails.streetAddress || '',
                         postalCode: customerDetails.postalCode || '',
+                        shippingMethod: '',
+                        carrier: '',
+                        deliveryTime: '',
                       });
                     }
                   }}
@@ -229,9 +316,9 @@ const CheckoutShipping = () => {
             <div className="col-span-1 sm:col-span-2 flex justify-end">
               <button
                 type="submit"
-                className="mt-8 bg-blue-500 text-white px-4 py-2 rounded w-full sm:w-auto"
+                className="mt-8 w-full sm:w-auto bg-black sm:bg-blue-500 text-white px-4 py-2 rounded-full"
               >
-                Continue to Payment Method
+                Confirm
               </button>
             </div>
           </form>
