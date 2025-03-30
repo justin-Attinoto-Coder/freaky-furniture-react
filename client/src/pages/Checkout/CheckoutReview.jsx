@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import CheckoutReviewProgressBar from '../../components/CheckoutReview/CheckoutReviewProgressBar';
 import ReviewProductCard from '../../components/CheckoutReview/ReviewProductCard';
 import OrderSummary from '../../components/CheckoutReview/OrderSummary';
 
-const CheckoutReview = () => {
+const CheckoutReview = ({ clearCartAfterCheckout }) => {
   const [cartItems, setCartItems] = useState([]);
   const [shippingMethod] = useState('home'); // Default shipping method
   const navigate = useNavigate();
@@ -45,8 +46,13 @@ const CheckoutReview = () => {
     console.log('Confirm Order button clicked');
     axios.delete('http://localhost:8000/api/cart/clear')
       .then(() => {
-        console.log('Cart cleared');
-        navigate('/checkout-confirmation');
+        console.log('Cart cleared in the backend');
+        if (clearCartAfterCheckout) {
+          clearCartAfterCheckout(); // Clear the frontend cart state if provided
+        } else {
+          setCartItems([]); // Fallback: Clear the cart state directly
+        }
+        navigate('/checkout-confirmation'); // Navigate to the confirmation page
       })
       .catch(error => {
         console.error('Error clearing cart:', error);
@@ -78,6 +84,9 @@ const CheckoutReview = () => {
       />
     </div>
   );
+};
+CheckoutReview.propTypes = {
+  clearCartAfterCheckout: PropTypes.func,
 };
 
 export default CheckoutReview;

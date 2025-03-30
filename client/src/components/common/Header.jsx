@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { FaHeart, FaUser, FaShoppingBasket } from 'react-icons/fa';
@@ -12,7 +12,13 @@ const Header = ({ handleSearch, cartItems }) => {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  // Calculate the total number of items in the cart
   const totalItemsInCart = cartItems.reduce((total, item) => total + item.quantity, 0);
+
+  // Debug: Log cartItems whenever it updates
+  useEffect(() => {
+    console.log('cartItems updated in Header:', cartItems);
+  }, [cartItems]);
 
   return (
     <header className="relative flex flex-col justify-between sm:text-sm md:text-xl items-center p-4 bg-white shadow-md">

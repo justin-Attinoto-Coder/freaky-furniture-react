@@ -4,10 +4,9 @@ import { Link } from 'react-router-dom';
 const BasketProductCard = ({ item, updateCartItem, deleteCartItem }) => {
   const handleQuantityChange = (amount) => {
     const newQuantity = Math.max(1, item.quantity + amount);
-    updateCartItem(item.urlSlug, newQuantity);
+    console.log('Updating quantity for:', item.productId, 'newQuantity:', newQuantity); // Debug log
+    updateCartItem(item.productId, newQuantity); // Pass productId to updateCartItem
   };
-
-  console.log('Item:', item); // Log the entire item object to the console
 
   return (
     <div className="relative flex justify-between items-center mb-4 border p-4 rounded">
@@ -40,7 +39,7 @@ const BasketProductCard = ({ item, updateCartItem, deleteCartItem }) => {
           <div className="flex flex-col justify-center">
             <p className="text-gray-700">{item.brand}</p> {/* Company brand */}
             <p className="font-bold text-xl">{item.name}</p> {/* Product name */}
-            <p className="text-gray-700">${item.price.toFixed(2)}</p> {/* Unit price */}
+            <p className="text-gray-700">${(item.price || 0).toFixed(2)}</p> {/* Unit price */}
           </div>
         </div>
       </Link>
@@ -48,13 +47,13 @@ const BasketProductCard = ({ item, updateCartItem, deleteCartItem }) => {
         <button
           onClick={(e) => {
             e.preventDefault();
-            deleteCartItem(item.urlSlug);
+            deleteCartItem(item.productId); // Use productId instead of urlSlug
           }}
           className="absolute top-1 right-1 text-black"
         >
           X
         </button>
-        <p className="font-bold text-xl">${(item.price * item.quantity).toFixed(2)}</p> {/* Total price */}
+        <p className="font-bold text-xl">${((item.price || 0) * item.quantity).toFixed(2)}</p> {/* Total price */}
       </div>
     </div>
   );
@@ -62,12 +61,13 @@ const BasketProductCard = ({ item, updateCartItem, deleteCartItem }) => {
 
 BasketProductCard.propTypes = {
   item: PropTypes.shape({
-    urlSlug: PropTypes.string.isRequired,
+    productId: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
-    brand: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
     quantity: PropTypes.number.isRequired,
-    image: PropTypes.string.isRequired, // Ensure image is included in the item prop
+    image: PropTypes.string.isRequired,
+    brand: PropTypes.string,
+    urlSlug: PropTypes.string.isRequired,
   }).isRequired,
   updateCartItem: PropTypes.func.isRequired,
   deleteCartItem: PropTypes.func.isRequired,

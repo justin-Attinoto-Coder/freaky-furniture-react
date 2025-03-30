@@ -74,7 +74,7 @@ function App() {
     fetchRecommendedItems();
   }, []);
 
-  const addToCart = (item) => {
+  const addToCart = useCallback((item) => {
     setCartItems((prevItems) => {
       const existingItem = prevItems.find((cartItem) => cartItem.id === item.id);
       if (existingItem) {
@@ -85,6 +85,11 @@ function App() {
         return [...prevItems, { ...item, quantity: 1 }];
       }
     });
+  }, []);
+
+  const clearCartAfterCheckout = () => {
+    console.log('Cart cleared in the frontend'); // Debug log
+    setCartItems([]); // Clear the cart in the frontend
   };
 
   const location = useLocation();
@@ -120,7 +125,7 @@ function App() {
           <Route path="/category/:category" element={<Category furnitureItems={furnitureItems} />} />
           <Route path="/checkout-shipping" element={<CheckoutShipping />} />
           <Route path="/checkout-payment" element={<CheckoutPayment />} />
-          <Route path="/checkout-review" element={<CheckoutReview />} />
+          <Route path="/checkout-review" element={<CheckoutReview clearCartAfterCheckout={clearCartAfterCheckout} />} />
           <Route path="/checkout-confirmation" element={<CheckoutConfirmation />} />
           <Route path="/search" element={<Search searchResults={searchResults} searchQuery={searchQuery} handleSearch={handleSearch} />} />
           <Route path="/admin/*" element={<Admin />} />

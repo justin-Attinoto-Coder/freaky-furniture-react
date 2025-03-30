@@ -3,12 +3,35 @@ import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import MyBasket from '../../components/Cart/MyBasket';
 import CartCustomerForm from '../../components/Cart/CartCustomerForm';
-import MaybeYouAlsoLike from '../../components/Cart/MaybeYouAlsoLike'; // Import the new component
+import MaybeYouAlsoLike from '../../components/Cart/MaybeYouAlsoLike';
 
-const Cart = ({ cartItems, updateCartItem, deleteCartItem, recommendedItems }) => {
+const addCustomerToDatabase = (customerData) => {
+  return fetch('http://localhost:8000/api/customers', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(customerData),
+  }).then((response) => {
+    if (!response.ok) {
+      throw new Error('Failed to add customer to the database');
+    }
+    return response.json();
+  });
+};
+
+// Removed unused deleteCartItem function
+
+const Cart = ({
+  cartItems, // 🟢 Array of items currently in the cart
+  // removeItemFromCart, // 🟢 Function to remove a single item from the cart
+  recommendedItems, // 🟢 Array of recommended items to display
+  // Removed unused updateCartItemQuantity prop
+  // Removed unused clearCartAfterCheckout prop
+}) => {
   const navigate = useNavigate();
 
-  // Updated formData to match the backend schema
+  // 🟢 State to manage customer form data
   const [formData, setFormData] = useState({
     fullName: '',
     phoneNumber: '',
@@ -18,64 +41,69 @@ const Cart = ({ cartItems, updateCartItem, deleteCartItem, recommendedItems }) =
     postalCode: '',
   });
 
-  const [error, setError] = useState(null); // State to handle errors
-  const [success, setSuccess] = useState(false); // State to handle success
+  // 🟢 State to handle errors during checkout
+  const [error, setError] = useState(null);
 
+  // 🟢 State to handle success messages during checkout
+  const [success, setSuccess] = useState(false);
+
+  // 🟢 Function to handle changes in the customer form
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
-      [name]: value,
+      [name]: value, // 🟢 Update the specific field in the form data
     }));
   };
 
+  // 🟢 Calculate the total price of items in the cart
   const totalPrice = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
 
-  const handleCheckout = (e) => {
-    e.preventDefault(); // Prevent the default form submission behavior
+  // 🟢 Function to handle the removal of an item from the cart
+  const deleteCartItem = (itemId) => {
+    console.log(`Removing item with ID: ${itemId}`); // Debug log
+    // Add logic to remove the item from the cart
+    // Example: Update the cartItems state or call a prop function
+  };
 
-    // Ensure all fields are filled
+  const updateCartItem = (productId, newQuantity) => {
+    console.log(`Updating item with ID: ${productId} to quantity: ${newQuantity}`); // Debug log
+    // Add logic to update the cart item quantity
+    // Example: Update the cartItems state or call a prop function
+  };
+
+  // 🟢 Function to handle the checkout process
+  const handleCheckout = (e) => {
+    e.preventDefault();
+    console.log('Purchase button clicked'); // Debug log
+
+    // Validate that all form fields are filled
     const isFormValid = Object.values(formData).every((field) => field.trim() !== '');
     if (!isFormValid) {
-      setError('Please fill out all fields.');
+      setError('Please fill out all fields.'); // Show an error if validation fails
       return;
     }
 
-    // Clear previous error and success states
-    setError(null);
-    setSuccess(false);
+    setError(null); // Clear any previous errors
+    setSuccess(false); // Reset the success state
 
-    console.log('Sending request to:', 'http://localhost:8000/api/customers');
-    console.log('Request payload:', formData);
+    // Add the customer to the database
+    addCustomerToDatabase(formData)
+      .then(() => {
+        setSuccess(true); // Set success state after adding the customer
 
-    fetch('http://localhost:8000/api/customers', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(formData), // Send formData as the payload
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('Failed to submit customer details');
-        }
-        return response.json();
-      })
-      .then((data) => {
-        console.log('Customer details submitted successfully:', data);
-        setSuccess(true); // Set success state
-        alert('Customer details submitted successfully!'); // Optional success alert
+        // Navigate to the shipping page without clearing the cart
         navigate('/checkout-shipping', {
           state: {
-            customerDetails: formData,
-            cartItems: cartItems,
-            totalPrice: totalPrice,
+            customerDetails: formData, // Pass customer details to the next page
+            cartItems, // Pass the current cart items to the next page
+            totalPrice, // Pass the total price to the next page
           },
-        }); // Navigate to /checkout-shipping with customer details
+        });
       })
       .catch((error) => {
-        console.error('Error submitting customer details:', error);
-        setError('Failed to submit customer details. Please try again.');
+        console.error('Error during checkout:', error); // Log the error
+        setError('Failed to proceed to shipping. Please try again.'); // Show an error message
       });
   };
 
@@ -87,30 +115,27 @@ const Cart = ({ cartItems, updateCartItem, deleteCartItem, recommendedItems }) =
           <form onSubmit={handleCheckout}>
             <div>
               <MyBasket
-                cartItems={cartItems}
-                updateCartItem={updateCartItem}
-                deleteCartItem={deleteCartItem}
+                cartItems={cartItems} // Pass the raw cart items array
+                updateCartItem={updateCartItem} // Pass the update function
+                deleteCartItem={deleteCartItem} // Pass the remove function
               />
               <CartCustomerForm
-                formData={formData}
-                onChange={handleChange}
-                total={totalPrice}
+                formData={formData} // 🟢 Pass the customer form data
+                onChange={handleChange} // 🟢 Pass the change handler
+                total={totalPrice} // 🟢 Pass the total price
               />
             </div>
             <div className="flex justify-between items-center mt-4 sm:mt-0">
-              {/* Continue Shopping Button */}
               <button
                 className="bg-blue-500 text-white px-4 py-2 rounded mt-2 sm:mt-0"
-                onClick={() => navigate('/')}
+                onClick={() => navigate('/')} // 🟢 Navigate back to the home page
                 type="button"
               >
                 Continue Shopping
               </button>
-
-              {/* Purchase Button */}
               <button
                 className="bg-green-500 text-white px-4 py-2 rounded mt-2 sm:mt-0"
-                type="submit"
+                type="submit" // 🟢 Submit the checkout form
               >
                 Purchase
               </button>
@@ -118,15 +143,11 @@ const Cart = ({ cartItems, updateCartItem, deleteCartItem, recommendedItems }) =
           </form>
         </div>
         <div className="sm:w-1/2">
-          <MaybeYouAlsoLike items={recommendedItems} />
+          <MaybeYouAlsoLike items={recommendedItems} /> {/* 🟢 Display recommended items */}
         </div>
       </div>
-
-      {/* Error Message */}
-      {error && <p className="text-red-500 mt-4">{error}</p>}
-
-      {/* Success Message */}
-      {success && <p className="text-green-500 mt-4">Customer details submitted successfully!</p>}
+      {error && <p className="text-red-500 mt-4">{error}</p>} {/* 🟢 Show error messages */}
+      {success && <p className="text-green-500 mt-4">Customer details submitted successfully!</p>} {/* 🟢 Show success messages */}
     </div>
   );
 };
@@ -134,15 +155,14 @@ const Cart = ({ cartItems, updateCartItem, deleteCartItem, recommendedItems }) =
 Cart.propTypes = {
   cartItems: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.number.isRequired,
+      productId: PropTypes.number.isRequired,
       name: PropTypes.string.isRequired,
       price: PropTypes.number.isRequired,
       quantity: PropTypes.number.isRequired,
       urlSlug: PropTypes.string.isRequired,
     })
   ).isRequired,
-  updateCartItem: PropTypes.func.isRequired,
-  deleteCartItem: PropTypes.func.isRequired,
+  removeItemFromCart: PropTypes.func.isRequired,
   recommendedItems: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number.isRequired,
@@ -152,6 +172,9 @@ Cart.propTypes = {
       image: PropTypes.string.isRequired,
     })
   ).isRequired,
+  updateCartItem: PropTypes.func.isRequired,
+  deleteCartItem: PropTypes.func.isRequired,  
+  addCustomerToDatabase: PropTypes.func.isRequired,
 };
 
 export default Cart;

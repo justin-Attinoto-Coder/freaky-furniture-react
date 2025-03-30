@@ -33,20 +33,41 @@ router.post('/', (req, res) => {
 });
 
 // Update an item in the cart
-router.put('/:id', (req, res) => {
-  const id = req.params.id;
-  const { quantity } = req.body;
-  const stmt = db.prepare('UPDATE cart SET quantity = ? WHERE id = ?');
-  stmt.run(quantity, id);
-  res.sendStatus(200);
+router.put('/:productId', (req, res) => {
+  const productId = req.params.productId; // Use productId from the URL
+  const quantity = parseInt(req.body.quantity, 10); // Parse the quantity from the request body
+
+  console.log('PUT request received with:', { productId, quantity }); // Log the incoming data
+
+  try {
+    const stmt = db.prepare('UPDATE cart SET quantity = ? WHERE productId = ?'); // Use "productId" in the query
+    const result = stmt.run(quantity, productId);
+
+    console.log('SQL query result:', result); // Log the SQL query result
+
+    if (result.changes > 0) {
+      res.status(200).json({ message: 'Cart item updated successfully' });
+    } else {
+      console.error('No rows updated. Check if the productId exists.');
+      res.status(404).json({ error: 'Cart item not found' });
+    }
+  } catch (error) {
+    console.error('Error updating cart item:', error); // Log the error
+    res.status(500).json({ error: 'Failed to update cart item' });
+  }
 });
 
-// Delete an item from the cart
-router.delete('/:id', (req, res) => {
-  const id = req.params.id;
-  const stmt = db.prepare('DELETE FROM cart WHERE id = ?');
-  stmt.run(id);
-  res.sendStatus(200);
+// Clear the cart
+router.delete('/clear', (req, res) => {
+  try {
+    const stmt = db.prepare('DELETE FROM cart'); // Clear all rows in the cart table
+    const result = stmt.run(); // Execute the query
+    console.log('Rows deleted:', result.changes); // Log the number of rows deleted
+    res.status(200).json({ message: 'Cart cleared successfully' });
+  } catch (error) {
+    console.error('Error clearing cart:', error); // Log the error
+    res.status(500).json({ error: 'Failed to clear cart' });
+  }
 });
 
 module.exports = router;
