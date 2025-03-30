@@ -8,7 +8,7 @@ const MaybeYouAlsoLike = ({ items }) => {
 
   return (
     <div>
-      <h2 className="text-xl font-bold mb-4">Maybe You Also Like</h2>
+      <h2 className="text-xl font-bold mt-8 mb-4">Maybe You Also Like</h2>
       <div className="grid grid-cols-2 gap-4">
         {items.map((item) => (
           <RecommendedProductCard key={item.id} item={item} />
