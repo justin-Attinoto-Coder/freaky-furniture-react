@@ -9,7 +9,7 @@ const MyBasket = ({ cartItems, updateCartItem, deleteCartItem }) => {
       ) : (
         <ul>
           {cartItems.map((item) => (
-            <li key={item.urlSlug}>
+            <li key={item.id || item.productId}> {/* Ensure the key is unique */}
               <BasketProductCard
                 item={item}
                 updateCartItem={updateCartItem}
@@ -24,7 +24,18 @@ const MyBasket = ({ cartItems, updateCartItem, deleteCartItem }) => {
 };
 
 MyBasket.propTypes = {
-  cartItems: PropTypes.array.isRequired,
+  cartItems: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number,
+      productId: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+      price: PropTypes.number.isRequired,
+      quantity: PropTypes.number.isRequired,
+      image: PropTypes.string.isRequired,
+      brand: PropTypes.string,
+      urlSlug: PropTypes.string.isRequired,
+    })
+  ).isRequired,
   updateCartItem: PropTypes.func.isRequired,
   deleteCartItem: PropTypes.func.isRequired,
 };

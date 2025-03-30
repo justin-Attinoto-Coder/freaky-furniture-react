@@ -1,12 +1,17 @@
 import { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import ProductCard from '../../components/Common/ProductCard';
+import CheckoutReviewProgressBar from '../../components/CheckoutReview/CheckoutReviewProgressBar';
+import ReviewProductCard from '../../components/CheckoutReview/ReviewProductCard';
+import OrderSummary from '../../components/CheckoutReview/OrderSummary';
 
-const CheckoutReview = () => {
+const CheckoutReview = ({ clearCartAfterCheckout }) => {
   const [cartItems, setCartItems] = useState([]);
+  const [shippingMethod] = useState('home'); // Default shipping method
   const navigate = useNavigate();
 
+  // Fetch cart items from the API
   const fetchCartItems = () => {
     axios.get('http://localhost:8000/api/cart')
       .then(response => {
@@ -21,18 +26,33 @@ const CheckoutReview = () => {
     fetchCartItems();
   }, []);
 
-  const totalPrice = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
-  const shippingFee = 20; // Example shipping fee
-  const subtotal = totalPrice + shippingFee;
+  // Calculate subtotal and total prices
+  const subtotal = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
+  const shippingFee =
+    shippingMethod === 'home' ? 10 : shippingMethod === 'servicePoint' ? 0 : 25;
+  const grandTotal = subtotal + shippingFee;
 
+  // Handle quantity changes for products
+  const handleQuantityChange = (id, newQuantity) => {
+    setCartItems((prevItems) =>
+      prevItems.map((item) =>
+        item.id === id ? { ...item, quantity: Math.max(newQuantity, 1) } : item
+      )
+    );
+  };
+
+  // Handle order confirmation
   const handleConfirmOrder = () => {
     console.log('Confirm Order button clicked');
-    // Clear the cart
     axios.delete('http://localhost:8000/api/cart/clear')
       .then(() => {
-        console.log('Cart cleared');
-        // Navigate to the confirmation page
-        navigate('/checkout-confirmation');
+        console.log('Cart cleared in the backend');
+        if (clearCartAfterCheckout) {
+          clearCartAfterCheckout(); // Clear the frontend cart state if provided
+        } else {
+          setCartItems([]); // Fallback: Clear the cart state directly
+        }
+        navigate('/checkout-confirmation'); // Navigate to the confirmation page
       })
       .catch(error => {
         console.error('Error clearing cart:', error);
@@ -40,32 +60,33 @@ const CheckoutReview = () => {
   };
 
   return (
-    <div className="container mx-auto px-4">
-      <h2 className="text-2xl font-bold mb-4">Review Your Order</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+    <div className="container mx-auto px-4 pb-40"> {/* Increased bottom padding */}
+      {/* Progress Bar */}
+      <CheckoutReviewProgressBar />
+
+      {/* Review Product Cards */}
+      <div className="mt-4 mb-24"> {/* Added bottom margin to avoid overlap with OrderSummary */}
         {cartItems.map((item) => (
-          <ProductCard key={item.id} product={item} />
+          <ReviewProductCard
+            key={item.id}
+            product={item}
+            handleQuantityChange={handleQuantityChange}
+          />
         ))}
       </div>
-      <div className="mt-8">
-        <div className="flex justify-between mb-2">
-          <span>Total Price:</span>
-          <span>${totalPrice.toFixed(2)}</span>
-        </div>
-        <div className="flex justify-between mb-2">
-          <span>Shipping Fee:</span>
-          <span>${shippingFee.toFixed(2)}</span>
-        </div>
-        <div className="flex justify-between mb-2">
-          <span>Subtotal:</span>
-          <span>${subtotal.toFixed(2)}</span>
-        </div>
-        <button onClick={handleConfirmOrder} className="bg-blue-500 text-white px-4 py-2 rounded mt-4">
-          Confirm Order
-        </button>
-      </div>
+
+      {/* Order Summary */}
+      <OrderSummary
+        subtotal={subtotal}
+        shippingFee={shippingFee}
+        grandTotal={grandTotal}
+        handleConfirmOrder={handleConfirmOrder}
+      />
     </div>
   );
+};
+CheckoutReview.propTypes = {
+  clearCartAfterCheckout: PropTypes.func,
 };
 
 export default CheckoutReview;
