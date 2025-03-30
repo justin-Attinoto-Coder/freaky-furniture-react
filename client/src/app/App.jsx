@@ -126,7 +126,23 @@ function App() {
           <Route path="/checkout-shipping" element={<CheckoutShipping />} />
           <Route path="/checkout-payment" element={<CheckoutPayment />} />
           <Route path="/checkout-review" element={<CheckoutReview clearCartAfterCheckout={clearCartAfterCheckout} />} />
-          <Route path="/checkout-confirmation" element={<CheckoutConfirmation />} />
+          <Route
+            path="/checkout-confirmation"
+            element={
+              <CheckoutConfirmation
+                customerName="John Doe"
+                shippingAddress="123 Main Street, Springfield, IL"
+                billingAddress="123 Main Street, Springfield, IL"
+                shippingMethod="Home Delivery"
+                paymentMethod="Credit Card"
+                orderSummary={{
+                  subtotal: 120.99,
+                  shippingFee: 10.0,
+                  grandTotal: 130.99,
+                }}
+              />
+            }
+          />
           <Route path="/search" element={<Search searchResults={searchResults} searchQuery={searchQuery} handleSearch={handleSearch} />} />
           <Route path="/admin/*" element={<Admin />} />
           <Route path="/reviews/:productId" element={<AllReviews />} />

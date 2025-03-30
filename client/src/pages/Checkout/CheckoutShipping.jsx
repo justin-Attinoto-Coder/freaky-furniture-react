@@ -32,7 +32,7 @@ const CheckoutShipping = () => {
 
   const carrierDeliveryTimes = {
     "DHL Express": "08:00-16:00",
-    "EarlyBird": "02:20-06:00",
+    "EarlyBird": "01:00-07:00",
     "AirMe": "17:00-22:00",
     "DHL": "08:00-16:00",
     "Schenker Parcel": "08:00-16:00",
