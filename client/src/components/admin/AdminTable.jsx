@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
-import { FaTrash } from 'react-icons/fa'; // Import the trash bin icon
+import { FaEdit, FaTrash } from 'react-icons/fa'; // Import the edit and trash bin icons
 
 const AdminTable = () => {
   const navigate = useNavigate(); // Initialize useNavigate
@@ -12,6 +12,16 @@ const AdminTable = () => {
       .then(data => setFurniture(data))
       .catch(error => console.error('Error fetching furniture data:', error));
   }, []);
+
+  const handleEdit = (id) => {
+    console.log('Edit product with ID:', id);
+    // Navigate to edit page or open modal
+  };
+
+  const handleDelete = (id) => {
+    console.log('Delete product with ID:', id);
+    // Show confirmation and delete product
+  };
 
   return (
     <div className="w-3/4 p-4">
@@ -41,8 +51,17 @@ const AdminTable = () => {
               <td className="py-2 px-4 border-b">{item.name}</td>
               <td className="py-2 px-4 border-b">{item.sku}</td>
               <td className="py-2 px-4 border-b">{item.price}</td>
-              <td className="py-2 px-4 border-b">
-                <button className="bg-red-500 text-white py-1 px-2 rounded hover:bg-red-700">
+              <td className="py-2 px-4 border-b text-center">
+                <button
+                  onClick={() => handleEdit(item.id)}
+                  className="text-blue-500 hover:text-blue-700 mr-2"
+                >
+                  <FaEdit />
+                </button>
+                <button
+                  onClick={() => handleDelete(item.id)}
+                  className="text-red-500 hover:text-red-700"
+                >
                   <FaTrash />
                 </button>
               </td>

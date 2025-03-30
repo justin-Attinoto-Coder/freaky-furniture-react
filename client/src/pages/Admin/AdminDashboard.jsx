@@ -6,11 +6,17 @@ import AdminNewProduct from './AdminNewProduct';
 
 const Admin = () => {
   return (
-    <div className="admin-page flex flex-col min-h-screen">
+    <div className="admin-page flex flex-col min-h-screen bg-gray-100">
+      {/* Topbar */}
       <AdminTopbar />
+
+      {/* Main Content */}
       <div className="flex flex-1">
+        {/* Sidebar */}
         <AdminSidebar />
-        <div className="flex-1 p-4">
+
+        {/* Content Area */}
+        <div className="flex-1 p-6">
           <Routes>
             <Route path="products" element={<AdminTable />} />
             <Route path="products/new" element={<AdminNewProduct />} />
