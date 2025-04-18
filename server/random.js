@@ -101,6 +101,6 @@ function createRandomCustomers(count) {
 }
 
 // Clear tables and create random data
-clearTables();
+/* clearTables(); */
 createRandomProducts(1000);
 createRandomCustomers(100); // Create 100 random customers

@@ -98,6 +98,16 @@ db.prepare(`
   )
 `).run();
 
+// Create users table if it doesn't exist
+db.prepare(`
+  CREATE TABLE IF NOT EXISTS users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    username TEXT UNIQUE NOT NULL,
+    password TEXT NOT NULL,
+    role TEXT NOT NULL CHECK (role IN ('user', 'admin'))
+  )
+`).run();
+
 // Automatically fill the recommended table if it's empty
 const recommendedCount = db.prepare('SELECT COUNT(*) AS count FROM recommended').get().count;
 if (recommendedCount === 0) {
@@ -106,6 +116,25 @@ if (recommendedCount === 0) {
   furnitureItems.forEach(item => {
     insertRecommended.run(item.id);
   });
+}
+
+// Automatically populate the users table if it's empty
+const userCount = db.prepare('SELECT COUNT(*) AS count FROM users').get().count;
+if (userCount === 0) {
+  const insertUser = db.prepare('INSERT INTO users (username, password, role) VALUES (?, ?, ?)');
+  const bcrypt = require('bcryptjs');
+
+  // Generate hashed passwords
+  const hashedAdminPassword = bcrypt.hashSync('admin123', 10);
+  const hashedUserPassword = bcrypt.hashSync('user123', 10);
+
+  // Insert 10 users (1 admin and 9 regular users)
+  insertUser.run('admin', hashedAdminPassword, 'admin');
+  for (let i = 1; i <= 9; i++) {
+    insertUser.run(`user${i}`, hashedUserPassword, 'user');
+  }
+
+  console.log('Users table populated with 10 users (including an admin).');
 }
 
 module.exports = db;

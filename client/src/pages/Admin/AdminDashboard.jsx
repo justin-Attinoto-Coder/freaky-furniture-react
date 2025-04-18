@@ -3,6 +3,7 @@ import AdminSidebar from '../../components/Admin/AdminSidebar';
 import AdminTopbar from '../../components/Admin/AdminTopbar';
 import AdminTable from '../../components/Admin/AdminTable';
 import AdminNewProduct from './AdminNewProduct';
+import AdminUsersTable from '../../components/Admin/AdminUsersTable';
 
 const Admin = () => {
   return (
@@ -20,6 +21,7 @@ const Admin = () => {
           <Routes>
             <Route path="products" element={<AdminTable />} />
             <Route path="products/new" element={<AdminNewProduct />} />
+            <Route path="users" element={<AdminUsersTable />} />
           </Routes>
         </div>
       </div>

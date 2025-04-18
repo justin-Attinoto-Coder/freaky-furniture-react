@@ -15,6 +15,8 @@ import Admin from '../pages/Admin/AdminDashboard';
 import AllReviews from '../pages/ProductDetails/AllReviews/AllReviews';
 import Category from '../pages/Category/Category';
 import axios from 'axios';
+import UserDashboard from '../components/Admin/UserDashboard'; // Import the test component
+import LoginPage from '../components/Admin/LoginPage'; // Import your login page
 
 function App() {
   const [searchResults, setSearchResults] = useState([]);
@@ -146,6 +148,8 @@ function App() {
           <Route path="/search" element={<Search searchResults={searchResults} searchQuery={searchQuery} handleSearch={handleSearch} />} />
           <Route path="/admin/*" element={<Admin />} />
           <Route path="/reviews/:productId" element={<AllReviews />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/user-dashboard" element={<UserDashboard />} />
         </Routes>
       </div>
       {!isAdminRoute && <CommonAccordion />} {/* Include the Accordion component above the Footer */}
