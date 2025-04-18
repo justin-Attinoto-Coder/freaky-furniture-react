@@ -34,7 +34,10 @@ const Header = ({ handleSearch, cartItems }) => {
         </div>
         <div className="flex items-center ml-auto relative">
           <FaHeart className="mx-2 cursor-pointer text-2xl" />
-          <FaUser className="mx-2 cursor-pointer text-2xl" />
+          {/* Wrap FaUser with Link to navigate to /login */}
+          <Link to="/login">
+            <FaUser className="mx-2 cursor-pointer text-2xl" />
+          </Link>
           <Link to="/cart" className="relative">
             <FaShoppingBasket className="mx-2 cursor-pointer text-2xl" />
             {totalItemsInCart > 0 && (

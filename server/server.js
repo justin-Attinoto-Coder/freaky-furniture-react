@@ -10,6 +10,7 @@ const recommendedRoutes = require('./routes/recommended'); // Import the recomme
 const shippingDetailsRoutes = require('./routes/shipping-details'); // Import shipping details routes
 const customersDetailsRoutes = require('./routes/customers'); // Import customer details routes
 const paymentDetailsRoutes = require('./routes/payment-details'); // Import payment details routes
+const userRoutes = require('./routes/userRoutes'); // Import user routes
 const bodyParser = require('body-parser'); // Import body-parser for parsing JSON
 
 const app = express();
@@ -28,6 +29,7 @@ app.use('/api/recommended', recommendedRoutes); // Use the recommended routes
 app.use('/api/shipping-details', shippingDetailsRoutes); // Use the shipping details routes
 app.use('/api/customers', customersDetailsRoutes); // Use the customer details routes
 app.use('/api/payment-details', paymentDetailsRoutes); // Use the payment details routes
+app.use('/api/users', userRoutes); // Add the user routes
 console.log('Payment details route registered'); // Log when the route is registered
 
 app.get('/api/products/:id', (req, res) => {
