@@ -10,7 +10,7 @@ import CheckoutShipping from '../pages/Checkout/CheckoutShipping';
 import CheckoutPayment from '../pages/Checkout/CheckoutPayment';
 import CheckoutReview from '../pages/Checkout/CheckoutReview';
 import CheckoutConfirmation from '../pages/Checkout/CheckoutConfirmation';
-import Search from '../pages/search/Search';
+import Search from '../pages/Search/Search';
 import Admin from '../pages/Admin/AdminDashboard';
 import AllReviews from '../pages/ProductDetails/AllReviews/AllReviews';
 import Category from '../pages/Category/Category';
