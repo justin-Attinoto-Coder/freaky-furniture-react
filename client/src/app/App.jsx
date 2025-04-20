@@ -15,7 +15,7 @@ import Admin from '../pages/Admin/AdminDashboard';
 import AllReviews from '../pages/ProductDetails/AllReviews/AllReviews';
 import Category from '../pages/Category/Category';
 import axios from 'axios';
-import UserDashboard from '../components/Admin/UserDashboard';
+import UserDashboard from '../components/admin/UserDashboard';
 import LoginPage from '../components/Admin/LoginPage';
 
 function App() {
