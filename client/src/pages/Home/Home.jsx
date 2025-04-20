@@ -1,12 +1,12 @@
-import Hero from '../../components/Home/Hero';
-import NewsSection from '../../components/Home/NewsSection';
+import Hero from '../../components/home/Hero';
+import NewsSection from '../../components/home/NewsSection';
 import PropTypes from 'prop-types';
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import Mobler from '../../components/Home/Mobler';
-import Forvaring from '../../components/Home/Forvaring';
-import Detaljer from '../../components/Home/Detaljer';
-import Textil from '../../components/Home/Textil';
+import Mobler from '../../components/home/Mobler';
+import Forvaring from '../../components/home/Forvaring';
+import Detaljer from '../../components/home/Detaljer';
+import Textil from '../../components/home/Textil';
 
 const Home = ({ furnitureItems }) => {
   const location = useLocation();
