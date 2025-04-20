@@ -2,8 +2,8 @@ import PropTypes from 'prop-types';
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-import FocusProductCard from '../../components/Product/FocusProductCard';
-import SimilarProducts from '../../components/Product/SimilarProducts';
+import FocusProductCard from '../../components/product/FocusProductCard';
+import SimilarProducts from '../../components/product/SimilarProducts';
 
 const ProductDetails = ({ furnitureItems }) => {
   const { urlSlug } = useParams();
