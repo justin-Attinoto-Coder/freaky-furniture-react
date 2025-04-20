@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import ProductCard from '../Common/ProductCard';
+import ProductCard from '../common/ProductCard';
 
 const Detaljer = ({ products }) => {
   if (!products || products.length === 0) {
