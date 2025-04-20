@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import CheckoutHeader from '../../components/common/CheckoutHeader';
-import ProgressBar from '../../components/common/ProgressBar';
+import CheckoutHeader from '../../components/Common/CheckoutHeader';
+import ProgressBar from '../../components/Common/ProgressBar';
 import PaymentForm from '../../components/CheckoutPayment/PaymentForm';
-import OrderSummary from '../../components/common/OrderSummary';
+import OrderSummary from '../../components/Common/OrderSummary';
 
 const CheckoutPayment = () => {
   const [paymentDetails, setPaymentDetails] = useState({

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import SearchResults from '../../components/common/SearchResults';
-import Modal from '../../components/common/Modal'; // Import the Modal component
+import SearchResults from '../../components/Common/SearchResults';
+import Modal from '../../components/Common/Modal'; // Import the Modal component
 
 const SearchPage = ({ searchResults, searchQuery }) => {
   const [sortOption, setSortOption] = useState('Namn');
