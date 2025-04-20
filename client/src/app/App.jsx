@@ -1,8 +1,8 @@
 import { BrowserRouter as Router, Route, Routes, useNavigate, useLocation } from 'react-router-dom';
 import { useState, useEffect, useCallback } from 'react';
-import Header from '../components/Common/Header';
-import Footer from '../components/Common/Footer';
-import CommonAccordion from '../components/Common/CommonAccordion';
+import Header from '../components/common/Header';
+import Footer from '../components/common/Footer';
+import CommonAccordion from '../components/common/CommonAccordion';
 import Home from '../pages/Home/Home';
 import Cart from '../pages/Cart/Cart';
 import ProductDetails from '../pages/ProductDetails/ProductDetails';
