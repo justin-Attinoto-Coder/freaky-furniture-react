@@ -16,7 +16,7 @@ import AllReviews from '../pages/ProductDetails/AllReviews/AllReviews';
 import Category from '../pages/Category/Category';
 import axios from 'axios';
 import UserDashboard from '../components/admin/UserDashboard';
-import LoginPage from '../components/Admin/LoginPage';
+import LoginPage from '../components/admin/LoginPage';
 
 function App() {
     const [searchResults, setSearchResults] = useState([]);
