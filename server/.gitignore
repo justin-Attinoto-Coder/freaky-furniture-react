@@ -118,6 +118,3 @@ public/
 
 # Temporary files created by npm link
 node_modules/.cache
-
-# Database files
-*.db
