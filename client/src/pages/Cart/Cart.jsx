@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import MyBasket from '../../components/Cart/MyBasket';
-import CartCustomerForm from '../../components/Cart/CartCustomerForm';
-import MaybeYouAlsoLike from '../../components/Cart/MaybeYouAlsoLike';
+import MyBasket from '../../components/cart/MyBasket';
+import CartCustomerForm from '../../components/cart/CartCustomerForm';
+import MaybeYouAlsoLike from '../../components/cart/MaybeYouAlsoLike';
 
 const addCustomerToDatabase = (customerData) => {
   return fetch('http://localhost:8000/api/customers', {
