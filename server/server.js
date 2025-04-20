@@ -1,17 +1,17 @@
-require('dotenv').config(); // Load environment variables from .env file
+require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const cors = require('cors');
-const db = require('./db/init'); // Import database initialization
-const furnitureRoutes = require('./routes/furniture'); // Import furniture routes
-const cartRoutes = require('./routes/cart'); // Import cart routes
-const reviewsRoutes = require('./routes/reviews'); // Import reviews routes
-const recommendedRoutes = require('./routes/recommended'); // Import the recommended routes
-const shippingDetailsRoutes = require('./routes/shipping-details'); // Import shipping details routes
-const customersDetailsRoutes = require('./routes/customers'); // Import customer details routes
-const paymentDetailsRoutes = require('./routes/payment-details'); // Import payment details routes
-const userRoutes = require('./routes/userRoutes'); // Import user routes
-const bodyParser = require('body-parser'); // Import body-parser for parsing JSON
+const db = require('./db/init');
+const furnitureRoutes = require('./routes/furniture');
+const cartRoutes = require('./routes/cart');
+const reviewsRoutes = require('./routes/reviews');
+const recommendedRoutes = require('./routes/recommended');
+const shippingDetailsRoutes = require('./routes/shipping-details');
+const customersDetailsRoutes = require('./routes/customers');
+const paymentDetailsRoutes = require('./routes/payment-details');
+const userRoutes = require('./routes/userRoutes');
+const bodyParser = require('body-parser');
 
 const app = express();
 const PORT = process.env.PORT || 8000;
@@ -24,44 +24,50 @@ app.use(bodyParser.json());
 // Use routes
 app.use('/api/furniture', furnitureRoutes);
 app.use('/api/cart', cartRoutes);
-app.use('/api/reviews', reviewsRoutes); // Add reviews routes
-app.use('/api/recommended', recommendedRoutes); // Use the recommended routes
-app.use('/api/shipping-details', shippingDetailsRoutes); // Use the shipping details routes
-app.use('/api/customers', customersDetailsRoutes); // Use the customer details routes
-app.use('/api/payment-details', paymentDetailsRoutes); // Use the payment details routes
-app.use('/api/users', userRoutes); // Add the user routes
-console.log('Payment details route registered'); // Log when the route is registered
+app.use('/api/reviews', reviewsRoutes);
+app.use('/api/recommended', recommendedRoutes);
+app.use('/api/shipping-details', shippingDetailsRoutes);
+app.use('/api/customers', customersDetailsRoutes);
+app.use('/api/payment-details', paymentDetailsRoutes);
+app.use('/api/users', userRoutes);
+console.log('Payment details route registered');
 
 app.get('/api/products/:id', (req, res) => {
-  const product = db.prepare('SELECT * FROM furniture WHERE id = ?').get(req.params.id);
-  if (product) {
-    res.json(product);
-  } else {
-    res.status(404).json({ error: 'Product not found' });
-  }
+    const product = db.prepare('SELECT * FROM furniture WHERE id = ?').get(req.params.id);
+    if (product) {
+        res.json(product);
+    } else {
+        res.status(404).json({ error: 'Product not found' });
+    }
 });
 
 app.get('/api/reviews/:productId', (req, res) => {
-  const reviews = db.prepare('SELECT * FROM reviews WHERE productId = ?').all(req.params.productId);
-  res.json(reviews);
+    const reviews = db.prepare('SELECT * FROM reviews WHERE productId = ?').all(req.params.productId);
+    res.json(reviews);
 });
 
-// Example endpoint to fetch categories
 app.get('/api/categories', (req, res) => {
-  const categories = [
-    { id: 'mobler', name: 'Möbler' },
-    { id: 'forvaring', name: 'Förvaring' },
-    { id: 'detaljer', name: 'Detaljer' },
-    { id: 'textil', name: 'Textil' },
-  ];
-  res.json(categories);
+    const categories = [
+        { id: 'mobler', name: 'Möbler' },
+        { id: 'forvaring', name: 'Förvaring' },
+        { id: 'detaljer', name: 'Detaljer' },
+        { id: 'textil', name: 'Textil' },
+    ];
+    res.json(categories);
 });
 
-// Serve the React app for all other routes
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../client/dist', 'index.html'));
+// 404 handler
+app.use((req, res, next) => {
+    console.log(`404: ${req.method} ${req.url}`);
+    res.status(404).json({ error: 'Not Found' });
+});
+
+// Error handler
+app.use((err, req, res, next) => {
+    console.error(`Server error: ${err.stack}`);
+    res.status(500).json({ error: 'Internal Server Error' });
 });
 
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+    console.log(`Server is running on port ${PORT}`);
 });
