@@ -24,8 +24,43 @@ function App() {
     const [furnitureItems, setFurnitureItems] = useState([]);
     const [cartItems, setCartItems] = useState([]);
     const [recommendedItems, setRecommendedItems] = useState([]);
+    const [isAdmin, setIsAdmin] = useState(false); // New state for admin status
 
     const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000'; // Use Vite's import.meta.env
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    // Check admin status on mount
+    useEffect(() => {
+        const checkAdminStatus = async () => {
+            const token = localStorage.getItem('token');
+            if (token) {
+                try {
+                    const response = await axios.get(`${API_URL}/api/users/me`, {
+                        headers: { Authorization: `Bearer ${token}` },
+                    });
+                    setIsAdmin(response.data.isAdmin || false);
+                } catch (error) {
+                    console.error('Error checking admin status:', error);
+                    setIsAdmin(false);
+                }
+            } else {
+                setIsAdmin(false);
+            }
+        };
+        checkAdminStatus();
+    }, [API_URL]);
+
+    // ProtectedAdminRoute component
+    const ProtectedAdminRoute = ({ children }) => {
+        useEffect(() => {
+            if (!isAdmin && location.pathname.startsWith('/admin')) {
+                navigate('/login');
+            }
+        }, [isAdmin]);
+
+        return isAdmin ? children : null;
+    };
 
     const fetchCartItems = () => {
         axios.get(`${API_URL}/api/cart`)
@@ -96,9 +131,6 @@ function App() {
         setCartItems([]);
     };
 
-    const location = useLocation();
-    const navigate = useNavigate();
-
     useEffect(() => {
         fetch(`${API_URL}/api/furniture`)
             .then(response => response.json())
@@ -148,7 +180,14 @@ function App() {
                         }
                     />
                     <Route path="/search" element={<Search searchResults={searchResults} searchQuery={searchQuery} handleSearch={handleSearch} />} />
-                    <Route path="/admin/*" element={<Admin />} />
+                    <Route
+                        path="/admin/*"
+                        element={
+                            <ProtectedAdminRoute>
+                                <Admin />
+                            </ProtectedAdminRoute>
+                        }
+                    />
                     <Route path="/reviews/:productId" element={<AllReviews />} />
                     <Route path="/login" element={<LoginPage />} />
                     <Route path="/user-dashboard" element={<UserDashboard />} />
