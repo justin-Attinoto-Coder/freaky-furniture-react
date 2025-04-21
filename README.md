@@ -3,7 +3,7 @@ Welcome to Freaky Furniture, a full-stack web application that brings a unique f
 
 Live Demo: https://freaky-furniture.onrender.com
 
-Source Code: https://github.com/your-username/freaky-furniture
+Source Code: https://github.com/justin-Attinoto-Coder/freaky-furniture
 Tech Stack
 
 Frontend: React, JavaScript, CSS
