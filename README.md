@@ -1,6 +1,9 @@
 Freaky Furniture
 Welcome to Freaky Furniture, a full-stack web application that brings a unique furniture shopping experience to life! This project showcases my skills in building modern, user-friendly applications with a React frontend, Node.js/Express backend, and a relational database. Whether you’re browsing quirky furniture or managing inventory, Freaky Furniture delivers a seamless experience.
-Live Demo: https://freaky-furniture.onrender.comSource Code: https://github.com/your-username/freaky-furniture
+
+Live Demo: https://freaky-furniture.onrender.com
+
+Source Code: https://github.com/your-username/freaky-furniture
 Tech Stack
 
 Frontend: React, JavaScript, CSS
