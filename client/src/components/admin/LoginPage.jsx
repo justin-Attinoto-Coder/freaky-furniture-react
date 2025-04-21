@@ -11,7 +11,7 @@ const LoginPage = () => {
     const navigate = useNavigate();
     const location = useLocation();
 
-    // Get the intended redirect path (e.g., /admin) or default to /
+    // Get the intended redirect path, default to / for non-admins
     const from = location.state?.from || '/';
 
     const handleLogin = async (e) => {
@@ -25,14 +25,16 @@ const LoginPage = () => {
             });
 
             const { token, role } = response.data;
+            console.log('Login response:', { token, role }); // Debug role
             localStorage.setItem('token', token); // Store the token
 
             if (role === 'admin') {
-                navigate(from, { replace: true }); // Redirect to intended path (e.g., /admin)
+                navigate('/admin', { replace: true }); // Always redirect admins to /admin
             } else {
-                navigate('/user-dashboard', { replace: true });
+                navigate(from, { replace: true }); // Non-admins go to intended path or /
             }
         } catch (error) {
+            console.error('Login error:', error.response?.data); // Debug error
             setError(error.response?.data?.message || 'An error occurred. Please try again.');
         }
     };

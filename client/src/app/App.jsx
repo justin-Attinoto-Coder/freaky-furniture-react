@@ -25,13 +25,12 @@ function App() {
     const [furnitureItems, setFurnitureItems] = useState([]);
     const [cartItems, setCartItems] = useState([]);
     const [recommendedItems, setRecommendedItems] = useState([]);
-    const [isAdmin, setIsAdmin] = useState(false); // Tracks admin status
+    const [isAdmin, setIsAdmin] = useState(false);
 
-    const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000'; // Use Vite's import.meta.env
+    const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
     const navigate = useNavigate();
     const location = useLocation();
 
-    // Check admin status on mount
     useEffect(() => {
         const checkAdminStatus = async () => {
             const token = localStorage.getItem('token');
@@ -40,13 +39,13 @@ function App() {
                     const response = await axios.get(`${API_URL}/api/users/me`, {
                         headers: { Authorization: `Bearer ${token}` },
                     });
-                    // Check role instead of isAdmin
+                    console.log('User profile:', response.data); // Debug role
                     setIsAdmin(response.data.role === 'admin');
                 } catch (error) {
-                    console.error('Error checking admin status:', error);
+                    console.error('Error checking admin status:', error.response?.data); // Debug error
                     setIsAdmin(false);
                     if (error.response?.status === 401) {
-                        localStorage.removeItem('token'); // Clear invalid/expired token
+                        localStorage.removeItem('token');
                         navigate('/login');
                     }
                 }
@@ -57,9 +56,9 @@ function App() {
         checkAdminStatus();
     }, [API_URL, navigate]);
 
-    // ProtectedAdminRoute component
     const ProtectedAdminRoute = ({ children }) => {
         useEffect(() => {
+            console.log('ProtectedAdminRoute: isAdmin=', isAdmin, 'path=', location.pathname); // Debug
             if (!isAdmin && location.pathname.startsWith('/admin')) {
                 navigate('/login', { state: { from: location.pathname } });
             }
