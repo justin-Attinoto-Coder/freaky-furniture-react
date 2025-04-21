@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { BrowserRouter as Router, Route, Routes, useNavigate, useLocation } from 'react-router-dom';
 import { useState, useEffect, useCallback } from 'react';
 import Header from '../components/common/Header';
@@ -24,7 +25,7 @@ function App() {
     const [furnitureItems, setFurnitureItems] = useState([]);
     const [cartItems, setCartItems] = useState([]);
     const [recommendedItems, setRecommendedItems] = useState([]);
-    const [isAdmin, setIsAdmin] = useState(false); // New state for admin status
+    const [isAdmin, setIsAdmin] = useState(false); // Tracks admin status
 
     const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000'; // Use Vite's import.meta.env
     const navigate = useNavigate();
@@ -39,27 +40,36 @@ function App() {
                     const response = await axios.get(`${API_URL}/api/users/me`, {
                         headers: { Authorization: `Bearer ${token}` },
                     });
-                    setIsAdmin(response.data.isAdmin || false);
+                    // Check role instead of isAdmin
+                    setIsAdmin(response.data.role === 'admin');
                 } catch (error) {
                     console.error('Error checking admin status:', error);
                     setIsAdmin(false);
+                    if (error.response?.status === 401) {
+                        localStorage.removeItem('token'); // Clear invalid/expired token
+                        navigate('/login');
+                    }
                 }
             } else {
                 setIsAdmin(false);
             }
         };
         checkAdminStatus();
-    }, [API_URL]);
+    }, [API_URL, navigate]);
 
     // ProtectedAdminRoute component
     const ProtectedAdminRoute = ({ children }) => {
         useEffect(() => {
             if (!isAdmin && location.pathname.startsWith('/admin')) {
-                navigate('/login');
+                navigate('/login', { state: { from: location.pathname } });
             }
         }, [isAdmin]);
 
         return isAdmin ? children : null;
+    };
+
+    ProtectedAdminRoute.propTypes = {
+        children: PropTypes.node.isRequired,
     };
 
     const fetchCartItems = () => {
