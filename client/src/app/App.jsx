@@ -11,7 +11,7 @@ import CheckoutPayment from '../pages/Checkout/CheckoutPayment';
 import CheckoutReview from '../pages/Checkout/CheckoutReview';
 import CheckoutConfirmation from '../pages/Checkout/CheckoutConfirmation';
 import Search from '../pages/search/Search';
-import Admin from '../pages/Admin/AdminDashboard';
+import Admin from '../pages/admin/AdminDashboard';
 import AllReviews from '../pages/ProductDetails/AllReviews/AllReviews';
 import Category from '../pages/Category/Category';
 import axios from 'axios';
