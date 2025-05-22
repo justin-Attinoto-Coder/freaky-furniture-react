@@ -19,9 +19,6 @@ build/
 out/
 client/build/
 
-# Static files
-public/static/
-
 # Local environment files
 .env
 .env.local
