@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import ProductCard from '../../components/Common/ProductCard';
+import ProductCard from '../../components/common/ProductCard';
 
 const CheckoutReview = () => {
   const navigate = useNavigate();
