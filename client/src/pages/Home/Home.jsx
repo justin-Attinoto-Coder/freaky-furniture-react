@@ -1,5 +1,5 @@
 import Hero from '../../components/home/Hero';
-   import NewsSection from '../../components/Home/NewsSection';
+   import NewsSection from '../../components/home/NewsSection';
    import Accordion from '../../components/common/Accordion';
    import ProductCard from '../../components/common/ProductCard';
    import PropTypes from 'prop-types';
