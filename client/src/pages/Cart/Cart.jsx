@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import MyBasket from '../../components/Cart/MyBasket';
+import MyBasket from '../../components/cart/MyBasket';
 import CartCustomerForm from '../../components/cart/CartCustomerForm';
 
 const Cart = () => {
