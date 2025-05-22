@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Route, Routes, useNavigate, useLocation } from
 import { useState, useEffect, useCallback } from 'react';
 import Header from '../components/common/Header';
 import Footer from '../components/common/Footer';
-import Home from '../pages/Home/home';
+import Home from '../pages/Home/Home';
 import Cart from '../pages/Cart/cart';
 import ProductDetails from '../pages/ProductDetails/ProductDetails'; // Updated import
 import CheckoutShipping from '../pages/Checkout/CheckoutShipping';
