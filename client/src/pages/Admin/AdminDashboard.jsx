@@ -1,7 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
-import AdminSidebar from '../../components/Admin/AdminSidebar';
-import AdminTopbar from '../../components/Admin/AdminTopbar';
-import AdminTable from '../../components/Admin/AdminTable';
+import AdminSidebar from '../../components/admin/AdminSidebar';
+import AdminTopbar from '../../components/admin/AdminTopbar';
+import AdminTable from '../../components/admin/AdminTable';
 import AdminNewProduct from './AdminNewProduct';
 
 const Admin = () => {
