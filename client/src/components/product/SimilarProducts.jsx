@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import ProductCard from '../Common/ProductCard';
+import ProductCard from '../common/ProductCard';
 
 const SimilarProducts = ({ similarItems }) => {
   if (similarItems.length === 0) {
