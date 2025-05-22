@@ -1,5 +1,6 @@
-import React from 'react';
 import { FaFacebook, FaInstagram, FaMapMarkerAlt } from 'react-icons/fa';
+import '../../../src/index.css'; // Import your CSS file
+
 
 const Footer = () => {
   return (

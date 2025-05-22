@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import MyBasket from '../../components/cart/MyBasket';
 import CartCustomerForm from '../../components/cart/CartCustomerForm';
+import '../../../src/index.css'; // Import your CSS file
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);

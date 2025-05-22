@@ -3,6 +3,8 @@ import AdminSidebar from '../../components/admin/AdminSidebar';
 import AdminTopbar from '../../components/admin/AdminTopbar';
 import AdminTable from '../../components/admin/AdminTable';
 import AdminNewProduct from './AdminNewProduct';
+import '../../../src/index.css'; // Import your CSS file
+
 
 const Admin = () => {
   return (

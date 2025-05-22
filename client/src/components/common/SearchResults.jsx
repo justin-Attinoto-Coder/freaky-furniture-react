@@ -1,5 +1,7 @@
 import PropTypes from 'prop-types';
 import ProductCard from './ProductCard';
+import '../../../src/index.css'; // Import your CSS file
+
 
 const SearchResults = ({ results, searchPerformed }) => {
   if (!searchPerformed) {

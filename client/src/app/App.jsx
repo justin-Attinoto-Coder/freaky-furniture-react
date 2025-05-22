@@ -11,6 +11,7 @@ import CheckoutReview from '../pages/Checkout/CheckoutReview';
 import CheckoutConfirmation from '../pages/Checkout/CheckoutConfirmation';
 import Search from '../pages/search/Search'; // Import Search
 import Admin from '../pages/Admin/AdminDashboard'; // Import the Admin page
+import '../../src/index.css'; // Import your CSS file
 
 function App() {
   const [searchResults, setSearchResults] = useState([]);

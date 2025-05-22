@@ -1,4 +1,5 @@
-import React from 'react';
+import '../../../src/index.css'; // Import your CSS file
+
 
 const Detaljer = ({ products }) => {
   if (!products || products.length === 0) {

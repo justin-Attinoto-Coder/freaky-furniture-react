@@ -1,6 +1,8 @@
 import React from 'react';
 import SearchBar from './SearchBar';
 import PropTypes from 'prop-types';
+import '../../../src/index.css'; // Import your CSS file
+
 
 const Navbar = ({ handleSearch }) => {
   return (

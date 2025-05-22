@@ -1,5 +1,7 @@
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import '../../../src/index.css'; // Import your CSS file
+
 
 const ProductCard = ({ product }) => {
   return (

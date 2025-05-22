@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import '../../../src/index.css'; // Import your CSS file
 
 const ProductDetailsImage = ({ image, name }) => {
   return (

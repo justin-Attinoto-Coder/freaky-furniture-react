@@ -1,4 +1,4 @@
-import React from 'react';
+import '../../../src/index.css'; // Import your CSS file
 
 const Mobler = ({ products }) => {
   if (!products || products.length === 0) {

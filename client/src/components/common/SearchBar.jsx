@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import '../../../src/index.css'; // Import your CSS file
+
 
 const SearchBar = ({ handleSearch }) => {
   const [query, setQuery] = useState('');

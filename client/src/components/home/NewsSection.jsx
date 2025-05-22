@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import ProductCard from '../common/ProductCard';
+import '../../../src/index.css'; // Import your CSS file
 
 const NewsSection = ({ products }) => {
   return (

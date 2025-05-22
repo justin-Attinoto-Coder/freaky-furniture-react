@@ -1,3 +1,5 @@
+import '../../../src/index.css'; // Import your CSS file
+
 const Hero = () => {
     return (
         <div className="hero-container">

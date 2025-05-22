@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import AddToCartButton from '../cart/AddToCartButton';
+import '../../../src/index.css'; // Import your CSS file
 
 const ProductInformation = ({ title, brand, description, price, onAddToCart }) => {
   return (

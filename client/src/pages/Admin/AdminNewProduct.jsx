@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import '../../../src/index.css'; // Import your CSS file
+
 
 const AdminNewProduct = () => {
   const navigate = useNavigate(); // Initialize useNavigate

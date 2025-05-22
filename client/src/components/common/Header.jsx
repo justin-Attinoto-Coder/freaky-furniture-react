@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { FaHeart, FaUser, FaShoppingBasket } from 'react-icons/fa';
 import Navbar from './Navbar';
 import HamburgerMenu from './HamburgerMenu';
+import '../../../src/index.css'; // Import your CSS file
 
 const Header = (props) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
