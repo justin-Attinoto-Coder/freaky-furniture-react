@@ -9,5 +9,5 @@
       "@server/*": ["server/*"]
     }
   },
-  "include": ["client/src/**/*.js", "server/**/*.js", "client/postcss.config.js"]
+  "include": ["client/src/**/*.js", "server/**/*.js", "client/postcss.config.cjs"]
 }
