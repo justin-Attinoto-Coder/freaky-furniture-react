@@ -1,5 +1,5 @@
 const Database = require('better-sqlite3');
-const db = new Database('furniture.db', { verbose: console.log });
+const db = new Database('./db/furniture.db', { verbose: console.log });
 
 // Create furniture table if it doesn't exist
 db.prepare(`
