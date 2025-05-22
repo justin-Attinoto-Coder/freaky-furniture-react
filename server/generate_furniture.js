@@ -7,7 +7,7 @@ const names = [
   'Bench', 'Stool', 'Wardrobe', 'Nightstand', 'Console', 'Armchair', 'Dining Table', 'Coffee Table', 'TV Stand', 'Barstool'
 ];
 const brands = ['IKEA', 'Ashley', 'West Elm', 'CB2', 'Herman Miller', 'La-Z-Boy', 'Pottery Barn', 'Room & Board', 'Ethan Allen', 'Serta'];
-const categories = ['Living Room', 'Bedroom', 'Dining Room', 'Office', 'Outdoor', 'Kitchen'];
+const categories = ['Living Room', 'Bedroom', 'Office', 'Storage', 'Textile', 'Kitchen'];
 const descriptions = [
   'Modern design with plush cushioning',
   'Classic style with durable frame',
@@ -41,6 +41,9 @@ function generateUrlSlug(name, index) {
   return `${name.toLowerCase().replace(/\s+/g, '-')}-${index}`;
 }
 
+// Clear existing data to avoid UNIQUE constraint errors
+db.prepare('DELETE FROM furniture').run();
+
 // Prepare insert statement
 const insert = db.prepare(`
   INSERT INTO furniture (name, brand, price, description, sku, publishing_date, urlSlug, category, image)
@@ -58,7 +61,6 @@ const transaction = db.transaction(() => {
     const publishing_date = randomDate();
     const urlSlug = generateUrlSlug(name, i);
     const category = categories[Math.floor(Math.random() * categories.length)];
-    // Assign hero-one.jfif for first 50, hero-two.jfif for next 50
     const image = imageBaseUrl + (i <= 50 ? imageNames[0] : imageNames[1]);
 
     insert.run(name, brand, price, description, sku, publishing_date, urlSlug, category, image);

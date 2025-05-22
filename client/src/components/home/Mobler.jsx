@@ -1,4 +1,4 @@
-import '../../../src/index.css'; // Import your CSS file
+import PropTypes from 'prop-types';
 
 const Mobler = ({ products }) => {
   if (!products || products.length === 0) {
@@ -21,6 +21,17 @@ const Mobler = ({ products }) => {
       </div>
     </section>
   );
+};
+
+Mobler.propTypes = {
+  products: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+      description: PropTypes.string,
+      image: PropTypes.string.isRequired,
+    })
+  ).isRequired,
 };
 
 export default Mobler;

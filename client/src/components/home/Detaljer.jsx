@@ -1,5 +1,4 @@
-import '../../../src/index.css'; // Import your CSS file
-
+import PropTypes from 'prop-types';
 
 const Detaljer = ({ products }) => {
   if (!products || products.length === 0) {
@@ -22,6 +21,17 @@ const Detaljer = ({ products }) => {
       </div>
     </section>
   );
+};
+
+Detaljer.propTypes = {
+  products: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+      description: PropTypes.string,
+      image: PropTypes.string.isRequired,
+    })
+  ).isRequired,
 };
 
 export default Detaljer;

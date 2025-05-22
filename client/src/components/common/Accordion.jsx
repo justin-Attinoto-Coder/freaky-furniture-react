@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import '../../../src/index.css'; // Import your CSS file
+import PropTypes from 'prop-types';
+import '../../../src/index.css';
 
-const AccordionItem = ({ title, children }) => {
+const AccordionItem = ({ title, children, id, customClass }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleAccordion = () => {
@@ -11,7 +12,7 @@ const AccordionItem = ({ title, children }) => {
   return (
     <div className="border-b">
       <button
-        className="w-full text-left p-4 bg-gray-100 hover:bg-gray-200 focus:outline-none"
+        className={`w-full text-left p-4 ${customClass || 'bg-gray-100'} hover:bg-gray-200 focus:outline-none`}
         onClick={toggleAccordion}
       >
         <div className="flex justify-between items-center">
@@ -24,55 +25,71 @@ const AccordionItem = ({ title, children }) => {
   );
 };
 
+AccordionItem.propTypes = {
+  title: PropTypes.string.isRequired,
+  children: PropTypes.node.isRequired,
+  id: PropTypes.string,
+  customClass: PropTypes.string,
+};
+
 const Accordion = () => {
   return (
-    <div className="max-w-md mx-auto my-8">
-      <AccordionItem title="Categories">
-        <ul>
-          <li><a href="#mobler">Möbler</a></li>
-          <li><a href="#forvaring">Förvaring</a></li>
-          <li><a href="#detaljer">Detaljer</a></li>
-          <li><a href="#textil">Textil</a></li>
-        </ul>
-      </AccordionItem>
-      <AccordionItem title="My Pages">
-        <ul>
-          <li><a href="/">Home</a></li>
-          <li><a href="/about">About</a></li>
-          <li><a href="/shop">Shop</a></li>
-          <li><a href="/contact">Contact</a></li>
-        </ul>
-      </AccordionItem>
-      <AccordionItem title="Contact Form">
-        <form>
-          <div className="mb-4">
-            <label className="block text-gray-700">Name</label>
-            <input
-              type="text"
-              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block text-gray-700">Email</label>
-            <input
-              type="email"
-              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block text-gray-700">Message</label>
-            <textarea
-              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            ></textarea>
-          </div>
-          <button
-            type="submit"
-            className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700"
-          >
-            Submit
-          </button>
-        </form>
-      </AccordionItem>
+    <div className="w-full mx-auto sm:my-0">
+      {/* Mobile: Accordion (<sm) */}
+      <div className="block sm:hidden w-full">
+        <AccordionItem
+          title="Categories"
+          id="kategorier"
+          customClass="bg-gradient-to-r from-blue-500 to-purple-500 text-white"
+        >
+          <ul>
+            <li><a href="#mobler">Möbler</a></li>
+            <li><a href="#forvaring">Förvaring</a></li>
+            <li><a href="#detaljer">Detaljer</a></li>
+            <li><a href="#textil">Textil</a></li>
+          </ul>
+        </AccordionItem>
+        <AccordionItem title="My Pages" id="mina-sidor">
+          <ul>
+            <li><a href="/account">Mitt konto</a></li>
+          </ul>
+        </AccordionItem>
+        <AccordionItem title="Contact Us" id="kontakta-oss">
+          <ul>
+            <li><a href="/contact/customer-service">Kundservice</a></li>
+            <li><a href="/contact/complaints">Reklamation</a></li>
+            <li><a href="/contact/faq">Vanliga frågor</a></li>
+            <li><a href="/contact/delivery">Leverans</a></li>
+          </ul>
+        </AccordionItem>
+      </div>
+      {/* Desktop: Flex layout (sm and above) */}
+      <div className="hidden sm:flex sm:flex-row sm:space-x-4 sm:bg-gray-100 sm:p-4">
+        <div className="flex-1">
+          <h3 className="font-bold mb-2">Categories</h3>
+          <ul>
+            <li><a href="#mobler">Möbler</a></li>
+            <li><a href="#forvaring">Förvaring</a></li>
+            <li><a href="#detaljer">Detaljer</a></li>
+            <li><a href="#textil">Textil</a></li>
+          </ul>
+        </div>
+        <div className="flex-1">
+          <h3 className="font-bold mb-2">My Pages</h3>
+          <ul>
+            <li><a href="/account">Mitt konto</a></li>
+          </ul>
+        </div>
+        <div className="flex-1">
+          <h3 className="font-bold mb-2">Contact Us</h3>
+          <ul>
+            <li><a href="/contact/customer-service">Kundservice</a></li>
+            <li><a href="/contact/complaints">Reklamation</a></li>
+            <li><a href="/contact/faq">Vanliga frågor</a></li>
+            <li><a href="/contact/delivery">Leverans</a></li>
+          </ul>
+        </div>
+      </div>
     </div>
   );
 };

@@ -1,4 +1,5 @@
-import '../../../src/index.css'; // Import your CSS file
+import PropTypes from 'prop-types';
+import '../../../src/index.css';
 
 const Textil = ({ products }) => {
   if (!products || products.length === 0) {
@@ -14,13 +15,24 @@ const Textil = ({ products }) => {
             <img src={item.image} alt={item.name} className="w-full h-48 object-cover rounded-t-lg" />
             <div className="p-4">
               <h3 className="text-xl font-semibold mb-2">{item.name}</h3>
-              <p className="text-gray-700">{item.description}</p>
+              <p className="text-gray-600">{item.description}</p>
             </div>
           </div>
         ))}
       </div>
     </section>
   );
+};
+
+Textil.propTypes = {
+  products: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+      description: PropTypes.string,
+      image: PropTypes.string.isRequired,
+    })
+  ).isRequired,
 };
 
 export default Textil;
