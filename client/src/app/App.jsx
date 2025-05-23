@@ -25,7 +25,7 @@ function App() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch('http://localhost:8000/api/furniture')
+    fetch('https://freaky-furniture-react-server.onrender.com/api/furniture')
       .then(response => response.json())
       .then(data => setFurnitureItems(data))
       .catch(error => console.error('Error fetching furniture items:', error));
