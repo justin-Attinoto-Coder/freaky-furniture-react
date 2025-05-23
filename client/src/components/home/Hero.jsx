@@ -4,7 +4,7 @@ const Hero = () => {
   return (
     <div className="hero-container relative">
       <img
-        src="/images/hero-one.jfif"
+        src="img src="https://freaky-furniture-react-backend.onrender.com/images/hero-one.jfif"
         alt="hero"
         className="w-full h-[400px] object-cover"
       />
