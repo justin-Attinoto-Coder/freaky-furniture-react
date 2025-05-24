@@ -13,7 +13,7 @@ const Hero = () => {
       return url;
     }
     console.log('Hero: No image, using fallback');
-    return 'https://images.unsplash.com/photo-1513696780222-88d55395e534?ixlib=rb-4.0.3&auto=format&fit=crop&w=400';
+    return 'https://images.unsplash.com/photo-1493666438817-866a91353ca9?ixlib=rb-4.0.3&auto=format&fit=crop&w=400';
   };
 
   const handleImageLoad = () => {
@@ -23,7 +23,7 @@ const Hero = () => {
 
   const handleImageError = () => {
     console.log('Hero: Image failed to load, switching to fallback');
-    return 'https://images.unsplash.com/photo-1513696780222-88d55395e534?ixlib=rb-4.0.3&auto=format&fit=crop&w=400';
+    return 'https://images.unsplash.com/photo-1493666438817-866a91353ca9?ixlib=rb-4.0.3&auto=format&fit=crop&w=400';
   };
 
   return (
