@@ -19,17 +19,22 @@ const ProductCard = ({ product }) => {
       } else if (!normalizedPath.startsWith('http') && normalizedPath.startsWith('/')) {
         normalizedPath = normalizedPath.replace(/^\/+images\//, '/images/');
       }
-      return normalizedPath.startsWith('http') ? normalizedPath : `${baseUrl}${normalizedPath}`;
+      const url = normalizedPath.startsWith('http') ? normalizedPath : `${baseUrl}${normalizedPath}`;
+      console.log(`ProductCard: Computed URL for ${product.name}: ${url}`);
+      return url;
     }
-    return 'https://via.placeholder.com/150?text=No+Image';
+    console.log(`ProductCard: No image for ${product.name}, using fallback`);
+    return 'https://images.unsplash.com/photo-1493666438817-866a91353ca9?ixlib=rb-4.0.3&auto=format&fit=crop&w=150';
   };
 
   const handleImageLoad = () => {
+    console.log(`ProductCard: Image loaded for ${product.name}`);
     setIsImageLoaded(true);
   };
 
   const handleImageError = (event) => {
-    event.target.src = 'https://via.placeholder.com/150?text=No+Image';
+    console.log(`ProductCard: Image failed to load for ${product.name}, switching to fallback`);
+    event.target.src = 'https://images.unsplash.com/photo-1493666438817-866a91353ca9?ixlib=rb-4.0.3&auto=format&fit=crop&w=150';
     event.target.onerror = null; // Prevent infinite error loop
     setIsImageLoaded(true);
   };
