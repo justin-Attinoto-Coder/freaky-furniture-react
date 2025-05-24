@@ -14,16 +14,21 @@ const Hero = () => {
       } else if (!normalizedPath.startsWith('http') && normalizedPath.startsWith('/')) {
         normalizedPath = normalizedPath.replace(/^\/+images\//, '/images/');
       }
-      return normalizedPath.startsWith('http') ? normalizedPath : `${baseUrl}${normalizedPath}`;
+      const url = normalizedPath.startsWith('http') ? normalizedPath : `${baseUrl}${normalizedPath}`;
+      console.log(`Hero: Computed URL: ${url}`);
+      return url;
     }
+    console.log('Hero: No image, using fallback');
     return 'https://via.placeholder.com/150?text=No+Image';
   };
 
   const handleImageLoad = () => {
+    console.log('Hero: Image loaded');
     setIsImageLoaded(true);
   };
 
   const handleImageError = (event) => {
+    console.log('Hero: Image failed to load');
     event.target.src = 'https://via.placeholder.com/150?text=No+Image';
     event.target.onerror = null; // Prevent infinite error loop
     setIsImageLoaded(true);
