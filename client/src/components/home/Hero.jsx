@@ -19,7 +19,7 @@ const Hero = () => {
       return url;
     }
     console.log('Hero: No image, using fallback');
-    return 'https://via.placeholder.com/150?text=No+Image';
+    return 'https://images.unsplash.com/photo-1493666438817-866a91353ca9?ixlib=rb-4.0.3&auto=format&fit=crop&w=150';
   };
 
   const handleImageLoad = () => {
@@ -28,8 +28,8 @@ const Hero = () => {
   };
 
   const handleImageError = (event) => {
-    console.log('Hero: Image failed to load');
-    event.target.src = 'https://via.placeholder.com/150?text=No+Image';
+    console.log('Hero: Image failed to load, switching to fallback');
+    event.target.src = 'https://images.unsplash.com/photo-1493666438817-866a91353ca9?ixlib=rb-4.0.3&auto=format&fit=crop&w=150';
     event.target.onerror = null; // Prevent infinite error loop
     setIsImageLoaded(true);
   };
