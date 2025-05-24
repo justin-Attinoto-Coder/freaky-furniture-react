@@ -10,21 +10,12 @@ const ProductCard = ({ product }) => {
   const getImageUrl = () => {
     const imagePath = product.image?.trim();
     if (imagePath) {
-      let normalizedPath = imagePath;
-      if (imagePath.startsWith('http://localhost:8000')) {
-        normalizedPath = imagePath.replace('http://localhost:8000', baseUrl);
-      }
-      if (!normalizedPath.startsWith('http') && !normalizedPath.startsWith('/')) {
-        normalizedPath = `/images/${normalizedPath.replace(/^images\//, '')}`;
-      } else if (!normalizedPath.startsWith('http') && normalizedPath.startsWith('/')) {
-        normalizedPath = normalizedPath.replace(/^\/+images\//, '/images/');
-      }
-      const url = normalizedPath.startsWith('http') ? normalizedPath : `${baseUrl}${normalizedPath}`;
+      const url = imagePath.startsWith('http') ? imagePath : `${baseUrl}${imagePath}`;
       console.log(`ProductCard: Computed URL for ${product.name}: ${url}`);
       return url;
     }
     console.log(`ProductCard: No image for ${product.name}, using fallback`);
-    return 'https://images.unsplash.com/photo-1493666438817-866a91353ca9?ixlib=rb-4.0.3&auto=format&fit=crop&w=150';
+    return 'https://images.unsplash.com/photo-1513696780222-88d55395e534?ixlib=rb-4.0.3&auto=format&fit=crop&w=150';
   };
 
   const handleImageLoad = () => {
@@ -32,11 +23,9 @@ const ProductCard = ({ product }) => {
     setIsImageLoaded(true);
   };
 
-  const handleImageError = (event) => {
+  const handleImageError = () => {
     console.log(`ProductCard: Image failed to load for ${product.name}, switching to fallback`);
-    event.target.src = 'https://images.unsplash.com/photo-1493666438817-866a91353ca9?ixlib=rb-4.0.3&auto=format&fit=crop&w=150';
-    event.target.onerror = null; // Prevent infinite error loop
-    setIsImageLoaded(true);
+    return 'https://images.unsplash.com/photo-1513696780222-88d55395e534?ixlib=rb-4.0.3&auto=format&fit=crop&w=150';
   };
 
   return (
@@ -50,7 +39,7 @@ const ProductCard = ({ product }) => {
           alt={product.name}
           className={`h-48 w-full object-cover mb-4 rounded-lg ${isImageLoaded ? '' : 'hidden'}`}
           onLoad={handleImageLoad}
-          onError={handleImageError}
+          onError={(e) => { e.target.src = handleImageError(); }}
         />
         <h2 className="text-lg font-semibold">{product.name}</h2>
         <p className="text-gray-600">${product.price}</p>
