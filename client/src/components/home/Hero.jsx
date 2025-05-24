@@ -8,18 +8,12 @@ const Hero = () => {
 
   const getImageUrl = () => {
     if (imagePath) {
-      let normalizedPath = imagePath;
-      if (!normalizedPath.startsWith('http') && !normalizedPath.startsWith('/')) {
-        normalizedPath = `/images/${normalizedPath.replace(/^images\//, '')}`;
-      } else if (!normalizedPath.startsWith('http') && normalizedPath.startsWith('/')) {
-        normalizedPath = normalizedPath.replace(/^\/+images\//, '/images/');
-      }
-      const url = normalizedPath.startsWith('http') ? normalizedPath : `${baseUrl}${normalizedPath}`;
+      const url = imagePath.startsWith('http') ? imagePath : `${baseUrl}${imagePath}`;
       console.log(`Hero: Computed URL: ${url}`);
       return url;
     }
     console.log('Hero: No image, using fallback');
-    return 'https://images.unsplash.com/photo-1493666438817-866a91353ca9?ixlib=rb-4.0.3&auto=format&fit=crop&w=150';
+    return 'https://images.unsplash.com/photo-1513696780222-88d55395e534?ixlib=rb-4.0.3&auto=format&fit=crop&w=400';
   };
 
   const handleImageLoad = () => {
@@ -27,11 +21,9 @@ const Hero = () => {
     setIsImageLoaded(true);
   };
 
-  const handleImageError = (event) => {
+  const handleImageError = () => {
     console.log('Hero: Image failed to load, switching to fallback');
-    event.target.src = 'https://images.unsplash.com/photo-1493666438817-866a91353ca9?ixlib=rb-4.0.3&auto=format&fit=crop&w=150';
-    event.target.onerror = null; // Prevent infinite error loop
-    setIsImageLoaded(true);
+    return 'https://images.unsplash.com/photo-1513696780222-88d55395e534?ixlib=rb-4.0.3&auto=format&fit=crop&w=400';
   };
 
   return (
@@ -44,7 +36,7 @@ const Hero = () => {
         alt="hero"
         className={`w-full h-[400px] object-cover ${isImageLoaded ? '' : 'hidden'}`}
         onLoad={handleImageLoad}
-        onError={handleImageError}
+        onError={(e) => { e.target.src = handleImageError(); }}
       />
       <div className="hero-content absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center text-white">
         <h1 className="text-4xl font-bold mb-4">Freaky Furniture</h1>
