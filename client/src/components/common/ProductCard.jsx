@@ -15,7 +15,7 @@ const ProductCard = ({ product }) => {
       return url;
     }
     console.log(`ProductCard: No image for ${product.name}, using fallback`);
-    return 'https://images.unsplash.com/photo-1513696780222-88d55395e534?ixlib=rb-4.0.3&auto=format&fit=crop&w=150';
+    return 'https://images.unsplash.com/photo-1493666438817-866a91353ca9?ixlib=rb-4.0.3&auto=format&fit=crop&w=150';
   };
 
   const handleImageLoad = () => {
@@ -25,7 +25,7 @@ const ProductCard = ({ product }) => {
 
   const handleImageError = () => {
     console.log(`ProductCard: Image failed to load for ${product.name}, switching to fallback`);
-    return 'https://images.unsplash.com/photo-1513696780222-88d55395e534?ixlib=rb-4.0.3&auto=format&fit=crop&w=150';
+    return 'https://images.unsplash.com/photo-1493666438817-866a91353ca9?ixlib=rb-4.0.3&auto=format&fit=crop&w=150';
   };
 
   return (
