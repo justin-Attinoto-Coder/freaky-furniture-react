@@ -1,3 +1,11 @@
+A modern furniture store offering unique and stylish pieces for every home.
+
+Our collection features handcrafted items made from sustainable materials, ensuring both quality and environmental responsibility.  
+Each piece is designed with a focus on comfort and functionality, blending contemporary aesthetics with timeless appeal.  
+We provide personalized customer service, helping you find the perfect furniture to match your individual style and needs.
+
+# Freaky Furniture React 
+
 # React + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
