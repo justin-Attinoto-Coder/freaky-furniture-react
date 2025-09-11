@@ -39,9 +39,9 @@ app.use('/api/users', userRoutes);
    app.use(express.static(path.join(__dirname, '../client/dist')));
  */
    // Serve React app for all other routes
-   app.get('*', (req, res) => {
+/*    app.get('*', (req, res) => {
      res.sendFile(path.join(__dirname, '../client/dist', 'index.html'));
-   });
+   }); */
 
    const PORT = process.env.PORT || 8000;
    app.listen(PORT, () => {
