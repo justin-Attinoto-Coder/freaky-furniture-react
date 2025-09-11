@@ -28,9 +28,12 @@ const express = require('express');
 
    createAdminUser();
 
-   // Use routes
-   app.use('/api/furniture', furnitureRoutes);
-   app.use('/api/users', userRoutes);
+// Serve images statically
+app.use('/images', express.static(path.join(__dirname, 'public/images')));
+
+// Use routes
+app.use('/api/furniture', furnitureRoutes);
+app.use('/api/users', userRoutes);
 
    // Serve static files from client/dist
    app.use(express.static(path.join(__dirname, '../client/dist')));
