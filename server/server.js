@@ -26,6 +26,9 @@ async function createAdminUser() {
 
 createAdminUser();
 
+// Serve images statically
+app.use('/images', express.static(path.join(__dirname, 'public/images')));
+
 // Use routes
 app.use('/api/furniture', furnitureRoutes);
 app.use('/api/users', userRoutes);
