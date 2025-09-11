@@ -35,9 +35,9 @@ app.use('/images', express.static(path.join(__dirname, 'public/images')));
 app.use('/api/furniture', furnitureRoutes);
 app.use('/api/users', userRoutes);
 
-   // Serve static files from client/dist
+/*    // Serve static files from client/dist
    app.use(express.static(path.join(__dirname, '../client/dist')));
-
+ */
    // Serve React app for all other routes
    app.get('*', (req, res) => {
      res.sendFile(path.join(__dirname, '../client/dist', 'index.html'));
